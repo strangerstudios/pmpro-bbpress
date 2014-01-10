@@ -1,5 +1,5 @@
 === Paid Memberships Pro BBPress Addon ===
-Contributors: strangerstudios, slocumstudio
+Contributors: strangerstudios, slocumstudio, jessicaoros
 Tags: paid memberships pro, bbpress, forums, membership forum, restrict forum
 Requires at least: 3.5
 Tested up to: 3.8

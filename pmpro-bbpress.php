@@ -107,7 +107,7 @@ function pmprobbp_check_forum() {
 	if( ! bbp_is_forum_archive() && ! empty( $forum_id ) && pmpro_bbp_is_forum() ) {			
 		// The current user does not have access to this forum, re-direct them away
 		if( ! pmpro_has_membership_access( $forum_id ) ) {
-			wp_redirect( get_post_type_archive_link( 'forum' ) . '&noaccess=1' );
+			wp_redirect( add_query_arg('noaccess', 1, get_post_type_archive_link( 'forum' )) );
 			exit;
 		}
 	}

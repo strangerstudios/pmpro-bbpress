@@ -1,31 +1,38 @@
-=== Paid Memberships Pro BBPress Addon ===
+=== bbPress Add On for Paid Memberships Pro ===
 Contributors: strangerstudios, slocumstudio, jessicaoros
-Tags: paid memberships pro, bbpress, forums, membership forum, restrict forum
+Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
 Requires at least: 3.5
 Tested up to: 3.8
 Stable tag: 1.0
 
-Paid Memberships Pro BBPress Addon
+Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.
 
 == Description ==
 
-Integrates Paid Memberships Pro with BBPress to restrict forum content based on PMPro membership level.
+The bbPress Add On for Paid Memberships Pro adds a "Require Membership" meta box to the "Edit Forum" page, allowing you to easily toggle the membership level(s) that can access the forum. 
 
-Requires BBPress and Paid Memberships Pro installed and activated.
+Requires bbPress and Paid Memberships Pro installed and activated.
 
 == Installation ==
 
 = Prerequisites =
-1. You must have Paid Memberships Pro and BBPress installed and activated on your site.
+1. You must have Paid Memberships Pro and bbPress installed and activated on your site.
 
 = Download, Install and Activate! =
 1. Download the latest version of the plugin.
-2. Unzip the downloaded file to your computer.
-3. Upload the /pmpro-bbpress/ directory to the /wp-content/plugins/ directory of your site.
-4. Activate the plugin through the 'Plugins' menu in WordPress.
+1. Unzip the downloaded file to your computer.
+1. Upload the /pmpro-bbpress/ directory to the /wp-content/plugins/ directory of your site.
+1. Activate the plugin through the 'Plugins' menu in WordPress.
 
-== Usage ==
-After activation, navigate to the "Edit Forum" page of any forum you have already created. In the right sidebar with the Publishing options, you will notice a new panel titled "Require Membership". Simply check the boxes for the required membership levels to access this forum, then click "Update" (or "Publish" if you are creating a new forum).
+= How to Use =
+
+1. After activation, navigate to the "Edit Forum" page for the forum you would like to restrict. 
+1. Check the box for each level that can access this forum in the "Require Membership" meta box (below the Publish box in the right sidebar). 
+1. Save your changes by clicking the "Update" button (or "Publish" if you are creating a new forum).
+
+== Screenshots ==
+
+1. The "Require Membership" meta box for controlling forum access.
 
 == Changelog == 
 

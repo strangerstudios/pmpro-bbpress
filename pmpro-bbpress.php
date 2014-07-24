@@ -3,7 +3,7 @@
  * Plugin Name: PMPro bbPress
  * Plugin URI: http://www.paidmembershipspro.com/pmpro-bbpress/
  * Description: Allow individual forums to be locked down for members.
- * Version: 1.0.1
+ * Version: 1.1
  * Author: Stranger Studios, Scott Sousa
  * Author URI: http://www.strangerstudios.com
  */
@@ -104,7 +104,7 @@ function pmprobbp_check_forum() {
 	$restricted_forums[bbp_get_forum_id()] = array(1,2);
 	
 	// Is this even a forum page at all?
-	if( ! bbp_is_forum_archive() && ! empty( $forum_id ) && pmpro_bbp_is_forum() ) {			
+	if( ! bbp_is_forum_archive() && ! empty( $forum_id ) && pmpro_bbp_is_forum() ) {
 		// The current user does not have access to this forum, re-direct them away
 		if( ! pmpro_has_membership_access( $forum_id ) ) {
 			wp_redirect(add_query_arg('noaccess', 1, get_post_type_archive_link( 'forum' )));
@@ -164,3 +164,35 @@ function pmpro_bbp_membership_msg()
     }
 }
 add_action('bbp_template_before_forums_index','pmpro_bbp_membership_msg');
+
+/*
+ * Add topics and forums to pmpro_search_query
+ */
+function pmprobb_pre_get_posts($query) {
+
+    global $wpdb;
+
+    //get all member forums
+    $sqlQuery = "SELECT posts.ID post_id, pages.membership_id level_id FROM {$wpdb->posts} posts INNER JOIN {$wpdb->pmpro_memberships_pages} pages ON posts.ID = pages.page_id WHERE posts.post_type LIKE 'forum'";
+    $member_forums = $wpdb->get_results($sqlQuery);
+
+    //add restricted forums to array
+    $restricted_forum_ids = array();
+    foreach($member_forums as $forum) {
+        if(!pmpro_hasMembershipLevel($forum->level_id))
+            $restricted_forum_ids[] = $forum->post_id;
+    }
+
+    //get topics belonging to restricted forums
+    $sqlQuery = "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key LIKE '_bbp_forum_id' AND meta_value IN(" . implode(',', $restricted_forum_ids) . ")";
+    $restricted_topic_ids = $wpdb->get_col($sqlQuery);
+
+    //exclude restricted topics and posts
+    $query->set('post__not_in', array_merge($query->get('post__not_in'), $restricted_topic_ids, $restricted_forum_ids));
+
+    return $query;
+}
+
+$filterqueries = pmpro_getOption("filterqueries");
+if(!empty($filterqueries))
+    add_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' );

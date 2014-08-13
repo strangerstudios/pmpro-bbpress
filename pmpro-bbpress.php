@@ -3,7 +3,7 @@
  * Plugin Name: PMPro bbPress
  * Plugin URI: http://www.paidmembershipspro.com/pmpro-bbpress/
  * Description: Allow individual forums to be locked down for members.
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: Stranger Studios, Scott Sousa
  * Author URI: http://www.strangerstudios.com
  */
@@ -176,24 +176,32 @@ add_action('bbp_template_before_forums_index','pmpro_bbp_membership_msg');
 function pmprobb_pre_get_posts($query) {
 
     global $wpdb;
-
+	
+	//only filter front end searches
+	if(is_admin() || !$query->is_search)
+		return $query;
+	
     //get all member forums
-    $sqlQuery = "SELECT posts.ID post_id, pages.membership_id level_id FROM {$wpdb->posts} posts INNER JOIN {$wpdb->pmpro_memberships_pages} pages ON posts.ID = pages.page_id WHERE posts.post_type LIKE 'forum'";
-    $member_forums = $wpdb->get_results($sqlQuery);
-
+    $sqlQuery = "SELECT ID FROM $wpdb->posts WHERE post_type LIKE 'forum'";
+    $all_forums = $wpdb->get_col($sqlQuery);
+	
     //add restricted forums to array
     $restricted_forum_ids = array();
-    foreach($member_forums as $forum) {
-        if(!pmpro_hasMembershipLevel($forum->level_id))
-            $restricted_forum_ids[] = $forum->post_id;
+    foreach($all_forums as $forum_id) {
+        if(!pmpro_has_membership_access($forum_id))
+            $restricted_forum_ids[] = $forum_id;
     }
 
-    //get topics belonging to restricted forums
-    $sqlQuery = "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key LIKE '_bbp_forum_id' AND meta_value IN(" . implode(',', $restricted_forum_ids) . ")";
-    $restricted_topic_ids = $wpdb->get_col($sqlQuery);
+	//if there are restricted forums, find topics and exclude them all from searches
+	if(!empty($restricted_forum_ids))
+	{	
+		//get topics belonging to restricted forums
+		$sqlQuery = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key LIKE '_bbp_forum_id' AND meta_value IN(" . implode(',', $restricted_forum_ids) . ")";
+		$restricted_topic_ids = $wpdb->get_col($sqlQuery);
 
-    //exclude restricted topics and posts
-    $query->set('post__not_in', array_merge($query->get('post__not_in'), $restricted_topic_ids, $restricted_forum_ids));
-
+		//exclude restricted topics and posts
+		$query->set('post__not_in', array_merge($query->get('post__not_in'), $restricted_topic_ids, $restricted_forum_ids));		
+	}
+	
     return $query;
 }

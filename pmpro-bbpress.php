@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: PMPro bbPress
+ * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: http://www.paidmembershipspro.com/pmpro-bbpress/
  * Description: Allow individual forums to be locked down for members.
- * Version: 1.1.3
+ * Version: 1.1.4
  * Author: Stranger Studios, Scott Sousa
  * Author URI: http://www.strangerstudios.com
  */
@@ -210,3 +210,19 @@ function pmprobb_pre_get_posts($query) {
 	
     return $query;
 }
+
+/*
+Function to add links to the plugin row meta
+*/
+function pmprobb_plugin_row_meta($links, $file) {
+	if(strpos($file, 'pmpro-bbpress.php') !== false)
+	{
+		$new_links = array(
+			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plugins-wordpress-repository/pmpro-bbpress/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+		);
+		$links = array_merge($links, $new_links);
+	}
+	return $links;
+}
+add_filter('plugin_row_meta', 'pmprobb_plugin_row_meta', 10, 2);

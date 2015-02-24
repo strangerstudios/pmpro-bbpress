@@ -1,9 +1,9 @@
-=== bbPress Add On for Paid Memberships Pro ===
+=== Paid Memberships Pro - bbPress Add On ===
 Contributors: strangerstudios, slocumstudio, jessica o
 Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 1.1.3
+Tested up to: 4.1.1
+Stable tag: 1.1.4
 
 Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.
 
@@ -35,6 +35,9 @@ Requires bbPress and Paid Memberships Pro installed and activated.
 1. The "Require Membership" meta box for controlling forum access.
 
 == Changelog ==
+= 1.1.4 =
+* Updates to name, description, tags. Added link to support and settings on plugins page.
+
 = 1.1.3 =
 * Fixed fatal error that would come up if Paid Memberships Pro was not active. (Thanks, Karmyn Tyler Cobb)
  

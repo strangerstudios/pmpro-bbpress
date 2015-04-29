@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: http://www.paidmembershipspro.com/pmpro-bbpress/
  * Description: Allow individual forums to be locked down for members.
- * Version: 1.1.5
+ * Version: 1.2
  * Author: Stranger Studios, Scott Sousa
  * Author URI: http://www.strangerstudios.com
  */
@@ -166,7 +166,7 @@ function pmpro_bbp_is_forum( $forum_id = NULL ) {
 /* Add membership level required message if user does not have access */
 function pmpro_bbp_membership_msg() 
 {
-    $pmpro_bbp_error_msg = 'You do not have the required membership level to access that forum.'; // error message to display
+    $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', 'You do not have the required membership level to access that forum.'); // error message to display
 
     if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) 
 	{

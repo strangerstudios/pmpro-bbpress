@@ -3,32 +3,28 @@
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: http://www.paidmembershipspro.com/pmpro-bbpress/
  * Description: Allow individual forums to be locked down for members.
- * Version: 1.4
+ * Version: 1.5
  * Author: Stranger Studios, Scott Sousa
  * Author URI: http://www.strangerstudios.com
  */
 
+ //includes
+ define('PMPROBB_DIR', dirname(__FILE__));
+ require_once(PMPROBB_DIR . '/includes/functions.php');
+ require_once(PMPROBB_DIR . '/includes/options.php'); 
+ require_once(PMPROBB_DIR . '/includes/options-membership-levels.php');
+ 
 /**
- * These functions add the PMPro Require Membership metabox to bbPress Forums.
+ * Admin init
  */
-add_action( 'init', 'pmprobbpress_init', 20 );
-function pmprobbp_add_meta_box() {
-	add_meta_box( 'pmpro_page_meta', 'Require Membership', 'pmpro_page_meta', 'forum', 'side' );	
+function pmprobb_admin_init() {
+	//if on the edit level page, enqueue color picker
+	if(!empty($_REQUEST['page']) && $_REQUEST['page'] == 'pmpro-membershiplevels' && isset($_REQUEST['edit'])) {
+		wp_enqueue_script( 'wp-color-picker' );
+		wp_enqueue_style( 'wp-color-picker' );
+	}	
 }
-function pmprobbpress_init() {
-
-	//make sure pmpro and bbpress are active
-	if ( !defined('PMPRO_VERSION') || !class_exists('bbPress') )
-		return;
-	
-	if ( is_admin() )
-		add_action( 'admin_menu', 'pmprobbp_add_meta_box' );
-
-	//apply search filter to bbpress searches
-	$filterqueries = pmpro_getOption("filterqueries");
-	if(!empty($filterqueries))
-	    add_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' );
-}
+add_action('admin_init', 'pmprobb_admin_init');
 
 /**
  * These next two functions work together to lock down bbPress forums based on PMPro membership level.
@@ -46,7 +42,6 @@ function pmprobbp_check_forum() {
 	global $current_user;
 
 	$forum_id = bbp_get_forum_id();
-	$restricted_forums[bbp_get_forum_id()] = array(1,2);
 	
 	// Is this even a forum page at all?
 	if( ! bbp_is_forum_archive() && ! empty( $forum_id ) && pmpro_bbp_is_forum() ) {
@@ -163,3 +158,157 @@ function pmprobb_plugin_row_meta($links, $file) {
 	return $links;
 }
 add_filter('plugin_row_meta', 'pmprobb_plugin_row_meta', 10, 2);
+
+/*
+	Adds "pmpro-level-ID" to the forum topic replies post class where ID
+	is the membership level of the reply author. Useful for styling
+	forum replies based on membership level.
+	
+	Style the replies using this post class in the following format:
+	#bbpress-forums li.bbp-body div.pmpro-level-1 { } 
+	#bbpress-forums li.bbp-body div.pmpro-level-2 { }
+	Add this code to your active theme's functions.php or a custom plugin.
+*/
+function pmprobb_pmpro_reply_post_class($classes) {
+	global $reply_id;
+	$reply_id = bbp_get_reply_id( $reply_id );
+	$reply_author_id = bbp_get_reply_author_id( $reply_id );
+	$reply_author_membership_level = pmpro_getMembershipLevelForUser($reply_author_id);
+	$classes[] = 'pmpro-level-' . $reply_author_membership_level->id;
+	return $classes;
+}
+add_filter( 'bbp_get_reply_class', 'pmprobb_pmpro_reply_post_class');
+
+/*
+	Generates CSS to color member posts.
+*/
+function pmprobb_forum_color_css() {
+	//only on forum pages
+	if(!pmpro_bbp_is_forum())
+		return;
+	
+	//get color options and build rules
+	$options = pmprobb_getOptions();	
+	$rule = array();
+	if(!empty($options['levels'])) {
+		foreach($options['levels'] as $level) {
+			if(!empty($level['color']))
+				$rules[] = ".topic.pmpro-level-1, .reply.pmpro-level-1 {background-color: " . $level['color'] . " !important; }";
+		}
+	}
+	
+	//no rules?
+	if(empty($rules))
+		return false;
+	
+	//show rules
+	?>
+<style type="text/css" media="screen">
+	<?php echo implode("\n", $rules) . "\n";?>
+</style>
+	<?php
+}
+add_action('wp_head', 'pmprobb_forum_color_css');
+
+/*
+	Add links to the top of the member links
+*/
+function pmprobb_pmpro_member_links_top() {
+	$options = pmprobb_getOptions();
+	if(empty($options['member_links']))
+		return;
+	
+	$forums = get_posts(array('post_type'=>'forum', 'post_status'=>'publish'));	
+	foreach($forums as $forum) {
+		//show in member links?	
+		if(pmpro_has_membership_access($forum->ID)) {
+		?>
+		<li><a href="<?php echo get_permalink($forum->ID);?>"><?php echo $forum->post_title;?></a></li>
+		<?php
+		}
+	}
+}
+add_filter('pmpro_member_links_top','pmprobb_pmpro_member_links_top');
+
+/*
+	Hide forums from list and search results
+*/
+function pmprobb_pmpro_search_filter_post_types($post_types)
+{
+	$options = pmprobb_getOptions();
+	if(!empty($options['hide_member_forums'])) {
+		$post_types[] = 'forum';
+		array_unique($post_types);	
+	}
+	return $post_types;
+}
+$options = pmprobb_getOptions();
+if(!empty($options['hide_member_forums'])) {
+	add_filter( 'pre_get_posts', 'pmpro_search_filter' );	
+	add_filter( 'pmpro_search_filter_post_types', 'pmprobb_pmpro_search_filter_post_types' );
+}
+
+/**
+ * Change error message for PMPro bbPress	
+ */
+function pmprobb_pmpro_bbp_error_msg()
+{
+	$options = pmprobb_getOptions();
+	return $options['error_message'];
+}
+add_filter('pmpro_bbp_error_msg', 'pmprobb_pmpro_bbp_error_msg');
+
+/*
+	Hide the forum role from the bbPress forums replies author link.	
+*/	
+function pmprobb_pmpro_hide_role($args) {
+	$options = pmprobb_getOptions();
+	if(!empty($options['hide_forum_roles']))
+		$args['show_role'] = false;
+	return $args;
+}
+add_filter ('bbp_before_get_reply_author_link_parse_args', 'pmprobb_pmpro_hide_role' );
+
+/*
+	Adds a Section "Membership Level" and displays the user's level
+	on the bbPress User Profile page.	
+*/
+function pmprobb_pmpro_bbp_template_before_user_profile() 
+{
+	$options = pmprobb_getOptions();
+	if(empty($options['show_membership_levels']))
+		return;
+	
+	$profile_user->membership_level = pmpro_getMembershipLevelForUser(bbp_get_user_id( 0, true, false ));
+	if(!empty($profile_user->membership_level))
+	{
+		?>
+		<div id="bbp-user-profile" class="bbp-user-profile">
+			<h2 class="entry-title"><?php _e('Membership Level','pmpro');?></h2>
+			<div class="bbp-user-section">
+				<?php echo $profile_user->membership_level->name; ?>
+			</div>
+		</div>
+		<?php
+	}
+};
+add_action( 'bbp_template_before_user_profile', 'pmprobb_pmpro_bbp_template_before_user_profile', 10, 0 );
+
+/*
+	Display the Membership Level of the reply author 
+	in your bbPress forum replies.	
+*/
+function pmprobb_pmpro_bbp_theme_after_reply_author_details() 
+{
+	$options = pmprobb_getOptions();
+	if(empty($options['show_membership_levels']))
+		return;
+		
+	$displayed_user = bbp_get_reply_author_id(bbp_get_reply_id());
+	$membership_level = pmpro_getMembershipLevelForUser($displayed_user);
+	if(!empty($membership_level))
+	{
+	  echo '<br /><div class="bbp-author-role">' . $membership_level->name . '</div>';
+	}
+}
+add_action('bbp_theme_after_reply_author_details','pmprobb_pmpro_bbp_theme_after_reply_author_details', 10, 0);

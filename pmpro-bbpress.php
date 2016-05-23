@@ -174,7 +174,9 @@ function pmprobb_pmpro_reply_post_class($classes) {
 	$reply_id = bbp_get_reply_id( $reply_id );
 	$reply_author_id = bbp_get_reply_author_id( $reply_id );
 	$reply_author_membership_level = pmpro_getMembershipLevelForUser($reply_author_id);
-	$classes[] = 'pmpro-level-' . $reply_author_membership_level->id;
+	if(!empty($reply_author_membership_level)) {
+		$classes[] = 'pmpro-level-' . $reply_author_membership_level->id;
+	}
 	return $classes;
 }
 add_filter( 'bbp_get_reply_class', 'pmprobb_pmpro_reply_post_class');
@@ -279,6 +281,7 @@ function pmprobb_pmpro_bbp_template_before_user_profile()
 	if(empty($options['show_membership_levels']))
 		return;
 	
+	$profile_user = new stdClass();
 	$profile_user->membership_level = pmpro_getMembershipLevelForUser(bbp_get_user_id( 0, true, false ));
 	if(!empty($profile_user->membership_level))
 	{

@@ -59,6 +59,10 @@ function pmprobbp_check_forum() {
  */
 function pmpro_bbp_is_forum( $forum_id = NULL ) {
 	global $post;
+	
+	//avoid notices on 404 pages
+	if(!$post)
+		return false;
 		
 	if(bbp_is_forum($post->ID))
 	{		

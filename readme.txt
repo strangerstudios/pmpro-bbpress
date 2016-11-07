@@ -2,8 +2,8 @@
 Contributors: strangerstudios, slocumstudio, jessica o
 Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
 Requires at least: 3.5
-Tested up to: 4.4.2
-Stable tag: 1.5
+Tested up to: 4.6.1
+Stable tag: 1.5.1
 
 Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.
 
@@ -31,6 +31,21 @@ Requires bbPress and Paid Memberships Pro installed and activated.
 1. Save your changes by clicking the "Update" button (or "Publish" if you are creating a new forum).
 1. Further settings can be found on the Settings -> Forums page of your admin dashboard.
 
+= Shortcode for Member's Activity =
+
+The bbPress Add On includes one shortcode to display a member's activity (topics or replies created).
+
+Sample shortcode usage:
+[bbp-user-activity activity_type="topic" show_date="true" title="My Recent Topics"]
+
+Shortcode attributes include:
+* activity_type: Accepts 'topic' or 'reply'. Default is 'topic'
+* bbp_user_id: Accepts any user ID. Omit this attribute to load the current user's entries. Default is the current_user->ID.
+* count: The number of entries to show. Default is '5'.
+* show_date: Optionally show the entry date. Default is 'false'.
+* show_excerpt: Optionally show a 50-character excerpt of the entry. Default is 'false'.
+* title: An optional title for the shortcode output, wrapped in the h2 class="widgettitle" format.
+
 == Screenshots ==
 
 1. The "Require Membership" meta box for controlling forum access.
@@ -38,6 +53,9 @@ Requires bbPress and Paid Memberships Pro installed and activated.
 2. Settings -> Forums
 
 == Changelog ==
+= 1.5.1 =
+* FEATURE: Added new shortcode for member activity (topics or replies).
+
 = 1.5 =
 * FEATURE: Added a membership level setting to set the background color of member topics and replies.
 * FEATURE: Added an option to the bbPress settings page to change the error message shown when non-members try to access a member forum.

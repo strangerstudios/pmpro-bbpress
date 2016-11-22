@@ -55,6 +55,7 @@ Shortcode attributes include:
 == Changelog ==
 = 1.5.2 =
 * ENHANCEMENT: When redirecting members away from protected forums, the referring page is now saved in $_SESSION['pmpro_bbp_redirected_from'].
+
 = 1.5.1 =
 * FEATURE: Added new shortcode for member activity (topics or replies).
 

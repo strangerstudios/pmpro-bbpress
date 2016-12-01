@@ -3,7 +3,7 @@ Contributors: strangerstudios, slocumstudio, jessica o
 Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
 Requires at least: 3.5
 Tested up to: 4.6.1
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 
 Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.
 
@@ -53,6 +53,9 @@ Shortcode attributes include:
 2. Settings -> Forums
 
 == Changelog ==
+= 1.5.3 =
+* BUG: Fixed fatal error when bbPress was not activated.
+
 = 1.5.2 =
 * ENHANCEMENT: When redirecting members away from protected forums, the referring page is now saved in $_SESSION['pmpro_bbp_redirected_from'].
 

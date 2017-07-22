@@ -28,6 +28,9 @@ function pmprobbpress_init() {
 //show settings
 function pmprobb_pmpro_membership_level_after_other_settings()
 {
+	if (!class_exists( 'bbPress' ))
+		return;
+	
 	$level_id = intval($_REQUEST['edit']);	
 	$options = pmprobb_getOptions();
 		
@@ -88,16 +91,19 @@ add_action('pmpro_membership_level_after_other_settings', 'pmprobb_pmpro_members
 
 //save settings
 function pmprobb_pmpro_save_membership_level($level_id) {
-	//get values
-	$options = pmprobb_getOptions();
-		
-	//build array
-	$options['levels'][$level_id] = array(
-		'role' => sanitize_text_field($_REQUEST['forum_role']),
-		'color' => preg_replace('/^0-9a-fA-F#/', '', $_REQUEST['forum_color'])
-	);
 	
-	//save
-	update_option('pmprobb_options_levels', $options['levels'], "no");
+	if ( class_exists( 'bbPress' ) ) {
+		//get values
+		$options = pmprobb_getOptions();
+		
+		//build array
+		$options['levels'][$level_id] = array(
+			'role' => sanitize_text_field($_REQUEST['forum_role']),
+			'color' => preg_replace('/^0-9a-fA-F#/', '', $_REQUEST['forum_color'])
+		);
+	
+		//save
+		update_option('pmprobb_options_levels', $options['levels'], "no");
+	}
 }
 add_action("pmpro_save_membership_level", "pmprobb_pmpro_save_membership_level");

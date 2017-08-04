@@ -46,8 +46,6 @@ Shortcode attributes include:
 * show_excerpt: Optionally show a 50-character excerpt of the entry. Default is 'false'.
 * title: An optional title for the shortcode output, wrapped in the h2 class="widgettitle" format.
 
-View full documentation at: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
-
 == Screenshots ==
 
 1. The "Require Membership" meta box for controlling forum access.

@@ -5,7 +5,7 @@
  * Description: Allow individual forums to be locked down for members.
  * Version: 1.5.4
  * Author: Stranger Studios, Scott Sousa
- * Author URI: http://www.strangerstudios.com
+ * Author URI: https://www.paidmembershipspro.com
  */
 
  //includes

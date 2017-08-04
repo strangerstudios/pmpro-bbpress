@@ -1,9 +1,9 @@
 === Paid Memberships Pro - bbPress Add On ===
 Contributors: strangerstudios, slocumstudio, jessica o
 Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
-Requires at least: 3.5
-Tested up to: 4.6.1
-Stable tag: 1.5.3
+Requires at least: 4
+Tested up to: 4.8
+Stable tag: 1.5.4
 
 Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.
 
@@ -46,6 +46,8 @@ Shortcode attributes include:
 * show_excerpt: Optionally show a 50-character excerpt of the entry. Default is 'false'.
 * title: An optional title for the shortcode output, wrapped in the h2 class="widgettitle" format.
 
+View full documentation at: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
+
 == Screenshots ==
 
 1. The "Require Membership" meta box for controlling forum access.
@@ -53,6 +55,10 @@ Shortcode attributes include:
 2. Settings -> Forums
 
 == Changelog ==
+= 1.5.4 =
+* BUG FIX: Fixed issues on edit membership level page when bbPress is not activated.
+* BUG FIX: Fixed issue where non-members could access replies in member forums if linked to directly.
+
 = 1.5.3 =
 * BUG: Fixed fatal error when bbPress was not activated.
 

@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Paid Memberships Pro - bbPress Add On
- * Plugin URI: http://www.paidmembershipspro.com/pmpro-bbpress/
+ * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
  * Description: Allow individual forums to be locked down for members.
- * Version: 1.5.3
+ * Version: 1.5.4
  * Author: Stranger Studios, Scott Sousa
  * Author URI: http://www.strangerstudios.com
  */
@@ -163,7 +163,7 @@ function pmprobb_plugin_row_meta($links, $file) {
 	if(strpos($file, 'pmpro-bbpress.php') !== false)
 	{
 		$new_links = array(
-			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plugins-wordpress-repository/pmpro-bbpress/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
 			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
 		);
 		$links = array_merge($links, $new_links);

@@ -53,6 +53,9 @@ Shortcode attributes include:
 2. Settings -> Forums
 
 == Changelog ==
+= 1.5.5 =
+* BUG FIX: Fixed issue where the pmprobb_auth_reply_view filter was nuking content filters applied to bbpress replies before it.
+
 = 1.5.4 =
 * BUG FIX: Fixed issues on edit membership level page when bbPress is not activated.
 * BUG FIX: Fixed issue where non-members could access replies in member forums if linked to directly.

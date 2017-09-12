@@ -332,12 +332,8 @@ add_action('bbp_theme_after_reply_author_details','pmprobb_pmpro_bbp_theme_after
 /*
 	Block the reply content if non-members try to access it directly
 */
-function pmprobb_auth_reply_view($reply_id)
-{
-	$reply_id = bbp_get_reply_id($reply_id);
-
-	$content = get_post_field('post_content', $reply_id);
-
+function pmprobb_auth_reply_view($content)
+{	
 	if(!pmpro_has_membership_access(bbp_get_reply_forum_id($reply_id)) || !is_user_logged_in())
 	{
 		$content = "Replies viewable by members only";

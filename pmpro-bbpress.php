@@ -52,7 +52,7 @@ function pmprobbp_check_forum() {
 			// save to session in case we want to redirect later on
 			$_SESSION['pmpro_bbp_redirected_from'] = $_SERVER['REQUEST_URI'];
 			$redirect_to = add_query_arg( 'noaccess', 1, get_post_type_archive_link( 'forum' ) );
-			$redirect_to = apply_filters( 'pmprobbp_check_forum_filter_redirect_url', $redirect_to, $forum_id );
+			$redirect_to = apply_filters( 'pmprobbp_check_forum_redirect_url', $redirect_to, $forum_id );
 			wp_redirect( $redirect_to );
 			exit;
 		}

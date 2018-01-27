@@ -332,7 +332,7 @@ add_action('bbp_theme_after_reply_author_details','pmprobb_pmpro_bbp_theme_after
 /*
 	Block the reply content if non-members try to access it directly
 */
-function pmprobb_auth_reply_view($content)
+function pmprobb_auth_reply_view($content, $reply_id)
 {	
 	if(!pmpro_has_membership_access(bbp_get_reply_forum_id($reply_id)) || !is_user_logged_in())
 	{
@@ -342,4 +342,4 @@ function pmprobb_auth_reply_view($content)
 	return $content;
 
 }
-add_filter( 'bbp_get_reply_content', 'pmprobb_auth_reply_view' );
+add_filter( 'bbp_get_reply_content', 'pmprobb_auth_reply_view', 10, 2 );

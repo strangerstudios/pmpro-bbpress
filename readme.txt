@@ -56,6 +56,7 @@ Shortcode attributes include:
 = 1.5.5 =
 * BUG FIX: Fixed issue where the pmprobb_auth_reply_view filter was nuking content filters applied to bbpress replies before it.
 * BUG FIX/ENHANCEMENT: Now only calling the pmpro_bbp_error_msg filter if we're going to show the error. 
+* ENHANCEMENT: Added pmprobbp_check_forum_redirect_url filter to allow filtering of URL to which users without access are redirected.
 
 = 1.5.4 =
 * BUG FIX: Fixed issues on edit membership level page when bbPress is not activated.

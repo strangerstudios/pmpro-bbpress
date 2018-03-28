@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
  * Description: Allow individual forums to be locked down for members.
- * Version: 1.5.4
+ * Version: 1.5.5
  * Author: Stranger Studios, Scott Sousa
  * Author URI: https://www.paidmembershipspro.com
  */
@@ -43,7 +43,7 @@ function pmprobbp_check_forum() {
 	global $current_user;
 
 	$forum_id = bbp_get_forum_id();
-	
+		
 	// Is this even a forum page at all?
 	if( ! bbp_is_forum_archive() && ! empty( $forum_id ) && pmpro_bbp_is_forum() ) {
 		// The current user does not have access to this forum, re-direct them away
@@ -105,12 +105,9 @@ function pmpro_bbp_is_forum( $forum_id = NULL ) {
 }
 
 /* Add membership level required message if user does not have access */
-function pmpro_bbp_membership_msg() 
-{
-    $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', 'You do not have the required membership level to access that forum.'); // error message to display
-
-    if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) 
-	{
+function pmpro_bbp_membership_msg() {
+    if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) {
+        $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', 'You do not have the required membership level to access that forum.');
         echo '<p class="pmpro_bbp_membership_msg">' . $pmpro_bbp_error_msg . '</p>';
     }
 }
@@ -334,9 +331,13 @@ add_action('bbp_theme_after_reply_author_details','pmprobb_pmpro_bbp_theme_after
 */
 function pmprobb_auth_reply_view($content, $reply_id)
 {	
-	if(!pmpro_has_membership_access(bbp_get_reply_forum_id($reply_id)) || !is_user_logged_in())
-	{
-		$content = "Replies viewable by members only";
+	//make sure PMPro is active
+	if(!function_exists('pmpro_has_membership_access'))
+		return $content;
+	
+	$has_access = pmpro_has_membership_access(bbp_get_reply_forum_id($reply_id), NULL, true);	
+	if(!$has_access[0] || (!empty($has_access[1]) && !is_user_logged_in())) {
+		$content = 'Replies viewable by members only';
 	}
 	
 	return $content;

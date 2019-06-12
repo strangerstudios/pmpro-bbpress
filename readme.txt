@@ -2,7 +2,7 @@
 Contributors: strangerstudios, slocumstudio, jessica o
 Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
 Requires at least: 4
-Tested up to: 4.9.4
+Tested up to: 5.2.1
 Stable tag: 1.5.5
 
 Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.

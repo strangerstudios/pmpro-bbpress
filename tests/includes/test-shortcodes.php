@@ -8,7 +8,7 @@ class Shortcodes extends Base {
 	public function data_bbp_user_activity_shortcode() {
 
 		return [
-			[
+			[ // #0
 				[
 					'activity_type' => 'topic',
 				],
@@ -17,8 +17,12 @@ class Shortcodes extends Base {
 					'<div class="widget widget_display_topics">',
 					'<h2 class="widgettitle">My Recent Activity</h2>'
 				],
+				[
+					'<li>Post excerpt',
+					'</em></li>',
+				],
 			],
-			[
+			[ // #1
 				[
 					'activity_type' => 'reply',
 					'title'         => 'My Recent Unit Test',
@@ -29,8 +33,11 @@ class Shortcodes extends Base {
 				[
 					'<div class="widget widget_display_topics">',
 					'<h2 class="widgettitle">My Recent Unit Test</h2>',
-					'Post excerpt',
-					'<em>right now</em>',
+					'<li>Post excerpt',
+					'</em></li>',
+				],
+				[
+					'<h2 class="widgettitle">My Recent Activity</h2>'
 				],
 
 			]
@@ -42,7 +49,7 @@ class Shortcodes extends Base {
 	 * @covers ::bbp_user_activity_shortcode
 	 * @dataProvider data_bbp_user_activity_shortcode
 	 */
-	public function test_bbp_user_activity_shortcode( $atts, $content, $contains ) {
+	public function test_bbp_user_activity_shortcode( $atts, $content, $contains, $not_contains ) {
 
 		global $current_user;
 
@@ -66,6 +73,10 @@ class Shortcodes extends Base {
 
 		foreach ( $contains as $value ) {
 			$this->assertContains( $value, $output );
+		}
+
+		foreach ( $not_contains as $value ) {
+			$this->assertNotContains( $value, $output );
 		}
 
 	}

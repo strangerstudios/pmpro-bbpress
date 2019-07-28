@@ -18,3 +18,4 @@ $pmpro_plugins = [
  */
 require_once dirname( dirname( __FILE__ ) ) . '/../paid-memberships-pro/tests/bootstrap.php';
 
+//EOF

@@ -2,14 +2,14 @@
 Contributors: strangerstudios, slocumstudio, jessica o
 Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
 Requires at least: 4
-Tested up to: 5.2.1
+Tested up to: 5.2.2
 Stable tag: 1.5.5
 
 Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.
 
 == Description ==
 
-The bbPress Add On for Paid Memberships Pro adds a "Require Membership" meta box to the "Edit Forum" page, allowing you to easily toggle the membership level(s) that can access the forum. 
+The bbPress Add On for Paid Memberships Pro adds a "Require Membership" meta box to the "Edit Forum" page, allowing you to easily toggle the membership level(s) that can access the forum.
 
 Requires bbPress and Paid Memberships Pro installed and activated.
 
@@ -26,8 +26,8 @@ Requires bbPress and Paid Memberships Pro installed and activated.
 
 = How to Use =
 
-1. After activation, navigate to the "Edit Forum" page for the forum you would like to restrict. 
-1. Check the box for each level that can access this forum in the "Require Membership" meta box (below the Publish box in the right sidebar). 
+1. After activation, navigate to the "Edit Forum" page for the forum you would like to restrict.
+1. Check the box for each level that can access this forum in the "Require Membership" meta box (below the Publish box in the right sidebar).
 1. Save your changes by clicking the "Update" button (or "Publish" if you are creating a new forum).
 1. Further settings can be found on the Settings -> Forums page of your admin dashboard.
 
@@ -55,7 +55,7 @@ Shortcode attributes include:
 == Changelog ==
 = 1.5.5 =
 * BUG FIX: Fixed issue where the pmprobb_auth_reply_view filter was nuking content filters applied to bbpress replies before it.
-* BUG FIX/ENHANCEMENT: Now only calling the pmpro_bbp_error_msg filter if we're going to show the error. 
+* BUG FIX/ENHANCEMENT: Now only calling the pmpro_bbp_error_msg filter if we're going to show the error.
 * ENHANCEMENT: Added pmprobbp_check_forum_redirect_url filter to allow filtering of URL to which users without access are redirected.
 
 = 1.5.4 =
@@ -97,7 +97,7 @@ Shortcode attributes include:
 
 = 1.1.3 =
 * Fixed fatal error that would come up if Paid Memberships Pro was not active. (Thanks, Karmyn Tyler Cobb)
- 
+
 = 1.1.2 =
 * BUG: Fixed bug in search filter that would hide member forums/topics from members when more than one level had access to a forum.
 

@@ -36,9 +36,10 @@ add_action('admin_init', 'pmprobb_admin_init');
  */
 add_action( 'template_redirect', 'pmprobbp_check_forum' );
 function pmprobbp_check_forum() {
-	//make sure pmpro and bbpress are active
-	if ( !defined('PMPRO_VERSION') || !class_exists('bbPress') )
+	// Make sure pmpro and bbpress are active.
+	if ( ! defined( 'PMPRO_VERSION' ) || ! class_exists( 'bbPress' ) ) {
 		return;
+	}
 	
 	global $current_user;
 
@@ -108,10 +109,15 @@ function pmpro_bbp_is_forum( $forum_id = NULL ) {
 
 /* Add membership level required message if user does not have access */
 function pmpro_bbp_membership_msg() {
-    if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) {
-        $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', 'You do not have the required membership level to access that forum.');
-        echo '<p class="pmpro_bbp_membership_msg">' . $pmpro_bbp_error_msg . '</p>';
-    }
+  // Make sure bbpress is active.
+	if ( ! class_exists( 'bbPress' ) ) {
+		return;
+	}
+
+  if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) {
+      $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', 'You do not have the required membership level to access that forum.');
+      echo '<p class="pmpro_bbp_membership_msg">' . $pmpro_bbp_error_msg . '</p>';
+  }
 }
 add_action('bbp_template_before_forums_index','pmpro_bbp_membership_msg');
 
@@ -122,6 +128,11 @@ function pmprobb_pre_get_posts($query) {
 
     global $wpdb;
 		
+  // Make sure pmpro and bbpress are active.
+	if ( ! defined( 'PMPRO_VERSION' ) || ! class_exists( 'bbPress' ) ) {
+		return $query;
+	}
+
 	//only filter front end searches
 	if(is_admin() || !$query->is_search || bbp_is_single_topic())
 		return $query;
@@ -182,6 +193,11 @@ add_filter('plugin_row_meta', 'pmprobb_plugin_row_meta', 10, 2);
 	Add this code to your active theme's functions.php or a custom plugin.
 */
 function pmprobb_pmpro_reply_post_class($classes) {
+	// Make sure pmpro and bbpress are active.
+	if ( ! defined( 'PMPRO_VERSION' ) || ! class_exists( 'bbPress' ) ) {
+		return $classes;
+	}
+
 	global $reply_id;
 	$reply_id = bbp_get_reply_id( $reply_id );
 	$reply_author_id = bbp_get_reply_author_id( $reply_id );
@@ -228,6 +244,11 @@ add_action('wp_head', 'pmprobb_forum_color_css');
 	Add links to the top of the member links
 */
 function pmprobb_pmpro_member_links_top() {
+  // Make sure pmpro and bbpress are active.
+	if ( ! defined( 'PMPRO_VERSION' ) || ! class_exists( 'bbPress' ) ) {
+		return;
+	}
+
 	$options = pmprobb_getOptions();
 	if(empty($options['member_links']))
 		return;
@@ -289,6 +310,11 @@ add_filter ('bbp_before_get_reply_author_link_parse_args', 'pmprobb_pmpro_hide_r
 */
 function pmprobb_pmpro_bbp_template_before_user_profile() 
 {
+  // Make sure pmpro and bbpress are active.
+  if ( ! defined( 'PMPRO_VERSION' ) || ! class_exists( 'bbPress' ) ) {
+    return;
+  }
+
 	$options = pmprobb_getOptions();
 	if(empty($options['show_membership_levels']))
 		return;
@@ -315,6 +341,11 @@ add_action( 'bbp_template_before_user_profile', 'pmprobb_pmpro_bbp_template_befo
 */
 function pmprobb_pmpro_bbp_theme_after_reply_author_details() 
 {
+  // Make sure pmpro and bbpress are active.
+  if ( ! defined( 'PMPRO_VERSION' ) || ! class_exists( 'bbPress' ) ) {
+    return;
+  }
+
 	$options = pmprobb_getOptions();
 	if(empty($options['show_membership_levels']))
 		return;

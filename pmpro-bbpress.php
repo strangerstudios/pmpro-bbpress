@@ -198,9 +198,7 @@ function pmprobb_pmpro_reply_post_class($classes) {
 		return $classes;
 	}
 
-	global $reply_id;
-	$reply_id = bbp_get_reply_id( $reply_id );
-	$reply_author_id = bbp_get_reply_author_id( $reply_id );
+	$reply_author_id = bbp_get_reply_author_id();
 	$reply_author_membership_level = pmpro_getMembershipLevelForUser($reply_author_id);
 	if(!empty($reply_author_membership_level)) {
 		$classes[] = 'pmpro-level-' . $reply_author_membership_level->id;
@@ -221,9 +219,9 @@ function pmprobb_forum_color_css() {
 	$options = pmprobb_getOptions();	
 	$rule = array();
 	if(!empty($options['levels'])) {
-		foreach($options['levels'] as $level) {
+		foreach($options['levels'] as $level_id => $level) {
 			if(!empty($level['color']))
-				$rules[] = ".topic.pmpro-level-1, .reply.pmpro-level-1 {background-color: " . $level['color'] . " !important; }";
+				$rules[] = ".topic.pmpro-level-" . $level_id . ", .reply.pmpro-level-" . $level_id . " {background-color: " . $level['color'] . " !important; }";
 		}
 	}
 	

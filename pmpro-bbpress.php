@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
  * Description: Allow individual forums to be locked down for members.
- * Version: 1.5.5
+ * Version: 1.6
  * Author: Stranger Studios, Scott Sousa
  * Author URI: https://www.paidmembershipspro.com
  */
@@ -301,6 +301,38 @@ function pmprobb_pmpro_hide_role($args) {
 	return $args;
 }
 add_filter ('bbp_before_get_reply_author_link_parse_args', 'pmprobb_pmpro_hide_role' );
+
+/*
+    Change user's forum role when they change levels.
+    TODO: For MMPU compatibility, we need to get all of the user's Levels
+          and use the highest role found.
+*/
+function pmprobb_pmpro_after_change_membership_level( $level_id, $user_id, $cancel_level_id ) {
+    // Make sure bbPress is active.
+    if ( ! function_exists( 'bbp_set_user_role' ) ) {
+        return;
+    }
+    
+    // Ignore admins.
+    if ( user_can( $user_id, 'manage_options' ) ) {
+        return;
+    }
+    
+    if ( $level_id > 0 ) {
+        // Give them the role for their level.
+        $bbp_new_role = pmprobb_get_role_for_level( $level_id );
+        bbp_set_user_role( $user_id, $bbp_new_role );
+    } else {
+        // Cancelling. Give them the default role back
+        // if their old level was a non-default role.
+        $bbp_old_role = pmprobb_get_role_for_level( $cancel_level_id );
+        $bbp_default_role = get_option( '_bbp_default_role', 'bbp_participant' );
+        if ( $bbp_old_role != $bbp_default_role ) {
+            bbp_set_user_role( $user_id, $bbp_default_role );
+        }
+    }
+}
+add_action( 'pmpro_after_change_membership_level', 'pmprobb_pmpro_after_change_membership_level', 10, 3 );
 
 /*
 	Adds a Section "Membership Level" and displays the user's level

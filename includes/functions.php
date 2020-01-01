@@ -21,3 +21,17 @@ function pmprobb_getOptions($force = false)
 		
 	return $pmprobb_options;
 }
+
+/**
+ * Get the bbPress role for a given level.
+ */
+function pmprobb_get_role_for_level( $level_id ) {
+	$options = pmprobb_getOptions();
+    if ( ! empty( $options['levels'] ) 
+      && ! empty( $options['levels'][$level_id] )
+      && ! empty( $options['levels'][$level_id]['role'] ) ) {
+		  return $options['levels'][$level_id]['role'];
+	} else {
+		return get_option( '_bbp_default_role', 'bbp_participant' );
+	}
+}

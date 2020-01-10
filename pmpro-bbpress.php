@@ -8,12 +8,24 @@
  * Author URI: https://www.paidmembershipspro.com
  */
 
- //includes
- define('PMPROBB_DIR', dirname(__FILE__));
- require_once(PMPROBB_DIR . '/includes/functions.php');
- require_once(PMPROBB_DIR . '/includes/options.php'); 
- require_once(PMPROBB_DIR . '/includes/options-membership-levels.php');
- require_once(PMPROBB_DIR . '/includes/shortcodes.php'); 
+//includes
+define('PMPROBB_DIR', dirname(__FILE__));
+require_once(PMPROBB_DIR . '/includes/functions.php');
+require_once(PMPROBB_DIR . '/includes/options.php'); 
+require_once(PMPROBB_DIR . '/includes/options-membership-levels.php');
+require_once(PMPROBB_DIR . '/includes/shortcodes.php'); 
+ 
+/**
+ * Load search filters if set.
+ */
+function pmprobb_init() {
+	$options = pmprobb_getOptions();
+	if(!empty($options['hide_member_forums']) && function_exists('bbp_is_forum_archive') && bbp_is_forum_archive() ) {
+		add_filter( 'pre_get_posts', 'pmpro_search_filter' );
+		add_filter( 'pmpro_search_filter_post_types', 'pmprobb_pmpro_search_filter_post_types' );
+	}
+}
+add_action('init', 'pmprobb_init');
  
 /**
  * Admin init
@@ -274,11 +286,6 @@ function pmprobb_pmpro_search_filter_post_types($post_types)
 		array_unique($post_types);	
 	}
 	return $post_types;
-}
-$options = pmprobb_getOptions();
-if(!empty($options['hide_member_forums'])) {
-	add_filter( 'pre_get_posts', 'pmpro_search_filter' );	
-	add_filter( 'pmpro_search_filter_post_types', 'pmprobb_pmpro_search_filter_post_types' );
 }
 
 /**

@@ -85,7 +85,7 @@ function pmprobb_option_error_message() {
 		$error_message = "";
 	?>
 	<input id='pmprobb_option_error_message' name='pmprobb_option_error_message' size='40' type='text' value='<?php echo esc_attr($error_message);?>' />
-	<small>This message is shown when users attempt to view a forum or thread they don't have access to.</small>
+	<p class="description">This message is shown when users attempt to view a forum or thread they don't have access to.</p>
 	<?php
 }
 

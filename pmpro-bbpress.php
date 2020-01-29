@@ -128,14 +128,21 @@ function pmprobb_pre_get_posts($query) {
 
     global $wpdb;
 		
-  // Make sure pmpro and bbpress are active.
+  	// Make sure pmpro and bbpress are active.
 	if ( ! defined( 'PMPRO_VERSION' ) || ! class_exists( 'bbPress' ) ) {
 		return $query;
 	}
 
-	//only filter front end searches
-	if(is_admin() || !$query->is_search || bbp_is_single_topic())
+	// Get option to see if we need to hide Membership forum from front-end.
+	$options = pmprobb_getOptions();
+	if(empty($options['hide_member_forums'])) {
 		return $query;
+	}
+
+	//only filter front end queries for forums/topics.
+	if( is_admin() || ! $query->query_vars['post_type'] || ! in_array( $query->query_vars['post_type'] , array( 'forum', 'topic' ) ) ) {
+		return $query;
+	}
 	
     //get all member forums
     $sqlQuery = "SELECT ID FROM $wpdb->posts WHERE post_type LIKE 'forum'";

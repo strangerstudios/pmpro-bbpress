@@ -140,10 +140,10 @@ function pmprobb_pre_get_posts($query) {
 	}
 
 	//only filter front end queries for forums/topics.
-	if( is_admin() || ! $query->query_vars['post_type'] || ! in_array( $query->query_vars['post_type'] , array( 'forum', 'topic' ) ) ) {
+	if( is_admin() || ! $query->query_vars['post_type'] || ! pmprobb_check_values( $query->query_vars['post_type'], array( 'forum', 'topic', 'reply' ) ) ) {
 		return $query;
 	}
-	
+
     //get all member forums
     $sqlQuery = "SELECT ID FROM $wpdb->posts WHERE post_type LIKE 'forum'";
     $all_forums = $wpdb->get_col($sqlQuery);
@@ -158,6 +158,7 @@ function pmprobb_pre_get_posts($query) {
         if(!pmpro_has_membership_access($forum_id))
             $restricted_forum_ids[] = $forum_id;
     }
+
 
 	//if there are restricted forums, find topics and exclude them all from searches
 	if(!empty($restricted_forum_ids))
@@ -280,6 +281,8 @@ function pmprobb_pmpro_search_filter_post_types($post_types)
 	$options = pmprobb_getOptions();
 	if(!empty($options['hide_member_forums'])) {
 		$post_types[] = 'forum';
+		$post_types[] = 'topic';
+		$post_types[] = 'reply';
 		array_unique($post_types);	
 	}
 	return $post_types;
@@ -384,3 +387,19 @@ function pmprobb_auth_reply_view($content, $reply_id)
 
 }
 add_filter( 'bbp_get_reply_content', 'pmprobb_auth_reply_view', 10, 2 );
+
+/**
+ * This will check if values are inside the haystack to check. Wrapper function for pre_get_posts sometimes passing array sometimes passes string.
+ * @param $needle string/array. Checks whether values are in array via array to array comparison or string to array.
+ * @param $haystack array. Array of values to compare $needle to.
+ * @param $r boolean. Returns true or false if arrays match.
+ */
+function pmprobb_check_values( $needle, $haystack ) {
+	if ( is_array( $needle ) ) {
+		$r = array_intersect( $needle, $haystack );
+	} else {
+		$r = in_array( $needle, $haystack );
+	}
+	
+	return $r;
+}

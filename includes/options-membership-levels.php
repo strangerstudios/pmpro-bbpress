@@ -68,14 +68,14 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 					}
 				?>
 			</select>
-			<small>Leave as "Default Behavior" if you don't need to change roles by membership level.</small>
+			<p class="description">Leave as "Default Behavior" if you don't need to change roles by membership level.</p>
 		</td>
 	</tr>
 	<tr>
 		<th scope="row" valign="top"><label for="forum_color"><?php _e('Background Color', 'pmpro');?></label></th>
 		<td>			
 			<input type="text" id="forum_color" name="forum_color" value="<?php echo esc_attr($forum_color);?>" />
-			<small>You can also add custom styles for .pmpro-level-<?php echo $level_id;?> via your CSS files.</small>			
+			<p class="description">You can also add custom styles for <code>.pmpro-level-<?php echo $level_id;?></code> via your CSS files.</p>
 		</td>
 	</tr>	
 </tbody>

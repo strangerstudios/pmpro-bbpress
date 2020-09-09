@@ -56,7 +56,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 		<th scope="row" valign="top"><label for="forum_role"><?php _e('Forum Role', 'pmpro');?></label></th>
 		<td>			
 			<select id="forum_role" name="forum_role">
-				<option value="" <?php selected($forum_role, '');?>>Default Behavior</option>
+				<option value="" <?php selected($forum_role, '');?>><?php esc_html_e( 'Default Behavior', 'pmpro-bbpress' ); ?></option>
 				<?php
 					$roles = bbp_get_dynamic_roles();
 					if(!empty($roles)) {
@@ -68,14 +68,14 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 					}
 				?>
 			</select>
-			<p class="description">Leave as "Default Behavior" if you don't need to change roles by membership level.</p>
+			<p class="description"><?php esc_html_e( 'Leave as "Default Behavior" if you don\'t need to change roles by membership level.', 'pmpro-bbpress' ); ?></p>
 		</td>
 	</tr>
 	<tr>
 		<th scope="row" valign="top"><label for="forum_color"><?php _e('Background Color', 'pmpro');?></label></th>
 		<td>			
 			<input type="text" id="forum_color" name="forum_color" value="<?php echo esc_attr($forum_color);?>" />
-			<p class="description">You can also add custom styles for <code>.pmpro-level-<?php echo $level_id;?></code> via your CSS files.</p>
+			<p class="description"><?php printf( esc_html__( 'You can also add custom styles for %s via your CSS files.', 'pmpro-bbpress' ), "<code>.pmpro-level-" . intval( $level_id ) . "</code>" ); ?></p>
 		</td>
 	</tr>	
 </tbody>

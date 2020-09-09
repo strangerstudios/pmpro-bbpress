@@ -127,8 +127,8 @@ function pmpro_bbp_membership_msg() {
 	}
 
   if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) {
-      $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', 'You do not have the required membership level to access that forum.');
-      echo '<p class="pmpro_bbp_membership_msg">' . $pmpro_bbp_error_msg . '</p>';
+      $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', __( 'You do not have the required membership level to access that forum.' ) );
+      echo '<p class="pmpro_bbp_membership_msg">' . esc_html( $pmpro_bbp_error_msg ) . '</p>';
   }
 }
 add_action('bbp_template_before_forums_index','pmpro_bbp_membership_msg');
@@ -185,8 +185,8 @@ function pmprobb_plugin_row_meta($links, $file) {
 	if(strpos($file, 'pmpro-bbpress.php') !== false)
 	{
 		$new_links = array(
-			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
-			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . esc_html__( 'Docs', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . esc_html__( 'Support', 'pmpro' ) . '</a>',
 		);
 		$links = array_merge($links, $new_links);
 	}
@@ -362,9 +362,9 @@ function pmprobb_pmpro_bbp_template_before_user_profile()
 	{
 		?>
 		<div id="bbp-user-profile" class="bbp-user-profile">
-			<h2 class="entry-title"><?php _e('Membership Level','pmpro');?></h2>
+			<h2 class="entry-title"><?php esc_html_e('Membership Level','pmpro');?></h2>
 			<div class="bbp-user-section">
-				<?php echo $profile_user->membership_level->name; ?>
+				<?php echo esc_html( $profile_user->membership_level->name ); ?>
 			</div>
 		</div>
 		<?php
@@ -391,7 +391,7 @@ function pmprobb_pmpro_bbp_theme_after_reply_author_details()
 	$membership_level = pmpro_getMembershipLevelForUser($displayed_user);
 	if(!empty($membership_level))
 	{
-	  echo '<br /><div class="bbp-author-role">' . $membership_level->name . '</div>';
+	  echo '<br /><div class="bbp-author-role">' . esc_html( $membership_level->name ) . '</div>';
 	}
 }
 add_action('bbp_theme_after_reply_author_details','pmprobb_pmpro_bbp_theme_after_reply_author_details', 10, 0);
@@ -407,7 +407,7 @@ function pmprobb_auth_reply_view($content, $reply_id)
 	
 	$has_access = pmpro_has_membership_access(bbp_get_reply_forum_id($reply_id), NULL, true);	
 	if(!$has_access[0] || (!empty($has_access[1]) && !is_user_logged_in())) {
-		$content = 'Replies viewable by members only';
+		$content = __( 'Replies viewable by members only', 'pmpro-bbpress' );
 	}
 	
 	return $content;

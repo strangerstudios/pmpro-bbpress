@@ -10,7 +10,7 @@
 
 function pmprobb_bbp_admin_get_settings_sections($sections) {
 	$sections['bbp_settings_pmpro'] = array(
-		'title'    => __( 'Paid Memberships Pro', 'pmpro' ),
+		'title'    => esc_html__( 'Paid Memberships Pro', 'pmpro-bbpress' ),
 		'callback' => 'pmprobb_section_general',
 		'page'     => 'pmprobb',
 	);
@@ -22,31 +22,31 @@ add_filter('bbp_admin_get_settings_sections', 'pmprobb_bbp_admin_get_settings_se
 function pmprobb_bbp_admin_get_settings_fields($fields) {
 	$fields['bbp_settings_pmpro'] = array(
 		'pmprobb_option_error_message' => array(
-			'title'             => __( 'Error Message', 'pmprobb' ),
+			'title'             => esc_html__( 'Error Message', 'pmpro-bbpress' ),
 			'callback'          => 'pmprobb_option_error_message',
 			'sanitize_callback' => 'sanitize_text_field',
 			'args'              => array()
 		),
 		'pmprobb_option_member_links' => array(
-			'title'             => __( 'Member Links', 'pmprobb' ),
+			'title'             => esc_html__( 'Member Links', 'pmpro-bbpress' ),
 			'callback'          => 'pmprobb_option_member_links',
 			'sanitize_callback' => 'intval',
 			'args'              => array()
 		),
 		'pmprobb_option_hide_member_forums' => array(
-			'title'             => __( 'Hide Member Forums', 'pmprobb' ),
+			'title'             => esc_html__( 'Hide Member Forums', 'pmpro-bbpress' ),
 			'callback'          => 'pmprobb_option_hide_member_forums',
 			'sanitize_callback' => 'intval',
 			'args'              => array()
 		),
 		'pmprobb_option_hide_forum_roles' => array(
-			'title'             => __( 'Hide Forum Roles', 'pmprobb' ),
+			'title'             => esc_html__( 'Hide Forum Roles', 'pmpro-bbpress' ),
 			'callback'          => 'pmprobb_option_hide_forum_roles',
 			'sanitize_callback' => 'intval',
 			'args'              => array()
 		),
 		'pmprobb_option_show_membership_levels' => array(
-			'title'             => __( 'Show Membership Levels', 'pmprobb' ),
+			'title'             => esc_html__( 'Show Membership Levels', 'pmpro-bbpress' ),
 			'callback'          => 'pmprobb_option_show_membership_levels',
 			'sanitize_callback' => 'intval',
 			'args'              => array()
@@ -85,7 +85,7 @@ function pmprobb_option_error_message() {
 		$error_message = "";
 	?>
 	<input id='pmprobb_option_error_message' name='pmprobb_option_error_message' size='40' type='text' value='<?php echo esc_attr($error_message);?>' />
-	<p class="description">This message is shown when users attempt to view a forum or thread they don't have access to.</p>
+	<p class="description"><?php esc_html_e( "This message is shown when users attempt to view a forum or thread they don't have access to.", 'pmpro-bbpress' ); ?></p>
 	<?php
 }
 
@@ -100,7 +100,7 @@ function pmprobb_option_hide_member_forums() {
 		$hide_member_forums = 0;
 	?>
 	<input type="checkbox" id="pmprobb_option_hide_member_forums" name="pmprobb_option_hide_member_forums" value="1" <?php checked($hide_member_forums, 1);?> />
-	<label for="pmprobb_option_hide_member_forums">Hide member forums content from forums list and search results.</label>
+	<label for="pmprobb_option_hide_member_forums"><?php esc_html_e( 'Hide member forums content from forums list and search results.', 'pmpro-bbpress' ); ?></label>
 	<?php
 }
 
@@ -115,7 +115,7 @@ function pmprobb_option_member_links() {
 		$member_links = 0;
 	?>
 	<input type="checkbox" id="pmprobb_option_member_links" name="pmprobb_option_member_links" value="1" <?php checked($member_links, 1);?> />
-	<label for="pmprobb_option_member_links">Add links to member forums in the Member Links section of the Membership Account page.</label>
+	<label for="pmprobb_option_member_links"><?php esc_html_e( 'Add links to member forums in the Member Links section of the Membership Account page.', 'pmpro-bbpress' ); ?></label>
 	<?php
 }
 
@@ -130,7 +130,7 @@ function pmprobb_option_hide_forum_roles() {
 		$hide_forum_roles = 0;
 	?>
 	<input type="checkbox" id="pmprobb_option_hide_forum_roles" name="pmprobb_option_hide_forum_roles" value="1" <?php checked($hide_forum_roles, 1);?> />
-	<label for="pmprobb_option_hide_forum_roles">Hide forum roles in replies.</label>
+	<label for="pmprobb_option_hide_forum_roles"><?php esc_html_e( 'Hide forum roles in replies.', 'pmpro-bbpress' ); ?></label>
 	<?php
 }
 
@@ -145,6 +145,6 @@ function pmprobb_option_show_membership_levels() {
 		$show_membership_levels = 0;
 	?>
 	<input type="checkbox" id="pmprobb_option_show_membership_levels" name="pmprobb_option_show_membership_levels" value="1" <?php checked($show_membership_levels, 1);?> />
-	<label for="pmprobb_option_show_membership_levels">Show membership levels in replies and on the bbPress profile page.</label>
+	<label for="pmprobb_option_show_membership_levels"><?php esc_html_e( 'Show membership levels in replies and on the bbPress profile page.', 'pmpro-bbpress' ); ?></label>
 	<?php
 }

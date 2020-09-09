@@ -12,3 +12,5 @@ package.json export-ignore
 phpunit.xml.dist export-ignore
 tests export-ignore
 webpack.config.js export-ignore
+bin export-ignore
+languages/gettext.sh export-ignore

@@ -56,6 +56,18 @@ function pmprobb_init() {
 add_action('init', 'pmprobb_init', 50);
  
 /**
+ * Filter the search results for forums/topics.
+ * @since 1.7
+ */
+function pmprobb_filter_forum_search_results( $query ) {
+	if ( apply_filters( 'pmprobb_filter_topic_queries', true ) && bbp_is_search_results() ) {
+		add_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' );
+	}
+	return $query;
+}
+add_filter( 'pre_get_posts', 'pmprobb_filter_forum_search_results' );
+
+/**
  * Admin init
  */
 function pmprobb_admin_init() {
@@ -84,7 +96,6 @@ function pmprobbp_check_forum() {
 	global $current_user;
 
 	$forum_id = bbp_get_forum_id();
-	 
 	// Is this even a forum page at all?
 	if( ! bbp_is_forum_archive() && ! empty( $forum_id ) && pmpro_bbp_is_forum() ) {
 		// The current user does not have access to this forum, re-direct them away
@@ -196,7 +207,7 @@ function pmprobb_pre_get_posts($query) {
     foreach($all_forums as $forum_id) {
         if(!pmpro_has_membership_access($forum_id))
             $restricted_forum_ids[] = $forum_id;
-    }
+	}
 
 
 	//if there are restricted forums, find topics and exclude them all from searches

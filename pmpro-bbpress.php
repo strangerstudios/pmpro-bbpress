@@ -162,7 +162,7 @@ function pmprobb_pre_get_posts($query) {
 	}
 
 	//only filter front end queries for forums/topics.
-	if( is_admin() || ! $query->query_vars['post_type'] || ! pmprobb_check_values( $query->query_vars['post_type'], array( 'forum', 'topic', 'reply' ) ) ) {
+	if( is_admin() || ! isset( $query->query_vars['post_type'] ) || ! pmprobb_check_values( $query->query_vars['post_type'], array( 'forum', 'topic', 'reply' ) ) ) {
 		return $query;
 	}
 

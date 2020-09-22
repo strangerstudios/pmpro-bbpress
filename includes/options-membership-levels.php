@@ -2,24 +2,11 @@
 /**
  * These functions add the PMPro Require Membership metabox to bbPress Forums.
  */
-add_action( 'init', 'pmprobbpress_init', 20 );
 function pmprobbp_add_meta_box() {
 	add_meta_box( 'pmpro_page_meta', 'Require Membership', 'pmpro_page_meta', 'forum', 'side' );	
 }
-function pmprobbpress_init() {
+add_action( 'admin_menu', 'pmprobbp_add_meta_box' );
 
-	//make sure pmpro and bbpress are active
-	if ( !defined('PMPRO_VERSION') || !class_exists('bbPress') )
-		return;
-	
-	if ( is_admin() )
-		add_action( 'admin_menu', 'pmprobbp_add_meta_box' );
-
-	//apply search filter to bbpress searches
-	$filterqueries = pmpro_getOption("filterqueries");
-	if(!empty($filterqueries))
-	    add_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' );
-}
 
 /**
  * Add settings to membership levels.

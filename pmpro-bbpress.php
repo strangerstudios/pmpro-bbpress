@@ -29,13 +29,31 @@ add_action( 'plugins_loaded', 'pmprobb_load_plugin_text_domain' );
  * Load search filters if set.
  */
 function pmprobb_init() {
+
+	// Make sure PMPro and bbPress is installed.
+	if ( !defined('PMPRO_VERSION') || !class_exists('bbPress') ) {
+		return;
+	}
+
+	// bail if we're in the admin.
+	if ( is_admin() ) {
+		return;
+	}
+
+	$filterqueries = pmpro_getOption( "filterqueries" );
+	if ( apply_filters( 'pmprobb_filter_forum_queries', true ) && ! empty( $filterqueries ) ) {
+		add_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' );
+	}
+
+	// Try to filter the search results too, just in case.
 	$options = pmprobb_getOptions();
 	if(!empty($options['hide_member_forums']) && function_exists('bbp_is_forum_archive') && bbp_is_forum_archive() ) {
 		add_filter( 'pre_get_posts', 'pmpro_search_filter' );
 		add_filter( 'pmpro_search_filter_post_types', 'pmprobb_pmpro_search_filter_post_types' );
 	}
+
 }
-add_action('init', 'pmprobb_init');
+add_action('init', 'pmprobb_init', 50);
  
 /**
  * Admin init
@@ -66,12 +84,11 @@ function pmprobbp_check_forum() {
 	global $current_user;
 
 	$forum_id = bbp_get_forum_id();
-		
+	 
 	// Is this even a forum page at all?
 	if( ! bbp_is_forum_archive() && ! empty( $forum_id ) && pmpro_bbp_is_forum() ) {
 		// The current user does not have access to this forum, re-direct them away
 		if( ! pmpro_has_membership_access( $forum_id ) ) {
-			
 			// save to session in case we want to redirect later on
 			$_SESSION['pmpro_bbp_redirected_from'] = $_SERVER['REQUEST_URI'];
 			$redirect_to = add_query_arg( 'noaccess', 1, get_post_type_archive_link( 'forum' ) );

@@ -478,3 +478,34 @@ function pmprobb_check_values( $needle, $haystack ) {
 	
 	return $r;
 }
+
+
+/**
+ * Function to stop non-members from receiving member only emails/notifications to subscribed topics
+ * @since 1.7
+ */
+function pmprobb_non_member_reply_notifications( $user_ids, $reply_id, $topic_id ) {
+
+	// If no user ID's are subscribed to a topic, just bail.
+	if ( empty( $user_ids ) ) {
+		return $user_ids;
+	}
+
+	// Check if topic id belongs to restricted forum.
+	$forum_id = bbp_get_topic_forum_id( $topic_id );
+
+	if ( is_array( $user_ids ) ) {
+		$allowed_users = array();
+		foreach( $user_ids as $user_id ) {
+			if (  pmpro_has_membership_access( $forum_id, $user_id, false ) ) {
+				$allowed_users[] = $user_id;
+			}
+		}
+
+		$user_ids = $allowed_users;
+	}
+
+	// Check if users have access to that forum or has an active membership level, if not remove them.
+	return $user_ids;
+}
+add_filter( 'bbp_topic_subscription_user_ids', 'pmprobb_non_member_reply_notifications', 10, 3 );

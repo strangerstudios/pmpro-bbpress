@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
  * Description: Allow individual forums to be locked down for members.
- * Version: 1.6
+ * Version: 1.7
  * Author: Paid Memberships Pro, Scott Sousa
  * Author URI: https://www.paidmembershipspro.com
  * Text Domain: pmpro-bbpress
@@ -223,22 +223,6 @@ function pmprobb_pre_get_posts($query) {
 	
     return $query;
 }
-
-/*
-Function to add links to the plugin row meta
-*/
-function pmprobb_plugin_row_meta($links, $file) {
-	if(strpos($file, 'pmpro-bbpress.php') !== false)
-	{
-		$new_links = array(
-			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . esc_html__( 'Docs', 'pmpro' ) . '</a>',
-			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . esc_html__( 'Support', 'pmpro' ) . '</a>',
-		);
-		$links = array_merge($links, $new_links);
-	}
-	return $links;
-}
-add_filter('plugin_row_meta', 'pmprobb_plugin_row_meta', 10, 2);
 
 /*
 	Adds "pmpro-level-ID" to the forum topic replies post class where ID
@@ -509,3 +493,19 @@ function pmprobb_non_member_reply_notifications( $user_ids, $reply_id, $topic_id
 	return $user_ids;
 }
 add_filter( 'bbp_topic_subscription_user_ids', 'pmprobb_non_member_reply_notifications', 10, 3 );
+
+/*
+Function to add links to the plugin row meta
+*/
+function pmprobb_plugin_row_meta($links, $file) {
+	if(strpos($file, 'pmpro-bbpress.php') !== false)
+	{
+		$new_links = array(
+			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . esc_html__( 'Docs', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . esc_html__( 'Support', 'pmpro' ) . '</a>',
+		);
+		$links = array_merge($links, $new_links);
+	}
+	return $links;
+}
+add_filter('plugin_row_meta', 'pmprobb_plugin_row_meta', 10, 2);

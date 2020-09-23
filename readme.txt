@@ -1,9 +1,9 @@
 === Paid Memberships Pro - bbPress Add On ===
 Contributors: strangerstudios, slocumstudio, jessica o
 Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
-Requires at least: 4
-Tested up to: 5.3
-Stable tag: 1.6
+Requires at least: 4.0
+Tested up to: 5.5
+Stable tag: 1.7
 
 Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.
 
@@ -53,6 +53,12 @@ Shortcode attributes include:
 2. Settings -> Forums
 
 == Changelog ==
+= 1.7 - 2020-09-25 =
+* BUG FIX: Fixed a warning that post_type wasn't set in some cases for the pre_get_posts.
+* BUG FIX/ENHANCEMENT: Merged two functions that hooked in on 'init' to try and stabilize functionality.
+* ENHANCEMENT: Added in a filter to bypass the "Filter searches and archives" settings for forums and topics from search and archive pages. Namely 'pmprobb_filter_forum_queries' and 'pmprobb_filter_topic_queries' (boolean values).
+* ENHANCEMENT: Escape and localized strings to allow for translations and additional locales.
+
 = 1.6 - 2020-01-01 =
 * FEATURE: Actually changing user's bbPress Roles when changing levels if you've set a specific role for their level.
 

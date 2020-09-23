@@ -14,3 +14,7 @@ tests export-ignore
 webpack.config.js export-ignore
 bin export-ignore
 languages/gettext.sh export-ignore
+bbpress-integration-banner.png export-ignore
+README.md export-ignore
+screenshot-1.png export-ignore
+screenshot-2.png export-ignore

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
-"POT-Creation-Date: 2020-09-09 13:23+0200\n"
+"POT-Creation-Date: 2020-10-02 02:25+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,12 +21,12 @@ msgstr ""
 msgid "This forum is for members only."
 msgstr ""
 
-#: includes/options-membership-levels.php:56
+#: includes/options-membership-levels.php:43
 #: includes/options-membership-levels.php:56
 msgid "Forum Role"
 msgstr ""
 
-#: includes/options-membership-levels.php:75
+#: includes/options-membership-levels.php:62
 #: includes/options-membership-levels.php:75
 msgid "Background Color"
 msgstr ""
@@ -41,18 +41,18 @@ msgstr ""
 msgid "%1$s"
 msgstr ""
 
-#: pmpro-bbpress.php:140 pmpro-bbpress.php:140
+#: pmpro-bbpress.php:168 pmpro-bbpress.php:140
 msgid "You do not have the required membership level to access that forum."
 msgstr ""
 
-#: pmpro-bbpress.php:198 pmpro-bbpress.php:198
+#: pmpro-bbpress.php:442 pmpro-bbpress.php:420
+msgid "Replies viewable by members only"
+msgstr ""
+
+#: pmpro-bbpress.php:504 pmpro-bbpress.php:198
 msgid "View Documentation"
 msgstr ""
 
-#: pmpro-bbpress.php:199 pmpro-bbpress.php:199
+#: pmpro-bbpress.php:505 pmpro-bbpress.php:199
 msgid "Visit Customer Support Forum"
-msgstr ""
-
-#: pmpro-bbpress.php:420 pmpro-bbpress.php:420
-msgid "Replies viewable by members only"
 msgstr ""

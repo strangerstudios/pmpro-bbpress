@@ -40,7 +40,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 <table>
 <tbody class="form-table">
 	<tr>
-		<th scope="row" valign="top"><label for="forum_role"><?php _e('Forum Role', 'pmpro');?></label></th>
+		<th scope="row" valign="top"><label for="forum_role"><?php _e('Forum Role', 'pmpro-bbpress');?></label></th>
 		<td>			
 			<select id="forum_role" name="forum_role">
 				<option value="" <?php selected($forum_role, '');?>><?php esc_html_e( 'Default Behavior', 'pmpro-bbpress' ); ?></option>
@@ -59,7 +59,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 		</td>
 	</tr>
 	<tr>
-		<th scope="row" valign="top"><label for="forum_color"><?php _e('Background Color', 'pmpro');?></label></th>
+		<th scope="row" valign="top"><label for="forum_color"><?php _e('Background Color', 'pmpro-bbpress');?></label></th>
 		<td>			
 			<input type="text" id="forum_color" name="forum_color" value="<?php echo esc_attr($forum_color);?>" />
 			<p class="description"><?php printf( esc_html__( 'You can also add custom styles for %s via your CSS files.', 'pmpro-bbpress' ), "<code>.pmpro-level-" . intval( $level_id ) . "</code>" ); ?></p>

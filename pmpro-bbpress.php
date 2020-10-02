@@ -474,6 +474,11 @@ function pmprobb_non_member_reply_notifications( $user_ids, $reply_id, $topic_id
 	if ( empty( $user_ids ) ) {
 		return $user_ids;
 	}
+	
+	// Make sure PMPro is active.
+	if ( ! function_exists( 'pmpro_has_membership_access' ) ) {
+		return $user_ids;
+	}
 
 	// Check if topic id belongs to restricted forum.
 	$forum_id = bbp_get_topic_forum_id( $topic_id );

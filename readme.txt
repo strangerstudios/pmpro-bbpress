@@ -3,7 +3,7 @@ Contributors: strangerstudios, slocumstudio, jessica o
 Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
 Requires at least: 4.0
 Tested up to: 5.8
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 
 Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.
 
@@ -53,6 +53,9 @@ Shortcode attributes include:
 2. Settings -> Forums
 
 == Changelog ==
+= 1.7.2 - 2021-08-09 =
+* BUG FIX: Fixed issue where fatal errors were thrown in the admin when using some other plugins, e.v. WP Form or Formidable Pro. (Thanks, steve-page on GitHub)
+
 = 1.7.1 - 2020-10-03 =
 * BUG FIX: Fixed fatal error that occurred if bbPress was not active.
 

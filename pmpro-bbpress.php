@@ -60,6 +60,12 @@ add_action('init', 'pmprobb_init', 50);
  * @since 1.7
  */
 function pmprobb_filter_forum_search_results( $query ) {
+	
+	// Make sure that the query we want to filter has posts.
+	if ( ! $query->have_posts() ) {
+		return $query;
+	}
+
 	if ( ! is_admin() && apply_filters( 'pmprobb_filter_topic_queries', true ) && function_exists('bbp_is_search_results') && bbp_is_search_results() ) {
 		add_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' );
 	}
@@ -180,6 +186,11 @@ function pmprobb_pre_get_posts($query) {
 		
   	// Make sure pmpro and bbpress are active.
 	if ( ! defined( 'PMPRO_VERSION' ) || ! class_exists( 'bbPress' ) ) {
+		return $query;
+	}
+
+	// Make sure that the query we want to filter has posts.
+	if ( ! $query->have_posts() ) {
 		return $query;
 	}
 

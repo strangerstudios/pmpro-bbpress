@@ -1,60 +1,153 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Copyright (C) 2021 Paid Memberships Pro, Scott Sousa
+# This file is distributed under the same license as the Paid Memberships Pro - bbPress Add On plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Paid Memberships Pro - bbPress Add On 1.7.3\n"
 "Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
-"POT-Creation-Date: 2020-10-03 09:54+1000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
+"Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-08-13T14:25:05+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Domain: pmpro-bbpress\n"
 
-#: includes/functions.php:14 includes/functions.php:14
+#: includes/functions.php:14
 msgid "This forum is for members only."
 msgstr ""
 
-#: includes/options-membership-levels.php:43
 #: includes/options-membership-levels.php:43
 #: includes/options-membership-levels.php:56
 msgid "Forum Role"
 msgstr ""
 
 #: includes/options-membership-levels.php:62
-#: includes/options-membership-levels.php:62
 #: includes/options-membership-levels.php:75
 msgid "Background Color"
 msgstr ""
 
-#: includes/shortcodes.php:53 includes/shortcodes.php:53
+#: includes/shortcodes.php:53
 #, php-format
 msgid "%1$s %2$s"
 msgstr ""
 
-#: includes/shortcodes.php:57 includes/shortcodes.php:57
+#: includes/shortcodes.php:57
 #, php-format
 msgid "%1$s"
 msgstr ""
 
-#: pmpro-bbpress.php:168 pmpro-bbpress.php:140 pmpro-bbpress.php:168
+#: pmpro-bbpress.php:168
+#: pmpro-bbpress.php:140
+#: pmpro-bbpress.php:174
 msgid "You do not have the required membership level to access that forum."
 msgstr ""
 
-#: pmpro-bbpress.php:442 pmpro-bbpress.php:420 pmpro-bbpress.php:442
+#: pmpro-bbpress.php:442
+#: pmpro-bbpress.php:420
+#: pmpro-bbpress.php:453
 msgid "Replies viewable by members only"
 msgstr ""
 
-#: pmpro-bbpress.php:509 pmpro-bbpress.php:198 pmpro-bbpress.php:504
+#: pmpro-bbpress.php:509
+#: pmpro-bbpress.php:198
+#: pmpro-bbpress.php:504
+#: pmpro-bbpress.php:520
 msgid "View Documentation"
 msgstr ""
 
-#: pmpro-bbpress.php:510 pmpro-bbpress.php:199 pmpro-bbpress.php:505
+#: pmpro-bbpress.php:510
+#: pmpro-bbpress.php:199
+#: pmpro-bbpress.php:505
+#: pmpro-bbpress.php:521
 msgid "Visit Customer Support Forum"
+msgstr ""
+
+#. Plugin Name of the plugin
+msgid "Paid Memberships Pro - bbPress Add On"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Allow individual forums to be locked down for members."
+msgstr ""
+
+#. Author of the plugin
+msgid "Paid Memberships Pro, Scott Sousa"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.paidmembershipspro.com"
+msgstr ""
+
+#: includes/options-membership-levels.php:46
+msgid "Default Behavior"
+msgstr ""
+
+#: includes/options-membership-levels.php:58
+msgid "Leave as \"Default Behavior\" if you don't need to change roles by membership level."
+msgstr ""
+
+#: includes/options-membership-levels.php:65
+msgid "You can also add custom styles for %s via your CSS files."
+msgstr ""
+
+#: includes/options.php:13
+msgid "Paid Memberships Pro"
+msgstr ""
+
+#: includes/options.php:25
+msgid "Error Message"
+msgstr ""
+
+#: includes/options.php:31
+msgid "Member Links"
+msgstr ""
+
+#: includes/options.php:37
+msgid "Hide Member Forums"
+msgstr ""
+
+#: includes/options.php:43
+msgid "Hide Forum Roles"
+msgstr ""
+
+#: includes/options.php:49
+msgid "Show Membership Levels"
+msgstr ""
+
+#: includes/options.php:88
+msgid "This message is shown when users attempt to view a forum or thread they don't have access to."
+msgstr ""
+
+#: includes/options.php:103
+msgid "Hide member forums content from forums list and search results."
+msgstr ""
+
+#: includes/options.php:118
+msgid "Add links to member forums in the Member Links section of the Membership Account page."
+msgstr ""
+
+#: includes/options.php:133
+msgid "Hide forum roles in replies."
+msgstr ""
+
+#: includes/options.php:148
+msgid "Show membership levels in replies and on the bbPress profile page."
+msgstr ""
+
+#: pmpro-bbpress.php:408
+msgid "Membership Level"
+msgstr ""
+
+#: pmpro-bbpress.php:520
+msgid "Docs"
+msgstr ""
+
+#: pmpro-bbpress.php:521
+msgid "Support"
 msgstr ""

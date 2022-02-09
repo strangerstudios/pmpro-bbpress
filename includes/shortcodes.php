@@ -24,7 +24,7 @@ function bbp_user_activity_shortcode($atts, $content = null) {
 		'posts_per_page'      => (int) $count,
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
-		'author' => $bbp_user_id,
+		'author'		  	  => $bbp_user_id,
 	) );
 
 	// Bail if no replies

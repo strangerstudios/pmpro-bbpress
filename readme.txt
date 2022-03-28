@@ -1,46 +1,97 @@
-=== Paid Memberships Pro - bbPress Add On ===
-Contributors: strangerstudios, slocumstudio, jessica o
-Tags: paid memberships pro, pmpro, bbpress, forums, membership forum, restrict forum
+=== bbPress Restrict Membership Forum & Private Replies for Members Only with Paid Memberships Pro ===
+Contributors: strangerstudios, paidmembershipspro, slocumstudio
+Tags: private forum, membership forum, bbpress, paid memberships pro, pmpro 
 Requires at least: 5.2
-Tested up to: 5.9
+Tested up to: 5.9.2
+Requires PHP: 5.6
 Stable tag: 1.7.3
 
-Integrate bbPress with Paid Memberships Pro to restrict forums by membership level.
+Restrict access to bbPress for free or premium members by integrating bbPress with the top WordPress membership plugin Paid Memberships Pro.
 
 == Description ==
 
-The bbPress Add On for Paid Memberships Pro adds a "Require Membership" meta box to the "Edit Forum" page, allowing you to easily toggle the membership level(s) that can access the forum.
+### The most popular WordPress plugin for private forums.
 
-Requires bbPress and Paid Memberships Pro installed and activated.
+Use bbPress and Paid Memberships Pro to create a private forum in your WordPress site. This plugin enables secure, private discussion boards for members of your free or paid community.
+
+= Private Forums: Restrict Forum Access by Level =
+With private forums, all content in the forum is secured from public view. Select the membership levels that are allowed to access the restricted forum. Any member, user, or visitor without access is blocked from viewing forums, topics, and replies.
+
+* Members get quick access to the private forum on the "Member Links" section of the "Membership Account" page.
+* Site admins can optionally choose to hide the forum name from the forums list and search results.
+* To create a better forum experience for your members, choose from the settings to "Hide Forum Roles" and "Show Membership Levels" in replies and on the bbPress profile page. This helps participants see what level of membership access another member has.
+
+= Forum Roles: Set Forum Role by Membership Level =
+Give certain membership levels a higher tier of access within your forum. Assign the forum role by membership level in your Paid Memberships Pro settings. This forum role is changed or removed from the member when their membership level changes.
+
+For example, allow certain membership levels to be spectators in the forum, while you allow other higher tier members access to moderate forum replies.
+
+[Learn more about bbPress private forums in our documentation site](https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=wordpress-org&utm_medium=readme&utm_campaign=pmpro-bbpress).
+
+### About Paid Memberships Pro
+
+[Paid Memberships Pro is a WordPress membership plugin](https://www.paidmembershipspro.com/?utm_source=wordpress-org&utm_medium=readme&utm_campaign=pmpro-bbpress) that puts you in control. Create what you want and release in whatever format works best for your business.
+
+* Courses & E-Learning
+* Private podcasts
+* Premium Newsletters
+* Private Communities
+* Sell physical & digital goods
+
+Paid Memberships Pro allows anyone to build a membership site—for free. Restrict content, accept payment, and manage subscriptions right from your WordPress admin.
+
+Paid Memberships Pro is built "the WordPress way" with a lean core plugin and over 75 Add Ons to enhance every aspect of your membership site. Each business is different and we encourage customization. For our members we have a library of 300+ recipes to personalize your membership site.
+
+Paid Memberships Pro is the flagship product of Stranger Studios. We are a bootstrapped company which grows when membership sites like yours grow. That means we focus our entire company towards helping you succeed.
+
+[Try Paid Memberships Pro entirely for free on WordPress.org](https://wordpress.org/plugins/paid-memberships-pro/) and see why 100,000+ sites trust us to help them #GetPaid.
+
+### Read More
+
+Want more information on private forums, premium discussion boards, and WordPress membership sites? Have a look at:
+
+* The [Paid Memberships Pro](https://www.paidmembershipspro.com/?utm_source=wordpress-org&utm_medium=readme&utm_campaign=pmpro-bbpress) official homepage.
+* The [bbPress Integration for PMPro documentation page](https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=wordpress-org&utm_medium=readme&utm_campaign=pmpro-bbpress).
+* Also follow PMPro on [Twitter](https://twitter.com/pmproplugin), [YouTube](https://www.youtube.com/channel/UCFtMIeYJ4_YVidi1aq9kl5g) & [Facebook](https://www.facebook.com/PaidMembershipsPro/).
 
 == Installation ==
 
-= Prerequisites =
-1. You must have Paid Memberships Pro and bbPress installed and activated on your site.
+Note: You must have [Paid Memberships Pro](https://wordpress.org/plugins/paid-memberships-pro/) and [bbPress](https://wordpress.org/plugins/bbpress/) installed and activated on your site.
 
-= Download, Install and Activate! =
-1. Download the latest version of the plugin.
-1. Unzip the downloaded file to your computer.
-1. Upload the /pmpro-bbpress/ directory to the /wp-content/plugins/ directory of your site.
-1. Activate the plugin through the 'Plugins' menu in WordPress.
+### Install PMPro bbPress from within WordPress
 
-= How to Use =
+1. Visit the plugins page within your dashboard and select "Add New"
+1. Search for "PMPro bbPress"
+1. Locate this plugin and click "Install"
+1. Activate "Paid Memberships Pro - bbPress Integration" through the "Plugins" menu in WordPress
+1. Go to "after activation" below.
 
-1. After activation, navigate to the "Edit Forum" page for the forum you would like to restrict.
-1. Check the box for each level that can access this forum in the "Require Membership" meta box (below the Publish box in the right sidebar).
+### Install PMPro bbPress Manually
+
+1. Upload the `pmpro-bbpress` folder to the `/wp-content/plugins/` directory
+1. Activate "Paid Memberships Pro - bbPress Integration" through the "Plugins" menu in WordPress
+1. Go to "after activation" below.
+
+### After Activation: Create a Private Forum
+
+1. Navigate to Forums > Edit Forum to restrict access to the forum and make it private.
+1. Or, create a new Forum under Forums > Add New.
+1. In the right column "Settings" panel, locate the "Require Membership" section.
+1. Check the box for one or more membership level that can access this forum.
 1. Save your changes by clicking the "Update" button (or "Publish" if you are creating a new forum).
-1. Further settings can be found on the Settings -> Forums page of your admin dashboard.
+1. Further settings can be found on the Settings > Forums page of your admin dashboard.
 
-= Shortcode for Member's Activity =
+### Shortcode for Member Activity
 
-The bbPress Add On includes one shortcode to display a member's activity (topics or replies created).
+The bbPress Integration for Paid Memberships Pro includes one shortcode to display a member's activity (topics or replies created).
 
-Sample shortcode usage:
-[bbp-user-activity activity_type="topic" show_date="true" title="My Recent Topics"]
+= Sample shortcode usage: =
+`[bbp-user-activity activity_type="topic" show_date="true" title="My Recent Topics"]`
 
-Shortcode attributes include:
+= Shortcode attributes include: =
+
 * activity_type: Accepts 'topic' or 'reply'. Default is 'topic'
-* bbp_user_id: Accepts any user ID. Omit this attribute to load the current user's entries. Default is the current_user->ID.
+* bbp_user_id: Accepts any user ID. Omit this attribute to load the current user's entries. Default is the `current_user->ID`.
 * count: The number of entries to show. Default is '5'.
 * show_date: Optionally show the entry date. Default is 'false'.
 * show_excerpt: Optionally show a 50-character excerpt of the entry. Default is 'false'.
@@ -48,11 +99,12 @@ Shortcode attributes include:
 
 == Screenshots ==
 
-1. The "Require Membership" meta box for controlling forum access.
-
-2. Settings -> Forums
+1. The "Require Membership" meta box for controlling forum access by membership level.
+2. Additional Private Forum Settings on the Settings > Forums screen in the WordPress admin.
+3. Specifty additional bbPress settings specific to a membership level on the Memberships > Settings > Membership Levels screen in the WordPress admin.
 
 == Changelog ==
+
 = 1.7.3 - 2021-08-13 =
 * BUG FIX: Fixed issue that was causing fatal errors when WP_Query didn't contain posts when other plugins were setting the query. Fixes an issue for Formidable Pro/Registrations and improves compatibility with other plugins.
 

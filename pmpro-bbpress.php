@@ -2,9 +2,9 @@
 /**
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
- * Description: Allow individual forums to be locked down for members.
+ * Description: Restrict access to bbPress for free or premium members by integrating bbPress with Paid Memberships Pro.
  * Version: 1.7.3
- * Author: Paid Memberships Pro, Scott Sousa
+ * Author: Paid Memberships Pro
  * Author URI: https://www.paidmembershipspro.com
  * Text Domain: pmpro-bbpress
  * Domain Path: /languages
@@ -518,7 +518,7 @@ function pmprobb_plugin_row_meta($links, $file) {
 	{
 		$new_links = array(
 			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro-bbpress' ) ) . '">' . esc_html__( 'Docs', 'pmpro-bbpress' ) . '</a>',
-			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro-bbpress' ) ) . '">' . esc_html__( 'Support', 'pmpro-bbpress' ) . '</a>',
+			'<a href="' . esc_url('https://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro-bbpress' ) ) . '">' . esc_html__( 'Support', 'pmpro-bbpress' ) . '</a>',
 		);
 		$links = array_merge($links, $new_links);
 	}

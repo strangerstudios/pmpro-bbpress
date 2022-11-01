@@ -1,6 +1,6 @@
 === bbPress Restrict Membership Forum & Private Replies for Members Only with Paid Memberships Pro ===
 Contributors: strangerstudios, paidmembershipspro
-Tags: private forum, membership forum, bbpress, paid memberships pro, pmpro 
+Tags: discussion, forum, bbpress, paid memberships pro, pmpro
 Requires at least: 5.2
 Tested up to: 6.1
 Requires PHP: 5.6

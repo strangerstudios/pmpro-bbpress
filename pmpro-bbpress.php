@@ -252,9 +252,9 @@ function pmprobb_pmpro_reply_post_class($classes) {
 	}
 
 	$reply_author_id = bbp_get_reply_author_id();
-	$reply_author_membership_level = pmpro_getMembershipLevelForUser($reply_author_id);
-	if(!empty($reply_author_membership_level)) {
-		$classes[] = 'pmpro-level-' . $reply_author_membership_level->id;
+	$reply_author_membership_levels = pmpro_getMembershipLevelsForUser( $reply_author_id );
+	foreach ($reply_author_membership_levels as $level) {
+		$classes[] = 'pmpro-level-' . $level->id;
 	}
 	return $classes;
 }
@@ -270,7 +270,7 @@ function pmprobb_forum_color_css() {
 	
 	//get color options and build rules
 	$options = pmprobb_getOptions();	
-	$rule = array();
+	$rules = array();
 	if(!empty($options['levels'])) {
 		foreach($options['levels'] as $level_id => $level) {
 			if(!empty($level['color']))
@@ -356,8 +356,12 @@ add_filter ('bbp_before_get_reply_author_link_parse_args', 'pmprobb_pmpro_hide_r
     Change user's forum role when they change levels.
     TODO: For MMPU compatibility, we need to get all of the user's Levels
           and use the highest role found.
+	@deprecated TBD
 */
 function pmprobb_pmpro_after_change_membership_level( $level_id, $user_id, $cancel_level_id ) {
+	// Mark as deprecated.
+	_deprecated_function( __FUNCTION__, 'TBD', 'pmprobb_pmpro_after_change_membership_level' );
+
     // Make sure bbPress is active.
     if ( ! function_exists( 'bbp_set_user_role' ) ) {
         return;
@@ -382,10 +386,74 @@ function pmprobb_pmpro_after_change_membership_level( $level_id, $user_id, $canc
         }
     }
 }
-add_action( 'pmpro_after_change_membership_level', 'pmprobb_pmpro_after_change_membership_level', 10, 3 );
+
+/**
+ * Change user's forum role when they change levels.
+ *
+ * @since TBD
+ *
+ * @param array $pmpro_old_user_levels Array of user_id => old_levels_for_user.
+ */
+function pmprobb_after_all_membership_level_changes( $pmpro_old_user_levels ) {
+	// Make sure that bbPress is active.
+	if ( ! function_exists( 'bbp_set_user_role' ) ) {
+		return;
+	}
+
+	// Loop through all users.
+	foreach ( $pmpro_old_user_levels as $user_id => $old_levels ) {
+		// Get the user who changed levels.
+		$user = get_userdata( $user_id );
+
+		// Ignore admins and users who don't exist.
+		if ( empty( $user ) || user_can( $user_id, 'manage_options' ) ) {
+			continue;
+		}
+
+		// bbPress only supports one role per user, so let's get all of the roles
+		// assigned to this user's current levels and find the one with the
+		// most capabilities. This will be the BP role we assign to the user.
+		$new_levels = pmpro_getMembershipLevelsForUser( $user_id );
+		$bp_role_options = array();
+		foreach ( $new_levels as $new_level ) {
+			$bp_role_options[] = pmprobb_get_role_for_level( $new_level->id );
+		}
+
+		// Remove duplicates in the array of role options.
+		$bp_role_options = array_unique( $bp_role_options );		
+
+		// Find the role with the most capabilities.
+		$bp_new_role   = '';
+		$new_role_caps = 0;
+		foreach ( $bp_role_options as $bp_role_option ) {
+			// Get the capabilities for this role.
+			$role = get_role( $bp_role_option );
+			if ( empty( $role ) ) {
+				continue;
+			}
+
+			// If this role has more capabilities than the current role, use it.
+			$role_caps = count( $role->capabilities );
+			if ( $role_caps > $new_role_caps ) {
+				$bp_new_role   = $bp_role_option;
+				$new_role_caps = $role_caps;
+			}
+		}
+
+		// If the user has a new role, set it.
+		if ( ! empty( $bp_new_role ) ) {
+			bbp_set_user_role( $user_id, $bp_new_role );
+		} else {
+			// The user no longer has a bbPress role given by PMPro. Set them to the default.
+			$bbp_default_role = get_option( '_bbp_default_role', 'bbp_participant' );
+			bbp_set_user_role( $user_id, $bbp_default_role );
+		}
+	}
+}
+add_action( 'pmpro_after_all_membership_level_changes', 'pmprobb_after_all_membership_level_changes' );
 
 /*
-	Adds a Section "Membership Level" and displays the user's level
+	Adds a Section "Membership Level" and displays the user's levels
 	on the bbPress User Profile page.	
 */
 function pmprobb_pmpro_bbp_template_before_user_profile() 
@@ -399,15 +467,14 @@ function pmprobb_pmpro_bbp_template_before_user_profile()
 	if(empty($options['show_membership_levels']))
 		return;
 	
-	$profile_user = new stdClass();
-	$profile_user->membership_level = pmpro_getMembershipLevelForUser(bbp_get_user_id( 0, true, false ));
-	if(!empty($profile_user->membership_level))
-	{
+	$membership_levels = pmpro_getMembershipLevelsForUser( bbp_get_user_id( 0, true, false ) );
+	$level_names = wp_list_pluck( $membership_levels, 'name' );
+	if ( ! empty( $level_names ) ) {
 		?>
 		<div id="bbp-user-profile" class="bbp-user-profile">
-			<h2 class="entry-title"><?php esc_html_e('Membership Level','pmpro-bbpress');?></h2>
+			<h2 class="entry-title"><?php echo esc_html( _n( 'Membership Level', 'Membership Levels', count( $level_names ), 'pmpro-bbpress' ) );?></h2>
 			<div class="bbp-user-section">
-				<?php echo esc_html( $profile_user->membership_level->name ); ?>
+				<?php echo esc_html( implode( ', ', $level_names ) ); ?>
 			</div>
 		</div>
 		<?php
@@ -416,7 +483,7 @@ function pmprobb_pmpro_bbp_template_before_user_profile()
 add_action( 'bbp_template_before_user_profile', 'pmprobb_pmpro_bbp_template_before_user_profile', 10, 0 );
 
 /*
-	Display the Membership Level of the reply author 
+	Display the Membership Levels of the reply author 
 	in your bbPress forum replies.	
 */
 function pmprobb_pmpro_bbp_theme_after_reply_author_details() 
@@ -431,10 +498,10 @@ function pmprobb_pmpro_bbp_theme_after_reply_author_details()
 		return;
 		
 	$displayed_user = bbp_get_reply_author_id(bbp_get_reply_id());
-	$membership_level = pmpro_getMembershipLevelForUser($displayed_user);
-	if(!empty($membership_level))
-	{
-	  echo '<br /><div class="bbp-author-role">' . esc_html( $membership_level->name ) . '</div>';
+	$membership_levels = pmpro_getMembershipLevelsForUser( $displayed_user );
+	$level_names = wp_list_pluck( $membership_levels, 'name' );
+	if ( ! empty( $level_names ) ) {
+	  echo '<br /><div class="bbp-author-role">' . esc_html( implode( ', ', $level_names ) ) . '</div>';
 	}
 }
 add_action('bbp_theme_after_reply_author_details','pmprobb_pmpro_bbp_theme_after_reply_author_details', 10, 0);

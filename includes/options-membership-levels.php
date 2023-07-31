@@ -36,7 +36,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 		$forum_color = '';
 	
 ?>
-<h3 class="topborder">bbPress Settings</h3>
+<h2 class="topborder">bbPress Settings</h2>
 <table>
 <tbody class="form-table">
 	<tr>

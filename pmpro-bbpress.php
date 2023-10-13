@@ -40,7 +40,7 @@ function pmprobb_init() {
 		return;
 	}
 
-	$filterqueries = pmpro_getOption( "filterqueries" );
+	$filterqueries = get_option( "pmpro_filterqueries" );
 	if ( apply_filters( 'pmprobb_filter_forum_queries', true ) && ! empty( $filterqueries ) ) {
 		add_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' );
 	}

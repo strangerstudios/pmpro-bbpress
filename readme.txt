@@ -2,9 +2,9 @@
 Contributors: strangerstudios, paidmembershipspro
 Tags: discussion, forum, bbpress, paid memberships pro, pmpro
 Requires at least: 5.2
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 1.7.3
+Stable tag: 1.7.4
 
 Restrict access to bbPress for free or premium members by integrating bbPress with the top WordPress membership plugin Paid Memberships Pro.
 
@@ -104,6 +104,11 @@ The bbPress Integration for Paid Memberships Pro includes one shortcode to displ
 3. Specifty additional bbPress settings specific to a membership level on the Memberships > Settings > Membership Levels screen in the WordPress admin.
 
 == Changelog ==
+= 1.7.4 - 2023-10-13 =
+* ENHANCEMENT: Updating `<h3>` tags to `<h2>` tags for better accessibility. #47 (@michaelbeil)
+* BUG FIX/ENHANCEMENT: Added compatibility for Multiple Memberships Per User. #44 (@dparker1005)
+* BUG FIX/ENHANCEMENT: Improved escaping of strings. #40 (@rafiahmedd)
+* REFACTOR: Now using `get_option()` instead of `pmpro_getOption()`. #46 (@JarrydLong)
 
 = 1.7.3 - 2021-08-13 =
 * BUG FIX: Fixed issue that was causing fatal errors when WP_Query didn't contain posts when other plugins were setting the query. Fixes an issue for Formidable Pro/Registrations and improves compatibility with other plugins.

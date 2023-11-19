@@ -2,7 +2,7 @@
 Contributors: strangerstudios, paidmembershipspro
 Tags: discussion, forum, bbpress, paid memberships pro, pmpro
 Requires at least: 5.2
-Tested up to: 6.3
+Tested up to: 6.4.1
 Requires PHP: 5.6
 Stable tag: 1.7.4
 

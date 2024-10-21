@@ -1,0 +1,143 @@
+# Translation of Plugins - bbPress Restrict Membership Forum &amp; Private Replies for Members Only with Paid Memberships Pro - Stable (latest release) in Portuguese (Brazil)
+# This file is distributed under the same license as the Plugins - bbPress Restrict Membership Forum &amp; Private Replies for Members Only with Paid Memberships Pro - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2023-10-16 02:40:20+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: pt_BR\n"
+"Project-Id-Version: Plugins - bbPress Restrict Membership Forum &amp; Private Replies for Members Only with Paid Memberships Pro - Stable (latest release)\n"
+
+#: includes/options-membership-levels.php:40
+msgid "bbPress Settings"
+msgstr "Configurações do bbPress"
+
+#. Description of the plugin
+msgid "Restrict access to bbPress for free or premium members by integrating bbPress with Paid Memberships Pro."
+msgstr "Restrinja o acesso ao bbPress para associados gratuitos ou premium integrando o bbPress ao Paid Memberships Pro."
+
+#: pmpro-bbpress.php:588
+msgid "Support"
+msgstr "Suporte"
+
+#: pmpro-bbpress.php:588
+msgid "Visit Customer Support Forum"
+msgstr "Visite o fórum de suporte ao usuário"
+
+#: pmpro-bbpress.php:587
+msgid "Docs"
+msgstr "Documentação"
+
+#: pmpro-bbpress.php:587
+msgid "View Documentation"
+msgstr "Ver a documentação"
+
+#: pmpro-bbpress.php:520
+msgid "Replies viewable by members only"
+msgstr "Respostas visíveis apenas aos associados"
+
+#: pmpro-bbpress.php:475
+msgid "Membership Level"
+msgid_plural "Membership Levels"
+msgstr[0] "Nível de Associação"
+msgstr[1] ""
+
+#: pmpro-bbpress.php:174
+msgid "You do not have the required membership level to access that forum."
+msgstr "Você não tem o nível de associação necessário para acessar este fórum."
+
+#: includes/functions.php:14
+msgid "This forum is for members only."
+msgstr "Este fórum é apenas para associados."
+
+#: includes/options-membership-levels.php:66
+msgid "You can also add custom styles for %s via your CSS files."
+msgstr "Você também pode adicionar estilos personalizados para %s através dos seus arquivos CSS."
+
+#: includes/options-membership-levels.php:63
+msgid "Background Color"
+msgstr "Cor de fundo"
+
+#: includes/options-membership-levels.php:59
+msgid "Leave as \"Default Behavior\" if you don't need to change roles by membership level."
+msgstr "Deixar como \"Comportamento padrão\" se não precisa alterar as funções por nível de associação."
+
+#: includes/options-membership-levels.php:47
+msgid "Default Behavior"
+msgstr "Comportamento padrão"
+
+#: includes/options-membership-levels.php:44
+msgid "Forum Role"
+msgstr "Função no fórum"
+
+#. translators: 1: reply link
+#: includes/shortcodes.php:57
+msgctxt "widgets"
+msgid "%1$s"
+msgstr "%1$s"
+
+#. translators: 1: reply link, 2: reply timestamp
+#: includes/shortcodes.php:53
+msgctxt "widgets"
+msgid "%1$s %2$s"
+msgstr "%1$s %2$s"
+
+#: includes/options.php:148
+msgid "Show membership levels in replies and on the bbPress profile page."
+msgstr "Exibir os níveis de associação nas respostas e na página do perfil do bbPress."
+
+#: includes/options.php:133
+msgid "Hide forum roles in replies."
+msgstr "Ocultar as funções do fórum nas respostas."
+
+#: includes/options.php:118
+msgid "Add links to member forums in the Member Links section of the Membership Account page."
+msgstr "Adicionar links aos fóruns de associados na seção de Links de associados na página da Conta de Associação."
+
+#: includes/options.php:103
+msgid "Hide member forums content from forums list and search results."
+msgstr "Ocultar o conteúdo dos fóruns de associados da lista de fóruns e dos resultados de pesquisa."
+
+#: includes/options.php:88
+msgid "This message is shown when users attempt to view a forum or thread they don't have access to."
+msgstr "Esta mensagem é exibida quando usuários tentam ver um fórum ou tópico ao qual não têm acesso."
+
+#: includes/options.php:49
+msgid "Show Membership Levels"
+msgstr "Exibir Níveis de Associação"
+
+#: includes/options.php:43
+msgid "Hide Forum Roles"
+msgstr "Ocultar Funções do Fórum"
+
+#: includes/options.php:37
+msgid "Hide Member Forums"
+msgstr "Ocultar Fóruns de Associados"
+
+#: includes/options.php:31
+msgid "Member Links"
+msgstr "Links de associados"
+
+#: includes/options.php:25
+msgid "Error Message"
+msgstr "Mensagem de erro"
+
+#. Author of the plugin
+#: includes/options.php:13
+msgid "Paid Memberships Pro"
+msgstr "Paid Memberships Pro"
+
+#. Author URI of the plugin
+msgid "https://www.paidmembershipspro.com"
+msgstr "https://www.paidmembershipspro.com"
+
+#. Plugin URI of the plugin
+msgid "https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/"
+msgstr "https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/"
+
+#. Plugin Name of the plugin
+msgid "Paid Memberships Pro - bbPress Add On"
+msgstr "Paid Memberships Pro - Complemento do bbPress"

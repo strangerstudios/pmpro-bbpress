@@ -2,9 +2,9 @@
 Contributors: strangerstudios, paidmembershipspro
 Tags: discussion, forum, bbpress, paid memberships pro, pmpro
 Requires at least: 5.2
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 5.6
-Stable tag: 1.7.4
+Stable tag: 1.8
 
 Restrict access to bbPress for free or premium members by integrating bbPress with the top WordPress membership plugin Paid Memberships Pro.
 

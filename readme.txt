@@ -26,11 +26,11 @@ Give certain membership levels a higher tier of access within your forum. Assign
 
 For example, allow certain membership levels to be spectators in the forum, while you allow other higher tier members access to moderate forum replies.
 
-[Learn more about bbPress private forums in our documentation site](https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=wordpress-org&utm_medium=readme&utm_campaign=pmpro-bbpress).
+[Learn more about bbPress private forums in our documentation site](https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=pmpro-bbpress-readme&utm_medium=readme&utm_campaign=pmpro-bbpress).
 
 ### About Paid Memberships Pro
 
-[Paid Memberships Pro is a WordPress membership plugin](https://www.paidmembershipspro.com/?utm_source=wordpress-org&utm_medium=readme&utm_campaign=pmpro-bbpress) that puts you in control. Create what you want and release in whatever format works best for your business.
+[Paid Memberships Pro is a WordPress membership plugin](https://www.paidmembershipspro.com/?utm_source=pmpro-bbpress-readme&utm_medium=readme&utm_campaign=pmpro-bbpress) that puts you in control. Create what you want and release in whatever format works best for your business.
 
 * Courses & E-Learning
 * Private podcasts
@@ -44,19 +44,19 @@ Paid Memberships Pro is built "the WordPress way" with a lean core plugin and ov
 
 Paid Memberships Pro is the flagship product of Stranger Studios. We are a bootstrapped company which grows when membership sites like yours grow. That means we focus our entire company towards helping you succeed.
 
-[Try Paid Memberships Pro entirely for free on WordPress.org](https://wordpress.org/plugins/paid-memberships-pro/) and see why 100,000+ sites trust us to help them #GetPaid.
+[Try Paid Memberships Pro entirely for free](https://www.paidmembershipspro.com) and see why 100,000+ sites trust us to help them #GetPaid.
 
 ### Read More
 
 Want more information on private forums, premium discussion boards, and WordPress membership sites? Have a look at:
 
-* The [Paid Memberships Pro](https://www.paidmembershipspro.com/?utm_source=wordpress-org&utm_medium=readme&utm_campaign=pmpro-bbpress) official homepage.
-* The [bbPress Integration for PMPro documentation page](https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=wordpress-org&utm_medium=readme&utm_campaign=pmpro-bbpress).
+* The [Paid Memberships Pro](https://www.paidmembershipspro.com/?utm_source=pmpro-bbpress-readme&utm_medium=readme&utm_campaign=pmpro-bbpress) official homepage.
+* The [bbPress Integration for PMPro documentation page](https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=pmpro-bbpress-readme&utm_medium=readme&utm_campaign=pmpro-bbpress).
 * Also follow PMPro on [Twitter](https://twitter.com/pmproplugin), [YouTube](https://www.youtube.com/channel/UCFtMIeYJ4_YVidi1aq9kl5g) & [Facebook](https://www.facebook.com/PaidMembershipsPro/).
 
 == Installation ==
 
-Note: You must have [Paid Memberships Pro](https://wordpress.org/plugins/paid-memberships-pro/) and [bbPress](https://wordpress.org/plugins/bbpress/) installed and activated on your site.
+Note: You must have [Paid Memberships Pro](https://www.paidmembershipspro.com) and [bbPress](https://wordpress.org/plugins/bbpress/) installed and activated on your site.
 
 ### Install PMPro bbPress from within WordPress
 
@@ -104,6 +104,10 @@ The bbPress Integration for Paid Memberships Pro includes one shortcode to displ
 3. Specifty additional bbPress settings specific to a membership level on the Memberships > Settings > Membership Levels screen in the WordPress admin.
 
 == Changelog ==
+= 1.8 -2024-10-21 =
+* FEATURE: Now updating the plugin from paidmembershipspro.com
+* ENHANCEMENT: Added Swedish, Dutch and Portguese (Brazil) language files.
+
 = 1.7.4 - 2023-10-13 =
 * ENHANCEMENT: Updating `<h3>` tags to `<h2>` tags for better accessibility. #47 (@michaelbeil)
 * BUG FIX/ENHANCEMENT: Added compatibility for Multiple Memberships Per User. #44 (@dparker1005)

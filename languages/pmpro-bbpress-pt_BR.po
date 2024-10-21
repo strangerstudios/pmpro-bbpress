@@ -1,21 +1,25 @@
-# Translation of Plugins - bbPress Restrict Membership Forum &amp; Private Replies for Members Only with Paid Memberships Pro - Stable (latest release) in Portuguese (Brazil)
-# This file is distributed under the same license as the Plugins - bbPress Restrict Membership Forum &amp; Private Replies for Members Only with Paid Memberships Pro - Stable (latest release) package.
+# Copyright (C) 2024 Paid Memberships Pro
+# This file is distributed under the same license as the Paid Memberships Pro - bbPress Add On plugin.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-10-16 02:40:20+0000\n"
+"Project-Id-Version: Paid Memberships Pro - bbPress Add On 1.8\n"
+"Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
+"Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
+"Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: GlotPress/4.0.1\n"
-"Language: pt_BR\n"
-"Project-Id-Version: Plugins - bbPress Restrict Membership Forum &amp; Private Replies for Members Only with Paid Memberships Pro - Stable (latest release)\n"
+"POT-Creation-Date: 2024-10-21T08:33:42+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: pmpro-bbpress\n"
 
 #: includes/options-membership-levels.php:40
 msgid "bbPress Settings"
 msgstr "Configurações do bbPress"
 
 #. Description of the plugin
+#: pmpro-bbpress.php
 msgid "Restrict access to bbPress for free or premium members by integrating bbPress with Paid Memberships Pro."
 msgstr "Restrinja o acesso ao bbPress para associados gratuitos ou premium integrando o bbPress ao Paid Memberships Pro."
 
@@ -42,7 +46,7 @@ msgstr "Respostas visíveis apenas aos associados"
 #: pmpro-bbpress.php:475
 msgid "Membership Level"
 msgid_plural "Membership Levels"
-msgstr[0] "Nível de Associação"
+msgstr[0] ""
 msgstr[1] ""
 
 #: pmpro-bbpress.php:174
@@ -127,17 +131,21 @@ msgstr "Mensagem de erro"
 
 #. Author of the plugin
 #: includes/options.php:13
+#: pmpro-bbpress.php
 msgid "Paid Memberships Pro"
 msgstr "Paid Memberships Pro"
 
 #. Author URI of the plugin
+#: pmpro-bbpress.php
 msgid "https://www.paidmembershipspro.com"
 msgstr "https://www.paidmembershipspro.com"
 
 #. Plugin URI of the plugin
+#: pmpro-bbpress.php
 msgid "https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/"
 msgstr "https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/"
 
 #. Plugin Name of the plugin
+#: pmpro-bbpress.php
 msgid "Paid Memberships Pro - bbPress Add On"
 msgstr "Paid Memberships Pro - Complemento do bbPress"

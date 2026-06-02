@@ -15,7 +15,8 @@ define('PMPROBB_DIR', dirname(__FILE__));
 require_once(PMPROBB_DIR . '/includes/functions.php');
 require_once(PMPROBB_DIR . '/includes/options.php'); 
 require_once(PMPROBB_DIR . '/includes/options-membership-levels.php');
-require_once(PMPROBB_DIR . '/includes/shortcodes.php'); 
+require_once(PMPROBB_DIR . '/includes/shortcodes.php');
+require_once(PMPROBB_DIR . '/includes/buddyboss.php'); // Loads specifically for BuddyBoss V3.0+
 
 /**
  * Load text domain

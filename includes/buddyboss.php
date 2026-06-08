@@ -44,7 +44,7 @@ function pmprobb_buddyboss_admin_menu() {
 		return;
 	}
 
-	add_submenu_page(
+	$hook = add_submenu_page(
 		'pmpro-dashboard',
 		__( 'Forum Access', 'pmpro-bbpress' ),
 		__( 'Forum Access', 'pmpro-bbpress' ),
@@ -52,8 +52,42 @@ function pmprobb_buddyboss_admin_menu() {
 		'pmpro-forum-access',
 		'pmprobb_buddyboss_render_page'
 	);
+
+	// Enqueue the page styles only on the Forum Access screen.
+	if ( $hook ) {
+		add_action( 'admin_print_styles-' . $hook, 'pmprobb_buddyboss_enqueue_styles' );
+	}
 }
 add_action( 'admin_menu', 'pmprobb_buddyboss_admin_menu', 20 );
+
+/**
+ * Enqueue the Forum Access page styles.
+ *
+ * Registers an inline-only style handle and attaches the page CSS via
+ * wp_add_inline_style(), rather than echoing a <style> block from the
+ * render callback.
+ *
+ * @since TBD
+ */
+function pmprobb_buddyboss_enqueue_styles() {
+	$css = '
+		input[type=checkbox] + label.pmprobb-checkbox-label {
+			cursor: pointer;
+			display: inline;
+			width: auto;
+		}
+		.pmprobb-checkbox-list-scrollable {
+			height: 100px;
+			width: 300px;
+			background: #FFFFFF;
+			border: 1px solid #CCC;
+			overflow: auto;
+		}';
+
+	wp_register_style( 'pmprobb-buddyboss-admin', false );
+	wp_enqueue_style( 'pmprobb-buddyboss-admin' );
+	wp_add_inline_style( 'pmprobb-buddyboss-admin', $css );
+}
 
 /**
  * Get all membership levels (id + name), including hidden, sorted by admin order.
@@ -282,14 +316,14 @@ function pmprobb_buddyboss_render_page() {
 							<tr>
 								<th scope="row"><?php echo esc_html( $level['name'] ); ?></th>
 								<td>
-									<div <?php echo $scrollable ? 'class="pmpromc-checkbox-list-scrollable"' : ''; ?>>
+									<div <?php echo $scrollable ? 'class="pmprobb-checkbox-list-scrollable"' : ''; ?>>
 										<?php
 										foreach ( $forums as $forum ) :
 											$current  = isset( $restrictions[ $forum->ID ] ) ? $restrictions[ $forum->ID ] : array();
 											$checked  = in_array( $level['id'], $current, true ) ? ' checked' : '';
 											$field_id = 'pmprobb_level_' . (int) $level['id'] . '_forum_' . (int) $forum->ID;
 											echo '<input type="checkbox" name="pmprobb_buddyboss[' . (int) $level['id'] . '][]" value="' . (int) $forum->ID . '" id="' . esc_attr( $field_id ) . '"' . esc_attr( $checked ) . '>';
-											echo '<label for="' . esc_attr( $field_id ) . '" class="pmpromc-checkbox-label">' . esc_html( get_the_title( $forum ) ) . '</label><br>';
+											echo '<label for="' . esc_attr( $field_id ) . '" class="pmprobb-checkbox-label">' . esc_html( get_the_title( $forum ) ) . '</label><br>';
 										endforeach;
 										?>
 									</div>
@@ -303,63 +337,7 @@ function pmprobb_buddyboss_render_page() {
 			</form>
 		<?php endif; ?>
 	</div>
-
-	<style>
-		input[type=checkbox] + label.pmpromc-checkbox-label {
-			cursor: pointer;
-			display: inline;
-			width: auto;
-		}
-		.pmpromc-checkbox-list-scrollable {
-			height: 100px;
-			width: 300px;
-			background: #FFFFFF;
-			border: 1px solid #CCC;
-			overflow: auto;
-		}
-	</style>
 	<?php
-}
-
-/**
- * Map of level_id => level_name for every membership level that restricts at
- * least one forum (via the pmpro_memberships_pages table). Sorted by PMPro's
- * configured level order so the message reads consistently.
- *
- * @return array<int,string>
- */
-function pmprobb_buddyboss_get_all_forum_level_map() {
-	global $wpdb;
-
-	if ( ! function_exists( 'bbp_get_forum_post_type' ) ) {
-		return array();
-	}
-
-	$rows = $wpdb->get_results(
-		$wpdb->prepare(
-			"SELECT DISTINCT m.id, m.name
-			 FROM {$wpdb->pmpro_memberships_pages} mp
-			 INNER JOIN {$wpdb->pmpro_membership_levels} m ON mp.membership_id = m.id
-			 INNER JOIN {$wpdb->posts} p ON mp.page_id = p.ID
-			 WHERE p.post_type = %s",
-			bbp_get_forum_post_type()
-		)
-	);
-
-	if ( empty( $rows ) ) {
-		return array();
-	}
-
-	if ( function_exists( 'pmpro_sort_levels_by_order' ) ) {
-		$rows = pmpro_sort_levels_by_order( $rows );
-	}
-
-	$map = array();
-	foreach ( (array) $rows as $row ) {
-		$map[ (int) $row->id ] = $row->name;
-	}
-
-	return $map;
 }
 
 /**
@@ -393,8 +371,14 @@ add_filter( 'pmpro_membership_content_filter', 'pmprobb_buddyboss_suppress_archi
  * @return string
  */
 function pmprobb_buddyboss_forum_redirect_url( $redirect_to, $forum_id ) {
-	if ( function_exists( 'pmpro_bp_redirect_to_access_required_page' ) ) {
-		pmpro_bp_redirect_to_access_required_page(); // Redirects and exits.
+	if ( ! pmprobb_buddyboss_is_supported() ) {
+		return $redirect_to;
+	}
+
+	// If the PMPro BuddyPress/BuddyBoss "No Access" page is set, redirect there instead of the forums archive.
+	global $pmpro_pages;
+	if ( ! empty( $pmpro_pages['pmprobp_restricted'] ) ) {
+		$redirect_to = get_permalink( $pmpro_pages['pmprobp_restricted'] );
 	}
 
 	return $redirect_to;

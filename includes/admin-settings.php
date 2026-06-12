@@ -224,14 +224,52 @@ function pmprobb_settings_page() {
 			<div class="notice notice-error inline"><p><?php esc_html_e( 'bbPress or BuddyBoss Platform must be active to use this Add On.', 'pmpro-bbpress' ); ?></p></div>
 		<?php } ?>
 
-		<div id="pmprobb-forum-access" class="pmpro_section" data-visibility="shown" data-activated="true">
+		<div id="pmprobb-general-settings" class="pmpro_section" data-visibility="shown" data-activated="true">
 			<div class="pmpro_section_toggle">
 				<button class="pmpro_section-toggle-button" type="button" aria-expanded="true">
 					<span class="dashicons dashicons-arrow-up-alt2"></span>
-					<?php esc_html_e( 'Forum Access', 'pmpro-bbpress' ); ?>
+					<?php esc_html_e( 'General Settings', 'pmpro-bbpress' ); ?>
 				</button>
 			</div>
 			<div class="pmpro_section_inside">
+				<table class="form-table" role="presentation">
+					<tbody>
+						<tr>
+							<th scope="row"><label for="pmprobb_option_error_message"><?php esc_html_e( 'Error Message', 'pmpro-bbpress' ); ?></label></th>
+							<td><?php pmprobb_option_error_message(); ?></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="pmprobb_option_member_links"><?php esc_html_e( 'Member Links', 'pmpro-bbpress' ); ?></label></th>
+							<td><?php pmprobb_option_member_links(); ?></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="pmprobb_option_hide_member_forums"><?php esc_html_e( 'Hide Member Forums', 'pmpro-bbpress' ); ?></label></th>
+							<td><?php pmprobb_option_hide_member_forums(); ?></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="pmprobb_option_hide_forum_roles"><?php esc_html_e( 'Hide Forum Roles', 'pmpro-bbpress' ); ?></label></th>
+							<td><?php pmprobb_option_hide_forum_roles(); ?></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="pmprobb_option_show_membership_levels"><?php esc_html_e( 'Show Membership Levels', 'pmpro-bbpress' ); ?></label></th>
+							<td><?php pmprobb_option_show_membership_levels(); ?></td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="submit">
+					<input name="pmprobb_save_settings" type="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Settings', 'pmpro-bbpress' ); ?>" />
+				</p>
+			</div> <!-- end pmpro_section_inside -->
+		</div> <!-- end pmpro_section -->
+
+		<div id="pmprobb-forum-access" class="pmpro_section" data-visibility="hidden" data-activated="true">
+			<div class="pmpro_section_toggle">
+				<button class="pmpro_section-toggle-button" type="button" aria-expanded="false">
+					<span class="dashicons dashicons-arrow-down-alt2"></span>
+					<?php esc_html_e( 'Forum Access', 'pmpro-bbpress' ); ?>
+				</button>
+			</div>
+			<div class="pmpro_section_inside" style="display: none;">
 				<p><?php esc_html_e( 'Choose the membership levels required to view each forum. A forum is restricted to members as soon as it is assigned one or more levels; leave all levels unchecked to keep a forum public. These settings can also be managed in the "Require Membership" box when editing a single forum.', 'pmpro-bbpress' ); ?></p>
 				<?php if ( empty( $levels ) ) { ?>
 					<p><strong><?php esc_html_e( 'No membership levels found.', 'pmpro-bbpress' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'admin.php?page=pmpro-membershiplevels' ) ); ?>"><?php esc_html_e( 'Create a membership level to get started.', 'pmpro-bbpress' ); ?></a></p>
@@ -283,52 +321,20 @@ function pmprobb_settings_page() {
 						</tbody>
 					</table>
 				<?php } ?>
+				<p class="submit">
+					<input name="pmprobb_save_settings" type="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Settings', 'pmpro-bbpress' ); ?>" />
+				</p>
 			</div> <!-- end pmpro_section_inside -->
 		</div> <!-- end pmpro_section -->
 
-		<div id="pmprobb-general-settings" class="pmpro_section" data-visibility="shown" data-activated="true">
+		<div id="pmprobb-level-settings" class="pmpro_section" data-visibility="hidden" data-activated="true">
 			<div class="pmpro_section_toggle">
-				<button class="pmpro_section-toggle-button" type="button" aria-expanded="true">
-					<span class="dashicons dashicons-arrow-up-alt2"></span>
-					<?php esc_html_e( 'General Settings', 'pmpro-bbpress' ); ?>
-				</button>
-			</div>
-			<div class="pmpro_section_inside">
-				<table class="form-table" role="presentation">
-					<tbody>
-						<tr>
-							<th scope="row"><label for="pmprobb_option_error_message"><?php esc_html_e( 'Error Message', 'pmpro-bbpress' ); ?></label></th>
-							<td><?php pmprobb_option_error_message(); ?></td>
-						</tr>
-						<tr>
-							<th scope="row"><label for="pmprobb_option_member_links"><?php esc_html_e( 'Member Links', 'pmpro-bbpress' ); ?></label></th>
-							<td><?php pmprobb_option_member_links(); ?></td>
-						</tr>
-						<tr>
-							<th scope="row"><label for="pmprobb_option_hide_member_forums"><?php esc_html_e( 'Hide Member Forums', 'pmpro-bbpress' ); ?></label></th>
-							<td><?php pmprobb_option_hide_member_forums(); ?></td>
-						</tr>
-						<tr>
-							<th scope="row"><label for="pmprobb_option_hide_forum_roles"><?php esc_html_e( 'Hide Forum Roles', 'pmpro-bbpress' ); ?></label></th>
-							<td><?php pmprobb_option_hide_forum_roles(); ?></td>
-						</tr>
-						<tr>
-							<th scope="row"><label for="pmprobb_option_show_membership_levels"><?php esc_html_e( 'Show Membership Levels', 'pmpro-bbpress' ); ?></label></th>
-							<td><?php pmprobb_option_show_membership_levels(); ?></td>
-						</tr>
-					</tbody>
-				</table>
-			</div> <!-- end pmpro_section_inside -->
-		</div> <!-- end pmpro_section -->
-
-		<div id="pmprobb-level-settings" class="pmpro_section" data-visibility="shown" data-activated="true">
-			<div class="pmpro_section_toggle">
-				<button class="pmpro_section-toggle-button" type="button" aria-expanded="true">
-					<span class="dashicons dashicons-arrow-up-alt2"></span>
+				<button class="pmpro_section-toggle-button" type="button" aria-expanded="false">
+					<span class="dashicons dashicons-arrow-down-alt2"></span>
 					<?php esc_html_e( 'Membership Level Settings', 'pmpro-bbpress' ); ?>
 				</button>
 			</div>
-			<div class="pmpro_section_inside">
+			<div class="pmpro_section_inside" style="display: none;">
 				<p><?php esc_html_e( 'Assign a forum role or background color to members of a specific level. These settings are managed in the "bbPress Settings" section when editing a membership level.', 'pmpro-bbpress' ); ?></p>
 				<?php if ( empty( $levels ) ) { ?>
 					<p><strong><?php esc_html_e( 'No membership levels found.', 'pmpro-bbpress' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'admin.php?page=pmpro-membershiplevels' ) ); ?>"><?php esc_html_e( 'Create a membership level to get started.', 'pmpro-bbpress' ); ?></a></p>
@@ -380,8 +386,6 @@ function pmprobb_settings_page() {
 				<?php } ?>
 			</div> <!-- end pmpro_section_inside -->
 		</div> <!-- end pmpro_section -->
-
-		<?php submit_button( __( 'Save Settings', 'pmpro-bbpress' ), 'primary', 'pmprobb_save_settings' ); ?>
 	</form>
 	<?php
 	require_once PMPRO_DIR . '/adminpages/admin_footer.php';

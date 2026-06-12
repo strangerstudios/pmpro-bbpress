@@ -2,77 +2,14 @@
 /*
 	General Forum Settings
 	- Error message when trying to access a forum.
-	- Give non-member users bbpress role. [none, spectator, participant]
+	- Show links to member forums on the Membership Account page.
+	- Hide member forums from forum lists and search.
 	- Hide forum roles in replies.
-	- Show membership level in replies.
-	- Show membership level on bbpress profile page.
+	- Show membership level in replies and on the bbpress profile page.
+
+	These fields are rendered on the Memberships > bbPress settings page.
+	See includes/admin-settings.php.
 */
-
-function pmprobb_bbp_admin_get_settings_sections($sections) {
-	$sections['bbp_settings_pmpro'] = array(
-		'title'    => esc_html__( 'Paid Memberships Pro', 'pmpro-bbpress' ),
-		'callback' => 'pmprobb_section_general',
-		'page'     => 'pmprobb',
-	);
-
-	return $sections;
-}
-add_filter('bbp_admin_get_settings_sections', 'pmprobb_bbp_admin_get_settings_sections');
-
-function pmprobb_bbp_admin_get_settings_fields($fields) {
-	$fields['bbp_settings_pmpro'] = array(
-		'pmprobb_option_error_message' => array(
-			'title'             => esc_html__( 'Error Message', 'pmpro-bbpress' ),
-			'callback'          => 'pmprobb_option_error_message',
-			'sanitize_callback' => 'sanitize_text_field',
-			'args'              => array()
-		),
-		'pmprobb_option_member_links' => array(
-			'title'             => esc_html__( 'Member Links', 'pmpro-bbpress' ),
-			'callback'          => 'pmprobb_option_member_links',
-			'sanitize_callback' => 'intval',
-			'args'              => array()
-		),
-		'pmprobb_option_hide_member_forums' => array(
-			'title'             => esc_html__( 'Hide Member Forums', 'pmpro-bbpress' ),
-			'callback'          => 'pmprobb_option_hide_member_forums',
-			'sanitize_callback' => 'intval',
-			'args'              => array()
-		),
-		'pmprobb_option_hide_forum_roles' => array(
-			'title'             => esc_html__( 'Hide Forum Roles', 'pmpro-bbpress' ),
-			'callback'          => 'pmprobb_option_hide_forum_roles',
-			'sanitize_callback' => 'intval',
-			'args'              => array()
-		),
-		'pmprobb_option_show_membership_levels' => array(
-			'title'             => esc_html__( 'Show Membership Levels', 'pmpro-bbpress' ),
-			'callback'          => 'pmprobb_option_show_membership_levels',
-			'sanitize_callback' => 'intval',
-			'args'              => array()
-		),
-	);
-
-	return $fields;
-}
-add_filter('bbp_admin_get_settings_fields', 'pmprobb_bbp_admin_get_settings_fields');
-
-function pmprobb_bbp_map_settings_meta_caps($caps, $cap, $user_id, $args) {
-	if($cap == 'bbp_settings_pmpro') {
-		$caps = array( bbpress()->admin->minimum_capability );
-	}
-
-	return $caps;
-}
-add_filter('bbp_map_settings_meta_caps', 'pmprobb_bbp_map_settings_meta_caps', 10, 4);
-
-/**
- * Options section.
- */
-function pmprobb_section_general() {
-?>
-<?php
-}
 
 /**
  * Error Message Option

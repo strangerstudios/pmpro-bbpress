@@ -15,7 +15,9 @@ define('PMPROBB_DIR', dirname(__FILE__));
 require_once(PMPROBB_DIR . '/includes/functions.php');
 require_once(PMPROBB_DIR . '/includes/options.php'); 
 require_once(PMPROBB_DIR . '/includes/options-membership-levels.php');
-require_once(PMPROBB_DIR . '/includes/shortcodes.php'); 
+require_once(PMPROBB_DIR . '/includes/admin-settings.php');
+require_once(PMPROBB_DIR . '/includes/buddypress.php');
+require_once(PMPROBB_DIR . '/includes/shortcodes.php');
 
 /**
  * Load text domain

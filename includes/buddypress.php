@@ -52,6 +52,7 @@ add_filter( 'pmpro_membership_content_filter', 'pmprobb_bp_suppress_archive_no_a
  * "Access Restricted" page if it is set, instead of the forums archive.
  *
  * Requires the PMPro BuddyPress Add On, which registers the page setting.
+ * Applies whenever that page is configured, on BuddyPress or BuddyBoss.
  *
  * @since TBD
  *
@@ -62,7 +63,7 @@ add_filter( 'pmpro_membership_content_filter', 'pmprobb_bp_suppress_archive_no_a
 function pmprobb_bp_forum_redirect_url( $redirect_to, $forum_id ) {
 	global $pmpro_pages;
 
-	if ( pmprobb_is_buddyboss() && ! empty( $pmpro_pages['pmprobp_restricted'] ) ) {
+	if ( ! empty( $pmpro_pages['pmprobp_restricted'] ) ) {
 		$redirect_to = get_permalink( $pmpro_pages['pmprobp_restricted'] );
 	}
 

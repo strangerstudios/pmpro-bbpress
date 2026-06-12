@@ -58,7 +58,10 @@ function pmprobb_bbp_admin_get_settings_fields( $fields ) {
 add_filter( 'bbp_admin_get_settings_fields', 'pmprobb_bbp_admin_get_settings_fields' );
 
 /**
- * Let forum admins see the Paid Memberships Pro section.
+ * Map the capability for the Paid Memberships Pro section.
+ *
+ * Uses manage_options to match the Memberships > Forums page the section
+ * links to, so users never see a link to a page they cannot access.
  *
  * @since TBD
  *
@@ -70,11 +73,7 @@ add_filter( 'bbp_admin_get_settings_fields', 'pmprobb_bbp_admin_get_settings_fie
  */
 function pmprobb_bbp_map_settings_meta_caps( $caps, $cap, $user_id, $args ) {
 	if ( 'bbp_settings_pmpro' === $cap ) {
-		if ( function_exists( 'bbpress' ) && ! empty( bbpress()->admin->minimum_capability ) ) {
-			$caps = array( bbpress()->admin->minimum_capability );
-		} else {
-			$caps = array( 'manage_options' );
-		}
+		$caps = array( 'manage_options' );
 	}
 
 	return $caps;

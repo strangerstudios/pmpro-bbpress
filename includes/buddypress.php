@@ -64,7 +64,11 @@ function pmprobb_bp_forum_redirect_url( $redirect_to, $forum_id ) {
 	global $pmpro_pages;
 
 	if ( ! empty( $pmpro_pages['pmprobp_restricted'] ) ) {
-		$redirect_to = get_permalink( $pmpro_pages['pmprobp_restricted'] );
+		// Guard against a deleted page: get_permalink() returns false then.
+		$permalink = get_permalink( $pmpro_pages['pmprobp_restricted'] );
+		if ( ! empty( $permalink ) ) {
+			$redirect_to = $permalink;
+		}
 	}
 
 	return $redirect_to;

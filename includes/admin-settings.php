@@ -238,20 +238,23 @@ function pmprobb_settings_page() {
 				<?php } elseif ( empty( $forums ) ) { ?>
 					<p><strong><?php esc_html_e( 'No forums found.', 'pmpro-bbpress' ); ?></strong></p>
 				<?php } else { ?>
-					<table class="widefat striped">
-						<thead>
-							<tr>
-								<th scope="col"><?php esc_html_e( 'Forum', 'pmpro-bbpress' ); ?></th>
-								<th scope="col"><?php esc_html_e( 'Requires Membership', 'pmpro-bbpress' ); ?></th>
-							</tr>
-						</thead>
+					<?php
+						// Build the selectors for the checkbox list based on number of levels.
+						$classes = array();
+						$classes[] = 'pmpro_checkbox_box';
+						if ( count( $levels ) > 5 ) {
+							$classes[] = 'pmpro_scrollable';
+						}
+						$class = implode( ' ', array_unique( $classes ) );
+					?>
+					<table class="form-table">
 						<tbody>
 							<?php
 							foreach ( $forums as $forum ) {
 								$forum_restrictions = isset( $restrictions[ $forum->ID ] ) ? $restrictions[ $forum->ID ] : array();
 								?>
 								<tr>
-									<td>
+									<th scope="row" valign="top">
 										<?php
 										echo esc_html( str_repeat( '— ', (int) $forum->pmprobb_depth ) );
 										$edit_link = get_edit_post_link( $forum->ID );
@@ -261,17 +264,19 @@ function pmprobb_settings_page() {
 											echo esc_html( get_the_title( $forum ) );
 										}
 										?>
-									</td>
+									</th>
 									<td>
-										<?php
-										foreach ( $levels as $level ) {
-											$field_id = 'pmprobb_forum_' . (int) $forum->ID . '_level_' . (int) $level->id;
-											?>
-											<span style="display: inline-block; margin: 0 1.5em 0.25em 0; white-space: nowrap;">
-												<input type="checkbox" id="<?php echo esc_attr( $field_id ); ?>" name="pmprobb_forum_levels[<?php echo (int) $forum->ID; ?>][]" value="<?php echo (int) $level->id; ?>" <?php checked( in_array( (int) $level->id, $forum_restrictions, true ) ); ?> />
-												<label for="<?php echo esc_attr( $field_id ); ?>"><?php echo esc_html( $level->name ); ?></label>
-											</span>
-										<?php } ?>
+										<div class="<?php echo esc_attr( $class ); ?>">
+											<?php
+											foreach ( $levels as $level ) {
+												$field_id = 'pmprobb_forum_' . (int) $forum->ID . '_level_' . (int) $level->id;
+												?>
+												<div class="pmpro_clickable">
+													<input type="checkbox" id="<?php echo esc_attr( $field_id ); ?>" name="pmprobb_forum_levels[<?php echo (int) $forum->ID; ?>][]" value="<?php echo (int) $level->id; ?>" <?php checked( in_array( (int) $level->id, $forum_restrictions, true ) ); ?>>
+													<label for="<?php echo esc_attr( $field_id ); ?>"><?php echo esc_html( $level->name ); ?></label>
+												</div>
+											<?php } ?>
+										</div>
 									</td>
 								</tr>
 							<?php } ?>

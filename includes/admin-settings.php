@@ -214,9 +214,13 @@ function pmprobb_settings_page() {
 		<h1><?php esc_html_e( 'Forums Integration', 'pmpro-bbpress' ); ?></h1>
 		<p>
 			<?php
-				$pmprobb_docs_link = '<a title="' . esc_attr__( 'Paid Memberships Pro - bbPress Add On Documentation', 'pmpro-bbpress' ) . '" target="_blank" rel="nofollow noopener" href="https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=plugin&utm_medium=pmpro-bbpress-settings&utm_campaign=add-ons">' . esc_html__( 'bbPress Integration', 'pmpro-bbpress' ) . '</a>';
+				esc_html_e( 'Restrict access to forums by membership level. These settings apply to forums powered by bbPress or BuddyBoss.', 'pmpro-bbpress' );
+			?>
+
+			<?php
+				$pmprobb_docs_link = '<a title="' . esc_attr__( 'Paid Memberships Pro - bbPress Add On Documentation', 'pmpro-bbpress' ) . '" target="_blank" rel="nofollow noopener" href="https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=plugin&utm_medium=pmpro-bbpress-settings&utm_campaign=add-ons">' . esc_html__( 'bbPress Integration Add On', 'pmpro-bbpress' ) . '</a>';
 				// translators: %s: Link to the bbPress Add On documentation.
-				printf( esc_html__( 'Restrict access to forums by membership level. These settings apply to forums powered by bbPress or BuddyBoss. Learn more about %s.', 'pmpro-bbpress' ), $pmprobb_docs_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( esc_html__( 'Learn more about the %s.', 'pmpro-bbpress' ), $pmprobb_docs_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			?>
 		</p>
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * The Memberships > bbPress settings page.
+ * The Memberships > Forums settings page.
  *
  * Consolidates all PMPro bbPress settings in one place: the general forum
  * settings (previously registered into the bbPress > Settings screen) and
@@ -13,7 +13,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Register the bbPress submenu under the Memberships menu.
+ * Register the Forums submenu under the Memberships menu.
  *
  * @since TBD
  */
@@ -24,8 +24,8 @@ function pmprobb_admin_menu() {
 
 	add_submenu_page(
 		'pmpro-dashboard',
-		__( 'bbPress', 'pmpro-bbpress' ),
-		__( 'bbPress', 'pmpro-bbpress' ),
+		__( 'Forums', 'pmpro-bbpress' ),
+		__( 'Forums', 'pmpro-bbpress' ),
 		'manage_options',
 		'pmpro-bbpress',
 		'pmprobb_settings_page'
@@ -211,7 +211,7 @@ function pmprobb_settings_page() {
 	<form action="" method="post">
 		<?php wp_nonce_field( 'pmprobb_save_settings', 'pmprobb_settings_nonce' ); ?>
 		<hr class="wp-header-end">
-		<h1><?php esc_html_e( 'bbPress Integration', 'pmpro-bbpress' ); ?></h1>
+		<h1><?php esc_html_e( 'Forums Integration', 'pmpro-bbpress' ); ?></h1>
 		<p>
 			<?php
 				$pmprobb_docs_link = '<a title="' . esc_attr__( 'Paid Memberships Pro - bbPress Add On Documentation', 'pmpro-bbpress' ) . '" target="_blank" rel="nofollow noopener" href="https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=plugin&utm_medium=pmpro-bbpress-settings&utm_campaign=add-ons">' . esc_html__( 'bbPress Integration', 'pmpro-bbpress' ) . '</a>';
@@ -259,7 +259,7 @@ function pmprobb_settings_page() {
 										echo esc_html( str_repeat( '— ', (int) $forum->pmprobb_depth ) );
 										$edit_link = get_edit_post_link( $forum->ID );
 										if ( ! empty( $edit_link ) ) {
-											echo '<a href="' . esc_url( $edit_link ) . '">' . esc_html( get_the_title( $forum ) ) . '</a>';
+											echo '<a href="' . esc_url( $edit_link ) . '" target="_blank">' . esc_html( get_the_title( $forum ) ) . '</a>';
 										} else {
 											echo esc_html( get_the_title( $forum ) );
 										}
@@ -330,7 +330,54 @@ function pmprobb_settings_page() {
 			</div>
 			<div class="pmpro_section_inside">
 				<p><?php esc_html_e( 'Assign a forum role or background color to members of a specific level. These settings are managed in the "bbPress Settings" section when editing a membership level.', 'pmpro-bbpress' ); ?></p>
-				<p><a href="<?php echo esc_url( admin_url( 'admin.php?page=pmpro-membershiplevels' ) ); ?>" class="button"><?php esc_html_e( 'Edit Membership Levels', 'pmpro-bbpress' ); ?></a></p>
+				<?php if ( empty( $levels ) ) { ?>
+					<p><strong><?php esc_html_e( 'No membership levels found.', 'pmpro-bbpress' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'admin.php?page=pmpro-membershiplevels' ) ); ?>"><?php esc_html_e( 'Create a membership level to get started.', 'pmpro-bbpress' ); ?></a></p>
+				<?php } else { ?>
+					<table class="widefat striped">
+						<thead>
+							<tr>
+								<th scope="col"><?php esc_html_e( 'Level', 'pmpro-bbpress' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Forum Role', 'pmpro-bbpress' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Background Color', 'pmpro-bbpress' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Actions', 'pmpro-bbpress' ); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							$options    = pmprobb_getOptions();
+							$roles      = function_exists( 'bbp_get_dynamic_roles' ) ? bbp_get_dynamic_roles() : array();
+							foreach ( $levels as $level ) {
+								$level_settings = isset( $options['levels'][ $level->id ] ) ? $options['levels'][ $level->id ] : array();
+								$role           = ! empty( $level_settings['role'] ) ? $level_settings['role'] : '';
+								if ( ! empty( $role ) && isset( $roles[ $role ]['name'] ) ) {
+									$role_name = $roles[ $role ]['name'];
+								} elseif ( ! empty( $role ) ) {
+									$role_name = $role;
+								} else {
+									$role_name = __( 'Default Behavior', 'pmpro-bbpress' );
+								}
+								$color    = ! empty( $level_settings['color'] ) ? $level_settings['color'] : '';
+								$edit_url = admin_url( 'admin.php?page=pmpro-membershiplevels&edit=' . (int) $level->id );
+								?>
+								<tr>
+									<td><a href="<?php echo esc_url( $edit_url ); ?>" target="_blank"><?php echo esc_html( $level->name ); ?></a></td>
+									<td><?php echo esc_html( $role_name ); ?></td>
+									<td>
+										<?php if ( ! empty( $color ) ) {
+											$color_css = ( 0 === strpos( $color, '#' ) ) ? $color : '#' . $color;
+											?>
+											<span style="display: inline-block; width: 1em; height: 1em; vertical-align: middle; border: 1px solid #ccc; background-color: <?php echo esc_attr( $color_css ); ?>;"></span>
+											<code><?php echo esc_html( $color ); ?></code>
+										<?php } else {
+											esc_html_e( 'None', 'pmpro-bbpress' );
+										} ?>
+									</td>
+									<td><a href="<?php echo esc_url( $edit_url ); ?>" target="_blank"><?php esc_html_e( 'Edit Level', 'pmpro-bbpress' ); ?></a></td>
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+				<?php } ?>
 			</div> <!-- end pmpro_section_inside -->
 		</div> <!-- end pmpro_section -->
 

@@ -105,7 +105,7 @@ The bbPress Integration for Paid Memberships Pro includes one shortcode to displ
 
 == Changelog ==
 = TBD =
-* FEATURE: Added a "Memberships" > "bbPress" settings page that consolidates all Add On settings: per-forum membership restrictions, the general forum settings previously found on the bbPress > Settings screen, and links to level-specific settings. Compatible with bbPress and BuddyBoss Platform.
+* FEATURE: Added a "Memberships" > "Forums" settings page that consolidates all Add On settings: per-forum membership restrictions, the general forum settings previously found on the bbPress > Settings screen, and links to level-specific settings. Compatible with bbPress and BuddyBoss Platform. The bbPress > Settings screen now shows a Paid Memberships Pro section linking to the new page.
 * ENHANCEMENT: When BuddyBoss Platform is active, visitors without access to a single forum are now redirected to the "Access Restricted" page registered by the PMPro BuddyPress Add On if one is set.
 * ENHANCEMENT: When BuddyBoss Platform is active, the no access message is no longer shown for individual restricted forums on the forum archive page.
 

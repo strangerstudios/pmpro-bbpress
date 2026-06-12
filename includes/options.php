@@ -7,9 +7,102 @@
 	- Hide forum roles in replies.
 	- Show membership level in replies and on the bbpress profile page.
 
-	These fields are rendered on the Memberships > bbPress settings page.
+	These fields are rendered on the Memberships > Forums settings page.
 	See includes/admin-settings.php.
 */
+
+/**
+ * Add a Paid Memberships Pro section to the bbPress > Settings screen that
+ * links to the Memberships > Forums settings page, since users may expect
+ * to find these settings here.
+ *
+ * @since TBD
+ *
+ * @param array $sections bbPress settings sections.
+ * @return array
+ */
+function pmprobb_bbp_admin_get_settings_sections( $sections ) {
+	$sections['bbp_settings_pmpro'] = array(
+		'title'    => esc_html__( 'Paid Memberships Pro', 'pmpro-bbpress' ),
+		'callback' => 'pmprobb_bbp_settings_section_link',
+		'page'     => 'pmprobb',
+	);
+
+	return $sections;
+}
+add_filter( 'bbp_admin_get_settings_sections', 'pmprobb_bbp_admin_get_settings_sections' );
+
+/**
+ * Register a single display-only field for the section.
+ *
+ * bbPress skips sections that have no fields, so the link is rendered as a
+ * field. Nothing is saved for it.
+ *
+ * @since TBD
+ *
+ * @param array $fields bbPress settings fields.
+ * @return array
+ */
+function pmprobb_bbp_admin_get_settings_fields( $fields ) {
+	$fields['bbp_settings_pmpro'] = array(
+		'pmprobb_settings' => array(
+			'title'             => esc_html__( 'Forum Settings', 'pmpro-bbpress' ),
+			'callback'          => 'pmprobb_bbp_settings_field_link',
+			'sanitize_callback' => '__return_false',
+			'args'              => array(),
+		),
+	);
+
+	return $fields;
+}
+add_filter( 'bbp_admin_get_settings_fields', 'pmprobb_bbp_admin_get_settings_fields' );
+
+/**
+ * Let forum admins see the Paid Memberships Pro section.
+ *
+ * @since TBD
+ *
+ * @param array  $caps    Capabilities for meta capability.
+ * @param string $cap     Capability name.
+ * @param int    $user_id User id.
+ * @param array  $args    Arguments.
+ * @return array
+ */
+function pmprobb_bbp_map_settings_meta_caps( $caps, $cap, $user_id, $args ) {
+	if ( 'bbp_settings_pmpro' === $cap ) {
+		if ( function_exists( 'bbpress' ) && ! empty( bbpress()->admin->minimum_capability ) ) {
+			$caps = array( bbpress()->admin->minimum_capability );
+		} else {
+			$caps = array( 'manage_options' );
+		}
+	}
+
+	return $caps;
+}
+add_filter( 'bbp_map_settings_meta_caps', 'pmprobb_bbp_map_settings_meta_caps', 10, 4 );
+
+/**
+ * Section description for the Paid Memberships Pro section.
+ *
+ * @since TBD
+ */
+function pmprobb_bbp_settings_section_link() {
+	?>
+	<p><?php esc_html_e( 'Restrict access to forums by membership level with the Paid Memberships Pro - bbPress Add On.', 'pmpro-bbpress' ); ?></p>
+	<?php
+}
+
+/**
+ * Display-only field linking to the Memberships > Forums settings page.
+ *
+ * @since TBD
+ */
+function pmprobb_bbp_settings_field_link() {
+	?>
+	<a href="<?php echo esc_url( admin_url( 'admin.php?page=pmpro-bbpress' ) ); ?>" class="button"><?php esc_html_e( 'Manage Forum Membership Settings', 'pmpro-bbpress' ); ?></a>
+	<p class="description"><?php esc_html_e( 'Membership settings for forums are managed on the Memberships > Forums screen.', 'pmpro-bbpress' ); ?></p>
+	<?php
+}
 
 /**
  * Error Message Option

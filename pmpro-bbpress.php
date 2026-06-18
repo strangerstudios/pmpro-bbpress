@@ -10,12 +10,17 @@
  * Domain Path: /languages
  */
 
+// Constants
+define( 'PMPROBB_DIR', dirname( __FILE__ ) );
+define( 'PMPROBB_VERSION', '1.8' );
+
 //includes
-define('PMPROBB_DIR', dirname(__FILE__));
 require_once(PMPROBB_DIR . '/includes/functions.php');
 require_once(PMPROBB_DIR . '/includes/options.php'); 
 require_once(PMPROBB_DIR . '/includes/options-membership-levels.php');
-require_once(PMPROBB_DIR . '/includes/shortcodes.php'); 
+require_once(PMPROBB_DIR . '/includes/admin-settings.php');
+require_once(PMPROBB_DIR . '/includes/buddypress.php');
+require_once(PMPROBB_DIR . '/includes/shortcodes.php');
 
 /**
  * Load text domain
@@ -176,6 +181,13 @@ function pmpro_bbp_membership_msg() {
   }
 }
 add_action('bbp_template_before_forums_index','pmpro_bbp_membership_msg');
+
+/* Enqueue styles for the membership message alert */
+function pmpro_bbp_enqueue_styles() {
+	wp_enqueue_style( 'pmpro-bbpress', plugins_url( 'css/pmpro-bbpress.css', __FILE__ ), array(), PMPROBB_VERSION );
+	
+}
+add_action( 'wp_enqueue_scripts', 'pmpro_bbp_enqueue_styles' );
 
 /*
  * Add topics and forums to pmpro_search_query

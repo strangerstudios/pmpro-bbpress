@@ -1,0 +1,22 @@
+p.pmpro_bbp_membership_msg {
+	border-width: 1px;
+	border-style: solid;
+	padding: 0 0.6em;
+	margin: 5px 0 15px;
+	border-radius: 3px;
+	background-color: var(--pmpro--color--alert-background, #fff8e0);
+	border-color: var(--pmpro--color--alert-border, #ffeeba);
+	color: var(--pmpro--color--alert-text, #6C5101);
+	clear: both;
+	font-size: 12px;
+	line-height: 1.4;
+}
+
+p.pmpro_bbp_membership_msg a {
+	color: var(--pmpro--color--alert-link, #66512c);
+	text-decoration: none;
+}
+
+p.pmpro_bbp_membership_msg a:hover {
+	color: var(--pmpro--color--alert-text, #6C5101);
+}

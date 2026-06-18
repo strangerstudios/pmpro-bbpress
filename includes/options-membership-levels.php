@@ -36,8 +36,15 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 		$forum_color = '';
 	
 ?>
-
-<h2 class="topborder"><?php esc_html_e('bbPress Settings', 'pmpro-bbpress');?></h2>
+<hr />
+<h2><?php esc_html_e('bbPress Settings', 'pmpro-bbpress');?></h2>
+<p>
+	<?php
+		$pmprobb_docs_link = '<a title="' . esc_attr__( 'Paid Memberships Pro - bbPress Add On Documentation', 'pmpro-bbpress' ) . '" target="_blank" rel="nofollow noopener" href="https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=plugin&utm_medium=pmpro-bbpress-settings&utm_campaign=add-ons">' . esc_html__( 'bbPress Integration Add On', 'pmpro-bbpress' ) . '</a>';
+		// translators: %s: Link to the bbPress Add On documentation.
+		printf( esc_html__( 'Learn more about the %s.', 'pmpro-bbpress' ), $pmprobb_docs_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
+</p>
 <table>
 <tbody class="form-table">
 	<tr>

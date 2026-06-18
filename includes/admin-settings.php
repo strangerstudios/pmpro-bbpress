@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Register the Forums submenu under the Memberships menu.
  *
- * @since TBD
+ * @since 1.9
  */
 function pmprobb_admin_menu() {
 	if ( ! defined( 'PMPRO_VERSION' ) ) {
@@ -37,7 +37,7 @@ add_action( 'admin_menu', 'pmprobb_admin_menu', 20 );
  * Get all forums ordered hierarchically (parents followed by their children),
  * each annotated with a pmprobb_depth property for indentation.
  *
- * @since TBD
+ * @since 1.9
  *
  * @return WP_Post[] Forum posts, each with a ->pmprobb_depth int property.
  */
@@ -92,7 +92,7 @@ function pmprobb_get_forums() {
 /**
  * Get a map of forum_id => array of required level ids, in one query.
  *
- * @since TBD
+ * @since 1.9
  *
  * @param int[] $forum_ids Forum post IDs.
  * @return array<int,int[]>
@@ -125,7 +125,7 @@ function pmprobb_get_forum_restrictions( $forum_ids ) {
 /**
  * Persist the required levels for a single forum into pmpro_memberships_pages.
  *
- * @since TBD
+ * @since 1.9
  *
  * @param int   $forum_id  Forum post ID (stored as page_id).
  * @param int[] $level_ids Required membership level ids. An empty array clears all restrictions.
@@ -158,7 +158,7 @@ function pmprobb_update_forum_restrictions( $forum_id, $level_ids ) {
 /**
  * Render the Memberships > bbPress settings page (and handle the form submission).
  *
- * @since TBD
+ * @since 1.9
  */
 function pmprobb_settings_page() {
 	global $msg, $msgt;

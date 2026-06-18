@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Whether BuddyBoss Platform is active.
  *
- * @since TBD
+ * @since 1.9
  *
  * @return bool
  */
@@ -26,7 +26,7 @@ function pmprobb_is_buddyboss() {
  * since some forums in the list may be locked and others not. Direct access
  * to a restricted forum still redirects via pmprobbp_check_forum().
  *
- * @since TBD
+ * @since 1.9
  *
  * @param mixed  $override  False to keep default behavior, or content to return.
  * @param string $content   The original post content.
@@ -54,7 +54,7 @@ add_filter( 'pmpro_membership_content_filter', 'pmprobb_bp_suppress_archive_no_a
  * Requires the PMPro BuddyPress Add On, which registers the page setting.
  * Applies whenever that page is configured, on BuddyPress or BuddyBoss.
  *
- * @since TBD
+ * @since 1.9
  *
  * @param string $redirect_to Default redirect URL (forums archive + noaccess).
  * @param int    $forum_id    The restricted forum's ID.

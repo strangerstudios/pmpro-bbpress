@@ -16,7 +16,7 @@
  * links to the Memberships > Forums settings page, since users may expect
  * to find these settings here.
  *
- * @since TBD
+ * @since 1.9
  *
  * @param array $sections bbPress settings sections.
  * @return array
@@ -38,7 +38,7 @@ add_filter( 'bbp_admin_get_settings_sections', 'pmprobb_bbp_admin_get_settings_s
  * bbPress skips sections that have no fields, so the link is rendered as a
  * field. Nothing is saved for it.
  *
- * @since TBD
+ * @since 1.9
  *
  * @param array $fields bbPress settings fields.
  * @return array
@@ -63,7 +63,7 @@ add_filter( 'bbp_admin_get_settings_fields', 'pmprobb_bbp_admin_get_settings_fie
  * Uses manage_options to match the Memberships > Forums page the section
  * links to, so users never see a link to a page they cannot access.
  *
- * @since TBD
+ * @since 1.9
  *
  * @param array  $caps    Capabilities for meta capability.
  * @param string $cap     Capability name.
@@ -83,7 +83,7 @@ add_filter( 'bbp_map_settings_meta_caps', 'pmprobb_bbp_map_settings_meta_caps', 
 /**
  * Section description for the Paid Memberships Pro section.
  *
- * @since TBD
+ * @since 1.9
  */
 function pmprobb_bbp_settings_section_link() {
 	?>
@@ -94,7 +94,7 @@ function pmprobb_bbp_settings_section_link() {
 /**
  * Display-only field linking to the Memberships > Forums settings page.
  *
- * @since TBD
+ * @since 1.9
  */
 function pmprobb_bbp_settings_field_link() {
 	?>

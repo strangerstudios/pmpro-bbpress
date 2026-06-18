@@ -1,10 +1,10 @@
 === bbPress Restrict Membership Forum & Private Replies for Members Only with Paid Memberships Pro ===
 Contributors: strangerstudios, paidmembershipspro
 Tags: discussion, forum, bbpress, paid memberships pro, pmpro
-Requires at least: 5.2
-Tested up to: 6.6
-Requires PHP: 5.6
-Stable tag: 1.8
+Requires at least: 6.0
+Tested up to: 7.0
+Requires PHP: 7.4
+Stable tag: 1.9
 
 Restrict access to bbPress for free or premium members by integrating bbPress with the top WordPress membership plugin Paid Memberships Pro.
 
@@ -104,7 +104,7 @@ The bbPress Integration for Paid Memberships Pro includes one shortcode to displ
 3. Specifty additional bbPress settings specific to a membership level on the Memberships > Settings > Membership Levels screen in the WordPress admin.
 
 == Changelog ==
-= TBD =
+= 1.9 - 2026-06-18 =
 * FEATURE: Added a "Memberships" > "Forums" settings page that consolidates all Add On settings: per-forum membership restrictions, the general forum settings previously found on the bbPress > Settings screen, and links to level-specific settings. Compatible with bbPress and BuddyBoss Platform. The bbPress > Settings screen now shows a Paid Memberships Pro section linking to the new page.
 * ENHANCEMENT: Visitors without access to a single forum are now redirected to the "Access Restricted" page registered by the PMPro BuddyPress Add On if one is set. Applies on BuddyPress and BuddyBoss sites.
 * ENHANCEMENT: When BuddyBoss Platform is active, the no access message is no longer shown for individual restricted forums on the forum archive page.

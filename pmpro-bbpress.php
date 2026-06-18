@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
  * Description: Restrict access to bbPress for free or premium members by integrating bbPress with Paid Memberships Pro.
- * Version: 1.8
+ * Version: 1.9
  * Author: Paid Memberships Pro
  * Author URI: https://www.paidmembershipspro.com
  * Text Domain: pmpro-bbpress
@@ -12,7 +12,7 @@
 
 // Constants
 define( 'PMPROBB_DIR', dirname( __FILE__ ) );
-define( 'PMPROBB_VERSION', '1.8' );
+define( 'PMPROBB_VERSION', '1.9' );
 
 //includes
 require_once(PMPROBB_DIR . '/includes/functions.php');
@@ -368,11 +368,11 @@ add_filter ('bbp_before_get_reply_author_link_parse_args', 'pmprobb_pmpro_hide_r
     Change user's forum role when they change levels.
     TODO: For MMPU compatibility, we need to get all of the user's Levels
           and use the highest role found.
-	@deprecated TBD
+	@deprecated 1.9
 */
 function pmprobb_pmpro_after_change_membership_level( $level_id, $user_id, $cancel_level_id ) {
 	// Mark as deprecated.
-	_deprecated_function( __FUNCTION__, 'TBD', 'pmprobb_pmpro_after_change_membership_level' );
+	_deprecated_function( __FUNCTION__, '1.9', 'pmprobb_pmpro_after_change_membership_level' );
 
     // Make sure bbPress is active.
     if ( ! function_exists( 'bbp_set_user_role' ) ) {
@@ -402,7 +402,7 @@ function pmprobb_pmpro_after_change_membership_level( $level_id, $user_id, $canc
 /**
  * Change user's forum role when they change levels.
  *
- * @since TBD
+ * @since 1.9
  *
  * @param array $pmpro_old_user_levels Array of user_id => old_levels_for_user.
  */

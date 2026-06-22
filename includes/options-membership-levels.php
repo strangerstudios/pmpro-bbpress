@@ -51,7 +51,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 		<th scope="row" valign="top"><label for="forum_role"><?php _e('Forum Role', 'pmpro-bbpress');?></label></th>
 		<td>			
 			<select id="forum_role" name="forum_role">
-				<option value="" <?php selected($forum_role, '');?>><?php esc_html_e( 'Default Behavior', 'pmpro-bbpress' ); ?></option>
+				<option value="" <?php selected($forum_role, '');?>><?php esc_html_e( 'Preserve Current Forum Role', 'pmpro-bbpress' ); ?></option>
 				<?php
 					$roles = bbp_get_dynamic_roles();
 					if(!empty($roles)) {
@@ -63,7 +63,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 					}
 				?>
 			</select>
-			<p class="description"><?php esc_html_e( 'Leave as "Default Behavior" if you don\'t need to change roles by membership level.', 'pmpro-bbpress' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Leave as "Preserve Current Forum Role" to keep the user\'s existing forum role unchanged when they have this level. Choose a role only if this level should set a specific forum role.', 'pmpro-bbpress' ); ?></p>
 		</td>
 	</tr>
 	<tr>

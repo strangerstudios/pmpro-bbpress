@@ -402,6 +402,25 @@ function pmprobb_pmpro_after_change_membership_level( $level_id, $user_id, $canc
 /**
  * Change user's forum role when they change levels.
  *
+ * bbPress only supports one forum role per user, so we can't add and remove
+ * roles the way the WP Roles Add On does. Instead we record the role PMPro
+ * assigns ( user meta 'pmprobb_assigned_role' ) so that on later level changes
+ * we can tell a level-granted role apart from one set manually on the Edit User
+ * screen. PMPro only ever changes a role it assigned itself:
+ *
+ * - A current level grants a role and PMPro owns (or has not claimed) the slot:
+ *   assign the role and record it.
+ * - No current level grants a role and PMPro still owns the slot: revoke the
+ *   role and fall back to the bbPress default.
+ * - The user's current role was set manually (does not match what PMPro
+ *   recorded): leave it alone.
+ *
+ * Existing role holders predate the 'pmprobb_assigned_role' meta, so we also
+ * infer ownership from the levels the user just left: if the current role is
+ * exactly what those levels would have granted, PMPro most likely set it. This
+ * inference is used only to (re)claim the slot when applying a role — never to
+ * revoke one — so a role we cannot prove we assigned is never removed.
+ *
  * @since 1.9
  *
  * @param array $pmpro_old_user_levels Array of user_id => old_levels_for_user.
@@ -412,7 +431,13 @@ function pmprobb_after_all_membership_level_changes( $pmpro_old_user_levels ) {
 		return;
 	}
 
-	// Loop through all users.
+	// The role to fall back to when PMPro revokes a role it assigned.
+	$bbp_default_role = get_option( '_bbp_default_role', 'bbp_participant' );
+	if ( empty( $bbp_default_role ) ) {
+		$bbp_default_role = 'bbp_participant';
+	}
+
+	// Loop through all users who changed levels.
 	foreach ( $pmpro_old_user_levels as $user_id => $old_levels ) {
 		// Get the user who changed levels.
 		$user = get_userdata( $user_id );
@@ -422,43 +447,45 @@ function pmprobb_after_all_membership_level_changes( $pmpro_old_user_levels ) {
 			continue;
 		}
 
-		// bbPress only supports one role per user, so let's get all of the roles
-		// assigned to this user's current levels and find the one with the
-		// most capabilities. This will be the BP role we assign to the user.
-		$new_levels = pmpro_getMembershipLevelsForUser( $user_id );
-		$bp_role_options = array();
-		foreach ( $new_levels as $new_level ) {
-			$bp_role_options[] = pmprobb_get_role_for_level( $new_level->id );
-		}
+		// The forum role the user's current levels call for. Empty when every
+		// current level is set to "Preserve Current Forum Role". When more than
+		// one current level grants a role, the highest-capability one wins.
+		$new_levels   = pmpro_getMembershipLevelsForUser( $user_id );
+		$desired_role = pmprobb_get_highest_role_for_levels( $new_levels );
 
-		// Remove duplicates in the array of role options.
-		$bp_role_options = array_unique( $bp_role_options );		
+		// The user's current forum role and the role PMPro last assigned them.
+		$current_role  = bbp_get_user_role( $user_id );
+		$assigned_role = get_user_meta( $user_id, 'pmprobb_assigned_role', true );
 
-		// Find the role with the most capabilities.
-		$bp_new_role   = '';
-		$new_role_caps = 0;
-		foreach ( $bp_role_options as $bp_role_option ) {
-			// Get the capabilities for this role.
-			$role = get_role( $bp_role_option );
-			if ( empty( $role ) ) {
-				continue;
+		// PMPro owns the slot only if the current role is the one it recorded.
+		$pmpro_owns = ( ! empty( $assigned_role ) && $assigned_role === $current_role );
+
+		// An empty role or the default role is an open slot PMPro may claim. Any
+		// other role is treated as a manual assignment and left alone.
+		$slot_is_open = ( empty( $current_role ) || $current_role === $bbp_default_role );
+
+		// For users who predate the assigned-role meta: infer that PMPro set the
+		// current role if it matches what the levels they just left would have
+		// granted. Only used to claim the slot when applying a role, below.
+		$old_granted       = pmprobb_get_highest_role_for_levels( $old_levels );
+		$pmpro_set_current = ( ! empty( $old_granted ) && $old_granted === $current_role );
+
+		if ( ! empty( $desired_role ) ) {
+			// A current level grants a forum role. Apply it if PMPro owns the
+			// slot, the slot is open, or PMPro appears to have set the current
+			// role via a prior level, so we never override a role set manually
+			// outside of PMPro.
+			if ( $pmpro_owns || $slot_is_open || $pmpro_set_current ) {
+				bbp_set_user_role( $user_id, $desired_role );
+				update_user_meta( $user_id, 'pmprobb_assigned_role', $desired_role );
 			}
-
-			// If this role has more capabilities than the current role, use it.
-			$role_caps = count( $role->capabilities );
-			if ( $role_caps > $new_role_caps ) {
-				$bp_new_role   = $bp_role_option;
-				$new_role_caps = $role_caps;
-			}
-		}
-
-		// If the user has a new role, set it.
-		if ( ! empty( $bp_new_role ) ) {
-			bbp_set_user_role( $user_id, $bp_new_role );
-		} else {
-			// The user no longer has a bbPress role given by PMPro. Set them to the default.
-			$bbp_default_role = get_option( '_bbp_default_role', 'bbp_participant' );
+		} elseif ( $pmpro_owns ) {
+			// No current level grants a role and PMPro recorded assigning the
+			// current role, so revoke it and fall back to the default. Inferred
+			// ownership is deliberately not enough to revoke — we only remove a
+			// role we explicitly recorded assigning.
 			bbp_set_user_role( $user_id, $bbp_default_role );
+			delete_user_meta( $user_id, 'pmprobb_assigned_role' );
 		}
 	}
 }

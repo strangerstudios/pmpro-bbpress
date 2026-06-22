@@ -23,15 +23,68 @@ function pmprobb_getOptions($force = false)
 }
 
 /**
- * Get the bbPress role for a given level.
+ * Get the bbPress forum role configured for a given level.
+ *
+ * Returns an empty string when the level has no custom forum role set
+ * ("Preserve Current Forum Role"), so callers can leave the user's
+ * existing forum role untouched instead of forcing the default role.
+ *
+ * @param int $level_id The membership level ID.
+ * @return string The configured forum role, or '' if none is set.
  */
 function pmprobb_get_role_for_level( $level_id ) {
 	$options = pmprobb_getOptions();
-    if ( ! empty( $options['levels'] ) 
-      && ! empty( $options['levels'][$level_id] )
-      && ! empty( $options['levels'][$level_id]['role'] ) ) {
-		  return $options['levels'][$level_id]['role'];
-	} else {
-		return get_option( '_bbp_default_role', 'bbp_participant' );
+	if ( ! empty( $options['levels'] )
+	  && ! empty( $options['levels'][$level_id] )
+	  && ! empty( $options['levels'][$level_id]['role'] ) ) {
+		return $options['levels'][$level_id]['role'];
 	}
+
+	return '';
+}
+
+/**
+ * Get the highest-capability bbPress forum role assigned across a set of levels.
+ *
+ * Levels set to "Preserve Current Forum Role" assign no role and are skipped.
+ * bbPress only supports one role per user, so when multiple levels assign a
+ * role, the one with the most capabilities wins.
+ *
+ * @since TBD
+ *
+ * @param array $levels Array of level objects (each with an ->id property).
+ * @return string The highest-capability forum role, or '' if no level assigns one.
+ */
+function pmprobb_get_highest_role_for_levels( $levels ) {
+	if ( empty( $levels ) || ! is_array( $levels ) ) {
+		return '';
+	}
+
+	// Collect the custom forum roles assigned by these levels.
+	$role_options = array();
+	foreach ( $levels as $level ) {
+		$role = pmprobb_get_role_for_level( $level->id );
+		if ( ! empty( $role ) ) {
+			$role_options[] = $role;
+		}
+	}
+	$role_options = array_unique( $role_options );
+
+	// Find the role with the most capabilities.
+	$highest_role = '';
+	$highest_caps = 0;
+	foreach ( $role_options as $role_option ) {
+		$role = get_role( $role_option );
+		if ( empty( $role ) ) {
+			continue;
+		}
+
+		$role_caps = count( $role->capabilities );
+		if ( $role_caps > $highest_caps ) {
+			$highest_role = $role_option;
+			$highest_caps = $role_caps;
+		}
+	}
+
+	return $highest_role;
 }

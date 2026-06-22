@@ -415,6 +415,12 @@ function pmprobb_pmpro_after_change_membership_level( $level_id, $user_id, $canc
  * - The user's current role was set manually (does not match what PMPro
  *   recorded): leave it alone.
  *
+ * Existing role holders predate the 'pmprobb_assigned_role' meta, so we also
+ * infer ownership from the levels the user just left: if the current role is
+ * exactly what those levels would have granted, PMPro most likely set it. This
+ * inference is used only to (re)claim the slot when applying a role — never to
+ * revoke one — so a role we cannot prove we assigned is never removed.
+ *
  * @since 1.9
  *
  * @param array $pmpro_old_user_levels Array of user_id => old_levels_for_user.
@@ -432,7 +438,7 @@ function pmprobb_after_all_membership_level_changes( $pmpro_old_user_levels ) {
 	}
 
 	// Loop through all users who changed levels.
-	foreach ( array_keys( $pmpro_old_user_levels ) as $user_id ) {
+	foreach ( $pmpro_old_user_levels as $user_id => $old_levels ) {
 		// Get the user who changed levels.
 		$user = get_userdata( $user_id );
 
@@ -458,17 +464,26 @@ function pmprobb_after_all_membership_level_changes( $pmpro_old_user_levels ) {
 		// other role is treated as a manual assignment and left alone.
 		$slot_is_open = ( empty( $current_role ) || $current_role === $bbp_default_role );
 
+		// For users who predate the assigned-role meta: infer that PMPro set the
+		// current role if it matches what the levels they just left would have
+		// granted. Only used to claim the slot when applying a role, below.
+		$old_granted       = pmprobb_get_highest_role_for_levels( $old_levels );
+		$pmpro_set_current = ( ! empty( $old_granted ) && $old_granted === $current_role );
+
 		if ( ! empty( $desired_role ) ) {
-			// A current level grants a forum role. Apply it only if PMPro owns
-			// the slot or the slot is open, so we never override a role set
-			// manually outside of PMPro.
-			if ( $pmpro_owns || $slot_is_open ) {
+			// A current level grants a forum role. Apply it if PMPro owns the
+			// slot, the slot is open, or PMPro appears to have set the current
+			// role via a prior level, so we never override a role set manually
+			// outside of PMPro.
+			if ( $pmpro_owns || $slot_is_open || $pmpro_set_current ) {
 				bbp_set_user_role( $user_id, $desired_role );
 				update_user_meta( $user_id, 'pmprobb_assigned_role', $desired_role );
 			}
 		} elseif ( $pmpro_owns ) {
-			// No current level grants a role and the user still has the role
-			// PMPro assigned, so revoke it and fall back to the default.
+			// No current level grants a role and PMPro recorded assigning the
+			// current role, so revoke it and fall back to the default. Inferred
+			// ownership is deliberately not enough to revoke — we only remove a
+			// role we explicitly recorded assigning.
 			bbp_set_user_role( $user_id, $bbp_default_role );
 			delete_user_meta( $user_id, 'pmprobb_assigned_role' );
 		}

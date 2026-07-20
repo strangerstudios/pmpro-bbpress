@@ -79,8 +79,8 @@ function pmprobb_get_highest_role_for_levels( $levels ) {
 			continue;
 		}
 
-		$role_caps = count( $role->capabilities );
-		if ( $role_caps > $highest_caps ) {
+		$role_caps = count( array_filter( $role->capabilities ) );
+		if ( empty( $highest_role ) || $role_caps > $highest_caps ) {
 			$highest_role = $role_option;
 			$highest_caps = $role_caps;
 		}

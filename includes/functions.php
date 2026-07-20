@@ -50,7 +50,7 @@ function pmprobb_get_role_for_level( $level_id ) {
  * bbPress only supports one role per user, so when multiple levels assign a
  * role, the one with the most capabilities wins.
  *
- * @since TBD
+ * @since 1.9.1
  *
  * @param array $levels Array of level objects (each with an ->id property).
  * @return string The highest-capability forum role, or '' if no level assigns one.

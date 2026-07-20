@@ -4,7 +4,7 @@ Tags: discussion, forum, bbpress, paid memberships pro, pmpro
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.9
+Stable tag: 1.9.1
 
 Restrict access to bbPress for free or premium members by integrating bbPress with the top WordPress membership plugin Paid Memberships Pro.
 
@@ -106,8 +106,8 @@ The bbPress Integration for Paid Memberships Pro includes one shortcode to displ
 3. Specifty additional bbPress settings specific to a membership level on the Memberships > Settings > Membership Levels screen in the WordPress admin.
 
 == Changelog ==
-= TBD =
-* BUG FIX: Membership level changes no longer overwrite a forum role that was set manually (e.g. a member promoted to Moderator on their user profile). A forum role assigned by a membership level is still applied, updated, and removed automatically; a level set to "Preserve Current Forum Role" (previously "Default Behavior") no longer forces the member back to the default forum role.
+= 1.9.1 - 2026-07-20 =
+* BUG FIX: Membership level changes no longer overwrite forum roles assigned manually. Levels set to "Preserve Current Forum Role" no longer force members back to the default role, and members with multiple levels now receive the forum role with the most enabled capabilities. #52 (@kimcoleman)
 
 = 1.9 - 2026-06-18 =
 * FEATURE: Added a "Memberships" > "Forums" settings page that consolidates all Add On settings: per-forum membership restrictions, the general forum settings previously found on the bbPress > Settings screen, and links to level-specific settings. Compatible with bbPress and BuddyBoss Platform. The bbPress > Settings screen now shows a Paid Memberships Pro section linking to the new page.

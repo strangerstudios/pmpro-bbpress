@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Paid Memberships Pro - bbPress Add On plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Paid Memberships Pro - bbPress Add On 1.9\n"
+"Project-Id-Version: Paid Memberships Pro - bbPress Add On 1.9.1\n"
 "Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
 "Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-18T09:26:09+00:00\n"
+"POT-Creation-Date: 2026-07-20T15:37:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pmpro-bbpress\n"
@@ -56,6 +56,7 @@ msgstr ""
 #: pmpro-bbpress.php:453
 #: pmpro-bbpress.php:520
 #: pmpro-bbpress.php:532
+#: pmpro-bbpress.php:559
 msgid "Replies viewable by members only"
 msgstr ""
 
@@ -65,6 +66,7 @@ msgstr ""
 #: pmpro-bbpress.php:520
 #: pmpro-bbpress.php:587
 #: pmpro-bbpress.php:599
+#: pmpro-bbpress.php:626
 msgid "View Documentation"
 msgstr ""
 
@@ -74,6 +76,7 @@ msgstr ""
 #: pmpro-bbpress.php:521
 #: pmpro-bbpress.php:588
 #: pmpro-bbpress.php:600
+#: pmpro-bbpress.php:627
 msgid "Visit Customer Support Forum"
 msgstr ""
 
@@ -180,6 +183,7 @@ msgstr ""
 #: pmpro-bbpress.php:408
 #: pmpro-bbpress.php:475
 #: pmpro-bbpress.php:487
+#: pmpro-bbpress.php:514
 msgid "Membership Level"
 msgid_plural "Membership Levels"
 msgstr[0] ""
@@ -188,12 +192,14 @@ msgstr[1] ""
 #: pmpro-bbpress.php:520
 #: pmpro-bbpress.php:587
 #: pmpro-bbpress.php:599
+#: pmpro-bbpress.php:626
 msgid "Docs"
 msgstr ""
 
 #: pmpro-bbpress.php:521
 #: pmpro-bbpress.php:588
 #: pmpro-bbpress.php:600
+#: pmpro-bbpress.php:627
 msgid "Support"
 msgstr ""
 
@@ -317,4 +323,12 @@ msgstr ""
 
 #: includes/options.php:102
 msgid "Membership settings for forums are managed on the Memberships > Forums screen."
+msgstr ""
+
+#: includes/options-membership-levels.php:54
+msgid "Preserve Current Forum Role"
+msgstr ""
+
+#: includes/options-membership-levels.php:66
+msgid "Leave as \"Preserve Current Forum Role\" to keep the user's existing forum role unchanged when they have this level. Choose a role only if this level should set a specific forum role."
 msgstr ""

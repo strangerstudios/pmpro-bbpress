@@ -22,9 +22,11 @@ With private forums, all content in the forum is secured from public view. Selec
 * To create a better forum experience for your members, choose from the settings to "Hide Forum Roles" and "Show Membership Levels" in replies and on the bbPress profile page. This helps participants see what level of membership access another member has.
 
 = Forum Roles: Set Forum Role by Membership Level =
-Give certain membership levels a higher tier of access within your forum. Assign the forum role by membership level in your Paid Memberships Pro settings. This forum role is changed or removed from the member when their membership level changes.
+Give certain membership levels a higher tier of access within your forum. Assign the forum role by membership level in your Paid Memberships Pro settings. A forum role assigned by a membership level is applied, updated, and removed automatically as the member's levels change. Leave a level's Forum Role set to "Preserve Current Forum Role" if that level should not change the member's forum role.
 
 For example, allow certain membership levels to be spectators in the forum, while you allow other higher tier members access to moderate forum replies.
+
+Forum roles you set manually—for example, promoting a specific member to Moderator on their user profile—are preserved and are not overwritten when the member's membership level changes. Note: if you manually set a member back to the default forum role, a membership level that grants a forum role may re-apply its role on the member's next level change.
 
 [Learn more about bbPress private forums in our documentation site](https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/?utm_source=pmpro-bbpress-readme&utm_medium=readme&utm_campaign=pmpro-bbpress).
 
@@ -104,6 +106,9 @@ The bbPress Integration for Paid Memberships Pro includes one shortcode to displ
 3. Specifty additional bbPress settings specific to a membership level on the Memberships > Settings > Membership Levels screen in the WordPress admin.
 
 == Changelog ==
+= TBD =
+* BUG FIX: Membership level changes no longer overwrite a forum role that was set manually (e.g. a member promoted to Moderator on their user profile). A forum role assigned by a membership level is still applied, updated, and removed automatically; a level set to "Preserve Current Forum Role" (previously "Default Behavior") no longer forces the member back to the default forum role.
+
 = 1.9 - 2026-06-18 =
 * FEATURE: Added a "Memberships" > "Forums" settings page that consolidates all Add On settings: per-forum membership restrictions, the general forum settings previously found on the bbPress > Settings screen, and links to level-specific settings. Compatible with bbPress and BuddyBoss Platform. The bbPress > Settings screen now shows a Paid Memberships Pro section linking to the new page.
 * ENHANCEMENT: Visitors without access to a single forum are now redirected to the "Access Restricted" page registered by the PMPro BuddyPress Add On if one is set. Applies on BuddyPress and BuddyBoss sites.

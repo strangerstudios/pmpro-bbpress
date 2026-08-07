@@ -177,7 +177,7 @@ function pmpro_bbp_membership_msg() {
 
   if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) {
       $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', __( 'You do not have the required membership level to access that forum.', 'pmpro-bbpress' ) );
-      echo '<div role="alert" class="' . esc_attr( pmpro_get_element_class( 'pmpro_message pmpro_error pmpro_bbp_membership_msg' ) ) . '"><p>' . esc_html( $pmpro_bbp_error_msg ) . '</p></div>';
+      echo '<div role="alert" class="' . esc_attr( pmpro_get_element_class( 'pmpro_message pmpro_error pmpro_bbp_membership_msg', 'pmpro_bbp_membership_msg' ) ) . '"><p>' . esc_html( $pmpro_bbp_error_msg ) . '</p></div>';
   }
 }
 add_action('bbp_template_before_forums_index','pmpro_bbp_membership_msg');

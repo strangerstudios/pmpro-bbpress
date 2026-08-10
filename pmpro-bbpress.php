@@ -170,24 +170,29 @@ function pmpro_bbp_is_forum( $forum_id = NULL ) {
 
 /* Add membership level required message if user does not have access */
 function pmpro_bbp_membership_msg() {
-  // Make sure bbpress is active.
-	if ( ! class_exists( 'bbPress' ) ) {
+  // Make sure pmpro and bbpress are active.
+	if ( ! defined( 'PMPRO_VERSION' ) || ! class_exists( 'bbPress' ) ) {
 		return;
 	}
 
   if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) {
       $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', __( 'You do not have the required membership level to access that forum.', 'pmpro-bbpress' ) );
-      echo '<p class="pmpro_bbp_membership_msg">' . esc_html( $pmpro_bbp_error_msg ) . '</p>';
+      echo '<div role="alert" class="' . esc_attr( pmpro_get_element_class( 'pmpro_message pmpro_error pmpro_bbp_membership_msg', 'pmpro_bbp_membership_msg' ) ) . '"><p>' . esc_html( $pmpro_bbp_error_msg ) . '</p></div>';
   }
 }
 add_action('bbp_template_before_forums_index','pmpro_bbp_membership_msg');
 
-/* Enqueue styles for the membership message alert */
-function pmpro_bbp_enqueue_styles() {
-	wp_enqueue_style( 'pmpro-bbpress', plugins_url( 'css/pmpro-bbpress.css', __FILE__ ), array(), PMPROBB_VERSION );
-	
+/* Clear the floated bbPress search form so the membership message doesn't overlap it */
+function pmpro_bbp_membership_msg_styles() {
+	if ( ! defined( 'PMPRO_VERSION' ) || ! function_exists( 'bbp_is_forum_archive' ) ) {
+		return;
+	}
+
+	if ( bbp_is_forum_archive() && ! empty( $_REQUEST['noaccess'] ) ) {
+		wp_add_inline_style( 'pmpro_frontend_base', '.pmpro_message.pmpro_bbp_membership_msg { clear: both; } #bbpress-forums div.bbp-search-form { margin-bottom: 1em; }' );
+	}
 }
-add_action( 'wp_enqueue_scripts', 'pmpro_bbp_enqueue_styles' );
+add_action( 'wp_enqueue_scripts', 'pmpro_bbp_membership_msg_styles', 20 );
 
 /*
  * Add topics and forums to pmpro_search_query

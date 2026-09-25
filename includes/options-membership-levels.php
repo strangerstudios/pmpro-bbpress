@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * These functions add the PMPro Require Membership metabox to bbPress Forums.
  */
@@ -18,18 +23,18 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 	if (!class_exists( 'bbPress' ))
 		return;
 	
-	$level_id = intval($_REQUEST['edit']);	
+	$level_id = isset( $_REQUEST['edit'] ) ? intval( $_REQUEST['edit'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; used to display the level edit form.
 	$options = pmprobb_getOptions();
 		
-	if(!empty($_REQUEST['forum_role']))
-		$forum_role = sanitize_text_field($_REQUEST['forum_role']);
+	if(!empty($_REQUEST['forum_role'])) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; repopulates the level edit form.
+		$forum_role = sanitize_text_field( wp_unslash( $_REQUEST['forum_role'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; repopulates the level edit form.
 	elseif(!empty($options['levels']) && !empty($options['levels'][$level_id]['role']))
 		$forum_role = $options['levels'][$level_id]['role'];
 	else
 		$forum_role = '';
 	
-	if(!empty($_REQUEST['forum_color']))
-		$forum_color = preg_replace('/^0-9a-fA-F#/', '', $_REQUEST['forum_color']);
+	if(!empty($_REQUEST['forum_color'])) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; repopulates the level edit form.
+		$forum_color = sanitize_hex_color( wp_unslash( $_REQUEST['forum_color'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; repopulates the level edit form.
 	elseif(!empty($options['levels']) && !empty($options['levels'][$level_id]['color']))
 		$forum_color = $options['levels'][$level_id]['color'];
 	else
@@ -48,7 +53,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 <table>
 <tbody class="form-table">
 	<tr>
-		<th scope="row" valign="top"><label for="forum_role"><?php _e('Forum Role', 'pmpro-bbpress');?></label></th>
+		<th scope="row" valign="top"><label for="forum_role"><?php esc_html_e('Forum Role', 'pmpro-bbpress');?></label></th>
 		<td>			
 			<select id="forum_role" name="forum_role">
 				<option value="" <?php selected($forum_role, '');?>><?php esc_html_e( 'Preserve Current Forum Role', 'pmpro-bbpress' ); ?></option>
@@ -57,7 +62,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 					if(!empty($roles)) {
 						foreach($roles as $value => $role) {
 						?>
-						<option value="<?php echo esc_attr($value);?>" <?php selected($forum_role, $value);?>><?php echo $role['name'];?></option>
+						<option value="<?php echo esc_attr($value);?>" <?php selected($forum_role, $value);?>><?php echo esc_html( $role['name'] );?></option>
 						<?php
 						}
 					}
@@ -67,7 +72,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 		</td>
 	</tr>
 	<tr>
-		<th scope="row" valign="top"><label for="forum_color"><?php _e('Background Color', 'pmpro-bbpress');?></label></th>
+		<th scope="row" valign="top"><label for="forum_color"><?php esc_html_e('Background Color', 'pmpro-bbpress');?></label></th>
 		<td>			
 			<input type="text" id="forum_color" name="forum_color" value="<?php echo esc_attr($forum_color);?>" />
 			<p class="description"><?php printf( esc_html__( 'You can also add custom styles for %s via your CSS files.', 'pmpro-bbpress' ), "<code>.pmpro-level-" . intval( $level_id ) . "</code>" ); ?></p>
@@ -93,8 +98,8 @@ function pmprobb_pmpro_save_membership_level($level_id) {
 		
 		//build array
 		$options['levels'][$level_id] = array(
-			'role' => sanitize_text_field($_REQUEST['forum_role']),
-			'color' => preg_replace('/^0-9a-fA-F#/', '', $_REQUEST['forum_color'])
+			'role' => isset( $_REQUEST['forum_role'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['forum_role'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce and capability are verified by PMPro core before pmpro_save_membership_level fires.
+			'color' => isset( $_REQUEST['forum_color'] ) ? sanitize_hex_color( wp_unslash( $_REQUEST['forum_color'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce and capability are verified by PMPro core before pmpro_save_membership_level fires.
 		);
 	
 		//save

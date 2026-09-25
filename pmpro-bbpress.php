@@ -10,6 +10,10 @@
  * Domain Path: /languages
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Constants
 define( 'PMPROBB_DIR', dirname( __FILE__ ) );
 define( 'PMPROBB_VERSION', '1.9.1' );
@@ -83,7 +87,7 @@ add_filter( 'pre_get_posts', 'pmprobb_filter_forum_search_results' );
  */
 function pmprobb_admin_init() {
 	//if on the edit level page, enqueue color picker
-	if(!empty($_REQUEST['page']) && $_REQUEST['page'] == 'pmpro-membershiplevels' && isset($_REQUEST['edit'])) {
+	if(!empty($_REQUEST['page']) && $_REQUEST['page'] == 'pmpro-membershiplevels' && isset($_REQUEST['edit'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check to decide which admin scripts to enqueue.
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_style( 'wp-color-picker' );
 	}	
@@ -112,10 +116,10 @@ function pmprobbp_check_forum() {
 		// The current user does not have access to this forum, re-direct them away
 		if( ! pmpro_has_membership_access( $forum_id ) ) {
 			// save to session in case we want to redirect later on
-			$_SESSION['pmpro_bbp_redirected_from'] = $_SERVER['REQUEST_URI'];
+			$_SESSION['pmpro_bbp_redirected_from'] = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 			$redirect_to = add_query_arg( 'noaccess', 1, get_post_type_archive_link( 'forum' ) );
 			$redirect_to = apply_filters( 'pmprobbp_check_forum_redirect_url', $redirect_to, $forum_id );
-			wp_redirect( $redirect_to );
+			wp_redirect( $redirect_to ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- Destination is filterable via pmprobbp_check_forum_redirect_url and may legitimately be offsite.
 			exit;
 		}
 	}
@@ -175,7 +179,7 @@ function pmpro_bbp_membership_msg() {
 		return;
 	}
 
-  if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) {
+  if (bbp_is_forum_archive() && !empty($_REQUEST['noaccess'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only flag used to display a notice.
       $pmpro_bbp_error_msg = apply_filters('pmpro_bbp_error_msg', __( 'You do not have the required membership level to access that forum.', 'pmpro-bbpress' ) );
       echo '<div role="alert" class="' . esc_attr( pmpro_get_element_class( 'pmpro_message pmpro_error pmpro_bbp_membership_msg', 'pmpro_bbp_membership_msg' ) ) . '"><p>' . esc_html( $pmpro_bbp_error_msg ) . '</p></div>';
   }
@@ -188,7 +192,7 @@ function pmpro_bbp_membership_msg_styles() {
 		return;
 	}
 
-	if ( bbp_is_forum_archive() && ! empty( $_REQUEST['noaccess'] ) ) {
+	if ( bbp_is_forum_archive() && ! empty( $_REQUEST['noaccess'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only flag used to add notice styles.
 		wp_add_inline_style( 'pmpro_frontend_base', '.pmpro_message.pmpro_bbp_membership_msg { clear: both; } #bbpress-forums div.bbp-search-form { margin-bottom: 1em; }' );
 	}
 }
@@ -224,7 +228,7 @@ function pmprobb_pre_get_posts($query) {
 
     //get all member forums
     $sqlQuery = "SELECT ID FROM $wpdb->posts WHERE post_type LIKE 'forum'";
-    $all_forums = $wpdb->get_col($sqlQuery);
+    $all_forums = $wpdb->get_col($sqlQuery); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Static query with no user input.
 	
 	//no forums?
 	if(empty($all_forums))
@@ -242,8 +246,8 @@ function pmprobb_pre_get_posts($query) {
 	if(!empty($restricted_forum_ids))
 	{	
 		//get topics belonging to restricted forums
-		$sqlQuery = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key LIKE '_bbp_forum_id' AND meta_value IN(" . implode(',', $restricted_forum_ids) . ")";
-		$restricted_topic_ids = $wpdb->get_col($sqlQuery);
+		$sqlQuery = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key LIKE '_bbp_forum_id' AND meta_value IN(" . implode(',', array_map( 'intval', $restricted_forum_ids ) ) . ")";
+		$restricted_topic_ids = $wpdb->get_col($sqlQuery); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- IN list is built from intval'd forum IDs.
 
 		//exclude restricted topics and posts
 		$query->set('post__not_in', array_merge($query->get('post__not_in'), $restricted_topic_ids, $restricted_forum_ids));		
@@ -302,7 +306,7 @@ function pmprobb_forum_color_css() {
 	//show rules
 	?>
 <style type="text/css" media="screen">
-	<?php echo implode("\n", $rules) . "\n";?>
+	<?php echo esc_html( implode("\n", $rules) ) . "\n";?>
 </style>
 	<?php
 }
@@ -326,7 +330,7 @@ function pmprobb_pmpro_member_links_top() {
 		//show in member links?	
 		if(pmpro_has_membership_access($forum->ID)) {
 		?>
-		<li><a href="<?php echo get_permalink($forum->ID);?>"><?php echo $forum->post_title;?></a></li>
+		<li><a href="<?php echo esc_url( get_permalink($forum->ID) );?>"><?php echo esc_html( $forum->post_title );?></a></li>
 		<?php
 		}
 	}

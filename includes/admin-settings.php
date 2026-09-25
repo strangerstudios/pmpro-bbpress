@@ -107,13 +107,14 @@ function pmprobb_get_forum_restrictions( $forum_ids ) {
 	}
 
 	$placeholders = implode( ',', array_fill( 0, count( $forum_ids ), '%d' ) );
-	// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- placeholders are built from a counted int array.
+	// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- placeholders are built from a counted int array; PMPro custom table.
 	$rows = $wpdb->get_results(
 		$wpdb->prepare(
 			"SELECT page_id, membership_id FROM {$wpdb->pmpro_memberships_pages} WHERE page_id IN ($placeholders)",
 			$forum_ids
 		)
 	);
+	// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 	foreach ( (array) $rows as $row ) {
 		$map[ (int) $row->page_id ][] = (int) $row->membership_id;
@@ -142,9 +143,9 @@ function pmprobb_update_forum_restrictions( $forum_id, $level_ids ) {
 
 	// Fallback for older PMPro: replace all rows for this page_id.
 	global $wpdb;
-	$wpdb->delete( $wpdb->pmpro_memberships_pages, array( 'page_id' => $forum_id ), array( '%d' ) );
+	$wpdb->delete( $wpdb->pmpro_memberships_pages, array( 'page_id' => $forum_id ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- PMPro custom table.
 	foreach ( $level_ids as $level_id ) {
-		$wpdb->insert(
+		$wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- PMPro custom table.
 			$wpdb->pmpro_memberships_pages,
 			array(
 				'membership_id' => $level_id,

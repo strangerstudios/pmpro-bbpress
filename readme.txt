@@ -2,9 +2,9 @@
 Contributors: strangerstudios, paidmembershipspro
 Tags: discussion, forum, bbpress, paid memberships pro, pmpro
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.9.1
+Stable tag: 1.9.2
 
 Restrict access to bbPress for free or premium members by integrating bbPress with the top WordPress membership plugin Paid Memberships Pro.
 
@@ -106,6 +106,10 @@ The bbPress Integration for Paid Memberships Pro includes one shortcode to displ
 3. Specifty additional bbPress settings specific to a membership level on the Memberships > Settings > Membership Levels screen in the WordPress admin.
 
 == Changelog ==
+= 1.9.2 - 2026-09-29 =
+* SECURITY: Improved sanitization and escaping throughout the plugin to resolve Plugin Check security findings. #54 (@dparker1005)
+* ENHANCEMENT: The no access message on the forum archive now uses core PMPro message styling, and the Add On no longer loads its own stylesheet. #53 (@andrewlimaza)
+
 = 1.9.1 - 2026-07-20 =
 * BUG FIX: Membership level changes no longer overwrite forum roles assigned manually. Levels set to "Preserve Current Forum Role" no longer force members back to the default role, and members with multiple levels now receive the forum role with the most enabled capabilities. #52 (@kimcoleman)
 

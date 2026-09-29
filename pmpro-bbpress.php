@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
  * Description: Restrict access to bbPress for free or premium members by integrating bbPress with Paid Memberships Pro.
- * Version: 1.9.1
+ * Version: 1.9.2
  * Author: Paid Memberships Pro
  * Author URI: https://www.paidmembershipspro.com
  * Text Domain: pmpro-bbpress
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Constants
 define( 'PMPROBB_DIR', dirname( __FILE__ ) );
-define( 'PMPROBB_VERSION', '1.9.1' );
+define( 'PMPROBB_VERSION', '1.9.2' );
 
 //includes
 require_once(PMPROBB_DIR . '/includes/functions.php');

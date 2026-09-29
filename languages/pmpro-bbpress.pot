@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Paid Memberships Pro - bbPress Add On plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Paid Memberships Pro - bbPress Add On 1.9.1\n"
+"Project-Id-Version: Paid Memberships Pro - bbPress Add On 1.9.2\n"
 "Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
 "Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-20T15:37:18+00:00\n"
+"POT-Creation-Date: 2026-09-29T16:02:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pmpro-bbpress\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #. Author of the plugin
 #: pmpro-bbpress.php
-#: includes/options.php:26
+#: includes/options.php:30
 msgid "Paid Memberships Pro"
 msgstr ""
 
@@ -45,215 +45,215 @@ msgstr ""
 msgid "Forums"
 msgstr ""
 
-#: includes/admin-settings.php:167
+#: includes/admin-settings.php:168
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: includes/admin-settings.php:204
+#: includes/admin-settings.php:205
 msgid "Your settings have been updated."
 msgstr ""
 
-#: includes/admin-settings.php:214
+#: includes/admin-settings.php:215
 msgid "Forums Integration"
 msgstr ""
 
-#: includes/admin-settings.php:217
+#: includes/admin-settings.php:218
 msgid "Restrict access to forums by membership level. These settings apply to forums powered by bbPress or BuddyBoss."
 msgstr ""
 
-#: includes/admin-settings.php:221
-#: includes/options-membership-levels.php:43
+#: includes/admin-settings.php:222
+#: includes/options-membership-levels.php:48
 msgid "Paid Memberships Pro - bbPress Add On Documentation"
 msgstr ""
 
-#: includes/admin-settings.php:221
-#: includes/options-membership-levels.php:43
+#: includes/admin-settings.php:222
+#: includes/options-membership-levels.php:48
 msgid "bbPress Integration Add On"
 msgstr ""
 
 #. translators: %s: Link to the bbPress Add On documentation.
-#: includes/admin-settings.php:223
-#: includes/options-membership-levels.php:45
+#: includes/admin-settings.php:224
+#: includes/options-membership-levels.php:50
 #, php-format
 msgid "Learn more about the %s."
 msgstr ""
 
-#: includes/admin-settings.php:228
+#: includes/admin-settings.php:229
 msgid "bbPress or BuddyBoss Platform must be active to use this Add On."
 msgstr ""
 
-#: includes/admin-settings.php:235
+#: includes/admin-settings.php:236
 msgid "General Settings"
 msgstr ""
 
-#: includes/admin-settings.php:242
+#: includes/admin-settings.php:243
 msgid "Error Message"
 msgstr ""
 
-#: includes/admin-settings.php:246
+#: includes/admin-settings.php:247
 msgid "Member Links"
 msgstr ""
 
-#: includes/admin-settings.php:250
+#: includes/admin-settings.php:251
 msgid "Hide Member Forums"
 msgstr ""
 
-#: includes/admin-settings.php:254
+#: includes/admin-settings.php:255
 msgid "Hide Forum Roles"
 msgstr ""
 
-#: includes/admin-settings.php:258
+#: includes/admin-settings.php:259
 msgid "Show Membership Levels"
 msgstr ""
 
-#: includes/admin-settings.php:264
-#: includes/admin-settings.php:329
+#: includes/admin-settings.php:265
+#: includes/admin-settings.php:330
 msgid "Save Settings"
 msgstr ""
 
-#: includes/admin-settings.php:273
+#: includes/admin-settings.php:274
 msgid "Forum Access"
 msgstr ""
 
-#: includes/admin-settings.php:277
+#: includes/admin-settings.php:278
 msgid "Choose the membership levels required to view each forum. A forum is restricted to members as soon as it is assigned one or more levels; leave all levels unchecked to keep a forum public. These settings can also be managed in the \"Require Membership\" box when editing a single forum."
 msgstr ""
 
-#: includes/admin-settings.php:279
-#: includes/admin-settings.php:344
+#: includes/admin-settings.php:280
+#: includes/admin-settings.php:345
 msgid "No membership levels found."
 msgstr ""
 
-#: includes/admin-settings.php:279
-#: includes/admin-settings.php:344
+#: includes/admin-settings.php:280
+#: includes/admin-settings.php:345
 msgid "Create a membership level to get started."
 msgstr ""
 
-#: includes/admin-settings.php:281
+#: includes/admin-settings.php:282
 msgid "No forums found."
 msgstr ""
 
-#: includes/admin-settings.php:338
+#: includes/admin-settings.php:339
 msgid "Membership Level Settings"
 msgstr ""
 
-#: includes/admin-settings.php:342
+#: includes/admin-settings.php:343
 msgid "Assign a forum role or background color to members of a specific level. These settings are managed in the \"bbPress Settings\" section when editing a membership level."
 msgstr ""
 
-#: includes/admin-settings.php:349
+#: includes/admin-settings.php:350
 msgid "Level"
 msgstr ""
 
-#: includes/admin-settings.php:350
-#: includes/options-membership-levels.php:51
+#: includes/admin-settings.php:351
+#: includes/options-membership-levels.php:56
 msgid "Forum Role"
 msgstr ""
 
-#: includes/admin-settings.php:351
-#: includes/options-membership-levels.php:70
+#: includes/admin-settings.php:352
+#: includes/options-membership-levels.php:75
 msgid "Background Color"
 msgstr ""
 
-#: includes/admin-settings.php:352
+#: includes/admin-settings.php:353
 msgid "Actions"
 msgstr ""
 
-#: includes/admin-settings.php:367
+#: includes/admin-settings.php:368
 msgid "Default Behavior"
 msgstr ""
 
-#: includes/admin-settings.php:382
+#: includes/admin-settings.php:383
 msgid "None"
 msgstr ""
 
-#: includes/admin-settings.php:385
+#: includes/admin-settings.php:386
 msgid "Edit Level"
 msgstr ""
 
-#: includes/functions.php:14
+#: includes/functions.php:19
 msgid "This forum is for members only."
 msgstr ""
 
-#: includes/options-membership-levels.php:40
+#: includes/options-membership-levels.php:45
 msgid "bbPress Settings"
 msgstr ""
 
-#: includes/options-membership-levels.php:54
+#: includes/options-membership-levels.php:59
 msgid "Preserve Current Forum Role"
 msgstr ""
 
-#: includes/options-membership-levels.php:66
+#: includes/options-membership-levels.php:71
 msgid "Leave as \"Preserve Current Forum Role\" to keep the user's existing forum role unchanged when they have this level. Choose a role only if this level should set a specific forum role."
 msgstr ""
 
-#: includes/options-membership-levels.php:73
+#: includes/options-membership-levels.php:78
 #, php-format
 msgid "You can also add custom styles for %s via your CSS files."
 msgstr ""
 
-#: includes/options.php:49
+#: includes/options.php:53
 msgid "Forum Settings"
 msgstr ""
 
-#: includes/options.php:90
+#: includes/options.php:94
 msgid "Restrict access to forums by membership level with the Paid Memberships Pro - bbPress Add On."
 msgstr ""
 
-#: includes/options.php:101
+#: includes/options.php:105
 msgid "Manage Forum Membership Settings"
 msgstr ""
 
-#: includes/options.php:102
+#: includes/options.php:106
 msgid "Membership settings for forums are managed on the Memberships > Forums screen."
 msgstr ""
 
-#: includes/options.php:117
+#: includes/options.php:121
 msgid "This message is shown when users attempt to view a forum or thread they don't have access to."
 msgstr ""
 
-#: includes/options.php:132
+#: includes/options.php:136
 msgid "Hide member forums content from forums list and search results."
 msgstr ""
 
-#: includes/options.php:147
+#: includes/options.php:151
 msgid "Add links to member forums in the Member Links section of the Membership Account page."
 msgstr ""
 
-#: includes/options.php:162
+#: includes/options.php:166
 msgid "Hide forum roles in replies."
 msgstr ""
 
-#: includes/options.php:177
+#: includes/options.php:181
 msgid "Show membership levels in replies and on the bbPress profile page."
 msgstr ""
 
-#: pmpro-bbpress.php:179
+#: pmpro-bbpress.php:183
 msgid "You do not have the required membership level to access that forum."
 msgstr ""
 
-#: pmpro-bbpress.php:514
+#: pmpro-bbpress.php:523
 msgid "Membership Level"
 msgid_plural "Membership Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: pmpro-bbpress.php:559
+#: pmpro-bbpress.php:568
 msgid "Replies viewable by members only"
 msgstr ""
 
-#: pmpro-bbpress.php:626
+#: pmpro-bbpress.php:635
 msgid "View Documentation"
 msgstr ""
 
-#: pmpro-bbpress.php:626
+#: pmpro-bbpress.php:635
 msgid "Docs"
 msgstr ""
 
-#: pmpro-bbpress.php:627
+#: pmpro-bbpress.php:636
 msgid "Visit Customer Support Forum"
 msgstr ""
 
-#: pmpro-bbpress.php:627
+#: pmpro-bbpress.php:636
 msgid "Support"
 msgstr ""

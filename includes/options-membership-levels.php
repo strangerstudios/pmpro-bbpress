@@ -34,7 +34,7 @@ function pmprobb_pmpro_membership_level_after_other_settings()
 		$forum_role = '';
 	
 	if(!empty($_REQUEST['forum_color'])) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; repopulates the level edit form.
-		$forum_color = sanitize_hex_color( wp_unslash( $_REQUEST['forum_color'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; repopulates the level edit form.
+		$forum_color = (string) sanitize_hex_color( '#' . ltrim( wp_unslash( $_REQUEST['forum_color'] ), '#' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; repopulates the level edit form.
 	elseif(!empty($options['levels']) && !empty($options['levels'][$level_id]['color']))
 		$forum_color = $options['levels'][$level_id]['color'];
 	else
@@ -99,7 +99,7 @@ function pmprobb_pmpro_save_membership_level($level_id) {
 		//build array
 		$options['levels'][$level_id] = array(
 			'role' => isset( $_REQUEST['forum_role'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['forum_role'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce and capability are verified by PMPro core before pmpro_save_membership_level fires.
-			'color' => isset( $_REQUEST['forum_color'] ) ? sanitize_hex_color( wp_unslash( $_REQUEST['forum_color'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce and capability are verified by PMPro core before pmpro_save_membership_level fires.
+			'color' => isset( $_REQUEST['forum_color'] ) ? (string) sanitize_hex_color( '#' . ltrim( wp_unslash( $_REQUEST['forum_color'] ), '#' ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce and capability are verified by PMPro core before pmpro_save_membership_level fires.
 		);
 	
 		//save

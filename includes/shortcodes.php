@@ -3,6 +3,10 @@
 	bbPress shortcode for member activity
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function bbp_user_activity_shortcode($atts, $content = null) {
 	global $current_user;
 

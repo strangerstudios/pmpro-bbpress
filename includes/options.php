@@ -11,6 +11,10 @@
 	See includes/admin-settings.php.
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Add a Paid Memberships Pro section to the bbPress > Settings screen that
  * links to the Memberships > Forums settings page, since users may expect

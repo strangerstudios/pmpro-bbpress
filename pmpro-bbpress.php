@@ -327,11 +327,11 @@ function pmprobb_pmpro_member_links_top() {
 	
 	$forums = get_posts(
 		array(
-			'post_type'   => 'forum',
-			'post_status' => 'publish',
-			'numberposts' => -1,
-			'orderby'     => 'menu_order title',
-			'order'       => 'ASC',
+			'post_type'      => bbp_get_forum_post_type(),
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'orderby'        => 'menu_order title',
+			'order'          => 'ASC',
 		)
 	);
 	foreach($forums as $forum) {

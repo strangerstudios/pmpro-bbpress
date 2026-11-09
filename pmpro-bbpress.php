@@ -253,7 +253,14 @@ function pmprobb_pre_get_posts($query) {
 
 	//exclude restricted forums, topics, and replies
 	if ( ! empty( $restricted_ids[ $user_id ] ) ) {
-		$query->set( 'post__not_in', array_merge( (array) $query->get( 'post__not_in' ), $restricted_ids[ $user_id ] ) );
+		$post__in = $query->get( 'post__in' );
+		if ( ! empty( $post__in ) ) {
+			// WP_Query ignores post__not_in when post__in is set (e.g. bbPress stickies).
+			$post__in = array_diff( array_map( 'intval', (array) $post__in ), array_map( 'intval', $restricted_ids[ $user_id ] ) );
+			$query->set( 'post__in', empty( $post__in ) ? array( 0 ) : array_values( $post__in ) );
+		} else {
+			$query->set( 'post__not_in', array_merge( (array) $query->get( 'post__not_in' ), $restricted_ids[ $user_id ] ) );
+		}
 	}
 	
     return $query;

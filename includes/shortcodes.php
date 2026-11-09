@@ -36,14 +36,37 @@ function bbp_user_activity_shortcode($atts, $content = null) {
 		return '';
 	}
 
-	$shortcode_query = new WP_Query( array(
+	$query_args = array(
 		'post_type'           => $activity_type,
 		'post_status'         => array( bbp_get_public_status_id(), bbp_get_closed_status_id() ),
 		'posts_per_page'      => (int) $atts['count'],
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
 		'author'		  		  => $bbp_user_id,
-	) );
+	);
+
+	// Exclude entries in forums the viewer can't access.
+	if ( function_exists( 'pmpro_has_membership_access' ) ) {
+		global $wpdb;
+		$forum_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", bbp_get_forum_post_type() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Read-only list of forum IDs.
+		$restricted_forum_ids = array();
+		foreach ( $forum_ids as $forum_id ) {
+			if ( ! pmpro_has_membership_access( $forum_id ) ) {
+				$restricted_forum_ids[] = (int) $forum_id;
+			}
+		}
+		if ( ! empty( $restricted_forum_ids ) ) {
+			$query_args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_query
+				array(
+					'key'     => '_bbp_forum_id',
+					'value'   => $restricted_forum_ids,
+					'compare' => 'NOT IN',
+				),
+			);
+		}
+	}
+
+	$shortcode_query = new WP_Query( $query_args );
 
 	// Bail if no replies
 	if ( ! $shortcode_query->have_posts() ) {

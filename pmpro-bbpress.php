@@ -219,6 +219,11 @@ function pmprobb_pre_get_posts($query) {
 		return $query;
 	}
 
+	// Don't filter bbPress form handlers or cron, which save forum meta shared by all users.
+	if ( doing_action( 'bbp_post_request' ) || doing_action( 'bbp_get_request' ) || wp_doing_cron() ) {
+		return $query;
+	}
+
 	// Single forums, topics, and replies are protected by pmprobbp_check_forum().
 	if ( $query->is_singular() ) {
 		return $query;
@@ -349,6 +354,7 @@ add_filter('pmpro_member_links_top','pmprobb_pmpro_member_links_top');
 
 /*
 	Hide forums from list and search results
+	@deprecated TBD No longer hooked; pmprobb_pre_get_posts() hides member forums.
 */
 function pmprobb_pmpro_search_filter_post_types($post_types)
 {

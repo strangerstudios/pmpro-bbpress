@@ -46,10 +46,10 @@ function bbp_user_activity_shortcode($atts, $content = null) {
 	);
 
 	// Exclude entries in forums the viewer can't access.
+	$restricted_forum_ids = array();
 	if ( function_exists( 'pmpro_has_membership_access' ) ) {
 		global $wpdb;
 		$forum_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", bbp_get_forum_post_type() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Read-only list of forum IDs.
-		$restricted_forum_ids = array();
 		foreach ( $forum_ids as $forum_id ) {
 			if ( ! pmpro_has_membership_access( $forum_id ) ) {
 				$restricted_forum_ids[] = (int) $forum_id;
@@ -57,6 +57,11 @@ function bbp_user_activity_shortcode($atts, $content = null) {
 		}
 		if ( ! empty( $restricted_forum_ids ) ) {
 			$query_args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_query
+				'relation' => 'OR',
+				array(
+					'key'     => '_bbp_forum_id',
+					'compare' => 'NOT EXISTS',
+				),
 				array(
 					'key'     => '_bbp_forum_id',
 					'value'   => $restricted_forum_ids,
@@ -90,7 +95,7 @@ function bbp_user_activity_shortcode($atts, $content = null) {
 		}
 
 		// Skip entries in forums the viewer can't access.
-		if ( function_exists( 'pmpro_has_membership_access' ) && ! empty( $forum_id ) && ! pmpro_has_membership_access( $forum_id ) ) {
+		if ( in_array( (int) $forum_id, $restricted_forum_ids, true ) ) {
 			continue;
 		}
 

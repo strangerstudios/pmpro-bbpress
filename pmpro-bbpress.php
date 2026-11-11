@@ -35,7 +35,7 @@ function pmprobb_load_plugin_text_domain() {
 add_action( 'plugins_loaded', 'pmprobb_load_plugin_text_domain' );
 
 /**
- * Load search filters if set.
+ * Load forum query filters.
  */
 function pmprobb_init() {
 
@@ -49,16 +49,9 @@ function pmprobb_init() {
 		return;
 	}
 
-	$filterqueries = get_option( "pmpro_filterqueries" );
-	if ( apply_filters( 'pmprobb_filter_forum_queries', true ) && ! empty( $filterqueries ) ) {
+	// Hide member forums, topics, and replies from front-end forum queries.
+	if ( apply_filters( 'pmprobb_filter_forum_queries', true ) ) {
 		add_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' );
-	}
-
-	// Try to filter the search results too, just in case.
-	$options = pmprobb_getOptions();
-	if(!empty($options['hide_member_forums']) && function_exists('bbp_is_forum_archive') && bbp_is_forum_archive() ) {
-		add_filter( 'pre_get_posts', 'pmpro_search_filter' );
-		add_filter( 'pmpro_search_filter_post_types', 'pmprobb_pmpro_search_filter_post_types' );
 	}
 
 }
@@ -70,13 +63,18 @@ add_action('init', 'pmprobb_init', 50);
  */
 function pmprobb_filter_forum_search_results( $query ) {
 	
-	// Make sure that the query we want to filter has posts.
-	if ( ! $query->have_posts() ) {
+	// All forum queries are already being filtered.
+	if ( has_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' ) ) {
+		return $query;
+	}
+
+	// bbPress conditionals need the main query to exist.
+	if ( ! isset( $GLOBALS['wp_query'] ) || ! $GLOBALS['wp_query'] instanceof WP_Query ) {
 		return $query;
 	}
 
 	if ( ! is_admin() && apply_filters( 'pmprobb_filter_topic_queries', true ) && function_exists('bbp_is_search_results') && bbp_is_search_results() ) {
-		add_filter( 'pre_get_posts', 'pmprobb_pre_get_posts' );
+		return pmprobb_pre_get_posts( $query );
 	}
 	return $query;
 }
@@ -243,11 +241,6 @@ function pmprobb_pre_get_posts($query) {
 		return $query;
 	}
 
-	// Make sure that the query we want to filter has posts.
-	if ( ! $query->have_posts() ) {
-		return $query;
-	}
-
 	// Get option to see if we need to hide Membership forum from front-end.
 	$options = pmprobb_getOptions();
 	if(empty($options['hide_member_forums'])) {
@@ -259,31 +252,53 @@ function pmprobb_pre_get_posts($query) {
 		return $query;
 	}
 
-    //get all member forums
-    $sqlQuery = "SELECT ID FROM $wpdb->posts WHERE post_type LIKE 'forum'";
-    $all_forums = $wpdb->get_col($sqlQuery); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Static query with no user input.
-	
-	//no forums?
-	if(empty($all_forums))
+	// Don't filter bbPress form handlers or cron, which save forum meta shared by all users.
+	if ( doing_action( 'bbp_post_request' ) || doing_action( 'bbp_get_request' ) || wp_doing_cron() ) {
 		return $query;
-	
-    //add restricted forums to array
-    $restricted_forum_ids = array();
-    foreach($all_forums as $forum_id) {
-        if(!pmpro_has_membership_access($forum_id))
-            $restricted_forum_ids[] = $forum_id;
 	}
 
+	// Single forums, topics, and replies are protected by pmprobbp_check_forum().
+	if ( $query->is_singular() ) {
+		return $query;
+	}
 
-	//if there are restricted forums, find topics and exclude them all from searches
-	if(!empty($restricted_forum_ids))
-	{	
-		//get topics belonging to restricted forums
-		$sqlQuery = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key LIKE '_bbp_forum_id' AND meta_value IN(" . implode(',', array_map( 'intval', $restricted_forum_ids ) ) . ")";
-		$restricted_topic_ids = $wpdb->get_col($sqlQuery); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- IN list is built from intval'd forum IDs.
+	// Restricted IDs are cached per user for the rest of the request.
+	static $restricted_ids = array();
+	$user_id = get_current_user_id();
+	if ( ! isset( $restricted_ids[ $user_id ] ) ) {
+		$restricted_ids[ $user_id ] = array();
 
-		//exclude restricted topics and posts
-		$query->set('post__not_in', array_merge($query->get('post__not_in'), $restricted_topic_ids, $restricted_forum_ids));		
+		//get all member forums
+		$sqlQuery = "SELECT ID FROM $wpdb->posts WHERE post_type LIKE 'forum'";
+		$all_forums = $wpdb->get_col($sqlQuery); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Static query with no user input.
+
+		//add restricted forums to array
+		$restricted_forum_ids = array();
+		foreach($all_forums as $forum_id) {
+			if(!pmpro_has_membership_access($forum_id))
+				$restricted_forum_ids[] = $forum_id;
+		}
+
+		//if there are restricted forums, find their topics and replies
+		if(!empty($restricted_forum_ids))
+		{	
+			$sqlQuery = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key LIKE '_bbp_forum_id' AND meta_value IN(" . implode(',', array_map( 'intval', $restricted_forum_ids ) ) . ")";
+			$restricted_topic_ids = $wpdb->get_col($sqlQuery); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- IN list is built from intval'd forum IDs.
+
+			$restricted_ids[ $user_id ] = array_merge( $restricted_topic_ids, $restricted_forum_ids );
+		}
+	}
+
+	//exclude restricted forums, topics, and replies
+	if ( ! empty( $restricted_ids[ $user_id ] ) ) {
+		$post__in = $query->get( 'post__in' );
+		if ( ! empty( $post__in ) ) {
+			// WP_Query ignores post__not_in when post__in is set (e.g. bbPress stickies).
+			$post__in = array_diff( array_map( 'intval', (array) $post__in ), array_map( 'intval', $restricted_ids[ $user_id ] ) );
+			$query->set( 'post__in', empty( $post__in ) ? array( 0 ) : array_values( $post__in ) );
+		} else {
+			$query->set( 'post__not_in', array_merge( (array) $query->get( 'post__not_in' ), $restricted_ids[ $user_id ] ) );
+		}
 	}
 	
     return $query;
@@ -372,6 +387,7 @@ add_filter('pmpro_member_links_top','pmprobb_pmpro_member_links_top');
 
 /*
 	Hide forums from list and search results
+	@deprecated TBD No longer hooked; pmprobb_pre_get_posts() hides member forums.
 */
 function pmprobb_pmpro_search_filter_post_types($post_types)
 {

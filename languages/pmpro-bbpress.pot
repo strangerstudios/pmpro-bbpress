@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Paid Memberships Pro - bbPress Add On plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Paid Memberships Pro - bbPress Add On 1.9.2\n"
+"Project-Id-Version: Paid Memberships Pro - bbPress Add On 1.9.3\n"
 "Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
 "Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-29T16:02:20+00:00\n"
+"POT-Creation-Date: 2026-11-11T18:39:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pmpro-bbpress\n"
@@ -228,32 +228,41 @@ msgstr ""
 msgid "Show membership levels in replies and on the bbPress profile page."
 msgstr ""
 
-#: pmpro-bbpress.php:183
+#: includes/shortcodes.php:25
+msgid "My Recent Activity"
+msgstr ""
+
+#: pmpro-bbpress.php:152
+#: pmpro-bbpress.php:214
 msgid "You do not have the required membership level to access that forum."
 msgstr ""
 
-#: pmpro-bbpress.php:523
+#: pmpro-bbpress.php:580
 msgid "Membership Level"
 msgid_plural "Membership Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: pmpro-bbpress.php:568
+#: pmpro-bbpress.php:625
 msgid "Replies viewable by members only"
 msgstr ""
 
-#: pmpro-bbpress.php:635
+#: pmpro-bbpress.php:651
+msgid "Topics viewable by members only"
+msgstr ""
+
+#: pmpro-bbpress.php:745
 msgid "View Documentation"
 msgstr ""
 
-#: pmpro-bbpress.php:635
+#: pmpro-bbpress.php:745
 msgid "Docs"
 msgstr ""
 
-#: pmpro-bbpress.php:636
+#: pmpro-bbpress.php:746
 msgid "Visit Customer Support Forum"
 msgstr ""
 
-#: pmpro-bbpress.php:636
+#: pmpro-bbpress.php:746
 msgid "Support"
 msgstr ""

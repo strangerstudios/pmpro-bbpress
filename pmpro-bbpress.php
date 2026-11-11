@@ -373,7 +373,15 @@ function pmprobb_pmpro_member_links_top() {
 	if(empty($options['member_links']))
 		return;
 	
-	$forums = get_posts(array('post_type'=>'forum', 'post_status'=>'publish'));	
+	$forums = get_posts(
+		array(
+			'post_type'      => bbp_get_forum_post_type(),
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'orderby'        => 'menu_order title',
+			'order'          => 'ASC',
+		)
+	);
 	foreach($forums as $forum) {
 		//show in member links?	
 		if(pmpro_has_membership_access($forum->ID)) {

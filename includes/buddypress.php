@@ -86,7 +86,7 @@ add_filter( 'pmprobbp_check_forum_redirect_url', 'pmprobb_bp_forum_redirect_url'
  * Users who can moderate BuddyPress still see the content, so that editing an
  * activity item in the admin doesn't erase it.
  *
- * @since TBD
+ * @since 1.9.3
  *
  * @param array $activities Activity results, with the activity items in the 'activities' key.
  * @return array

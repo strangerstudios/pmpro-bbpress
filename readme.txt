@@ -4,7 +4,7 @@ Tags: discussion, forum, bbpress, paid memberships pro, pmpro
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 
 Restrict access to bbPress for free or premium members by integrating bbPress with the top WordPress membership plugin Paid Memberships Pro.
 
@@ -106,6 +106,16 @@ The bbPress Integration for Paid Memberships Pro includes one shortcode to displ
 3. Specifty additional bbPress settings specific to a membership level on the Memberships > Settings > Membership Levels screen in the WordPress admin.
 
 == Changelog ==
+= 1.9.3 - 2026-11-11 =
+* SECURITY: Topic content in restricted forums is now hidden from non-members in topic feeds, forum search results and topic excerpts. #65 (@dparker1005)
+* SECURITY: Topic and reply content from restricted forums is now hidden from non-members in BuddyPress activity streams, activity feeds and the BuddyPress REST API. #65 (@dparker1005)
+* SECURITY: Non-members can no longer post new topics or replies in restricted forums. #65 (@dparker1005)
+* SECURITY: Users who can't access a restricted forum, such as members whose membership ended, no longer get new topic emails for that forum. #65 (@dparker1005)
+* SECURITY: The `[bbp-user-activity]` shortcode no longer shows recent forum activity to logged-out visitors, and now skips entries in forums the viewer can't access. #63 (@flintfromthebasement)
+* BUG FIX: Fixed the "Hide Member Forums" setting, which had no effect since version 1.7.3. Sites with this setting checked will now hide restricted forums, topics and replies from non-members in forum lists and bbPress search results, whether or not the "Filter searches and archives" setting in PMPro is on. #62 (@flintfromthebasement)
+* BUG FIX: Fixed the `[bbp-user-activity]` shortcode showing the forum name instead of the topic title, treating `show_date="false"` and `show_excerpt="false"` as true, and not escaping the title. #63 (@flintfromthebasement)
+* BUG FIX: Member Links on the Membership Account page now include every forum the member can access, not just the 5 most recently published forums. #64 (@flintfromthebasement)
+
 = 1.9.2 - 2026-09-29 =
 * SECURITY: Improved sanitization and escaping throughout the plugin to resolve Plugin Check security findings. #54 (@dparker1005)
 * ENHANCEMENT: The no access message on the forum archive now uses core PMPro message styling, and the Add On no longer loads its own stylesheet. #53 (@andrewlimaza)

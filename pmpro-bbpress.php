@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
  * Description: Restrict access to bbPress for free or premium members by integrating bbPress with Paid Memberships Pro.
- * Version: 1.9.2
+ * Version: 1.9.3
  * Author: Paid Memberships Pro
  * Author URI: https://www.paidmembershipspro.com
  * Text Domain: pmpro-bbpress
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Constants
 define( 'PMPROBB_DIR', dirname( __FILE__ ) );
-define( 'PMPROBB_VERSION', '1.9.2' );
+define( 'PMPROBB_VERSION', '1.9.3' );
 
 //includes
 require_once(PMPROBB_DIR . '/includes/functions.php');
@@ -129,7 +129,7 @@ function pmprobbp_check_forum() {
  * The new topic and reply forms are not shown in restricted forums, but bbPress
  * processes those form submissions before pmprobbp_check_forum() runs.
  *
- * @since TBD
+ * @since 1.9.3
  *
  * @param int      $topic_or_forum_id The forum ID for new topics, or the topic ID for new replies.
  * @param int|null $forum_id          The forum ID posted with new replies. Not passed for new topics.
@@ -395,7 +395,7 @@ add_filter('pmpro_member_links_top','pmprobb_pmpro_member_links_top');
 
 /*
 	Hide forums from list and search results
-	@deprecated TBD No longer hooked; pmprobb_pre_get_posts() hides member forums.
+	@deprecated 1.9.3 No longer hooked; pmprobb_pre_get_posts() hides member forums.
 */
 function pmprobb_pmpro_search_filter_post_types($post_types)
 {
@@ -634,7 +634,7 @@ add_filter( 'bbp_get_reply_content', 'pmprobb_auth_reply_view', 10, 2 );
  * Block the topic content if non-members try to access it outside of the topic page,
  * such as in topic feeds, forum search results and topic excerpts.
  *
- * @since TBD
+ * @since 1.9.3
  *
  * @param string $content  The topic content.
  * @param int    $topic_id The topic ID.
@@ -711,7 +711,7 @@ add_filter( 'bbp_topic_subscription_user_ids', 'pmprobb_non_member_reply_notific
  * Stop users who can't access a forum from receiving new topic emails for it,
  * such as members whose membership ended after they subscribed to the forum.
  *
- * @since TBD
+ * @since 1.9.3
  *
  * @param array $user_ids The IDs of users subscribed to the forum.
  * @param int   $topic_id The new topic ID.

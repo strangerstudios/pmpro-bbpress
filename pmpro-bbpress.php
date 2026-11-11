@@ -134,7 +134,7 @@ function pmprobbp_check_forum() {
  * @since TBD
  *
  * @param int      $topic_or_forum_id The forum ID for new topics, or the topic ID for new replies.
- * @param int|null $forum_id          The forum ID for new replies. Not passed for new topics.
+ * @param int|null $forum_id          The forum ID posted with new replies. Not passed for new topics.
  */
 function pmprobb_check_forum_access_before_new_post( $topic_or_forum_id, $forum_id = null ) {
 	// Make sure PMPro is active.
@@ -142,9 +142,12 @@ function pmprobb_check_forum_access_before_new_post( $topic_or_forum_id, $forum_
 		return;
 	}
 
-	// New topics only pass the forum ID.
+	// New topics only pass the forum ID. For new replies, check the forum of the topic
+	// being replied to, since the forum ID passed for replies comes from the form.
 	if ( null === $forum_id ) {
 		$forum_id = $topic_or_forum_id;
+	} else {
+		$forum_id = bbp_get_topic_forum_id( $topic_or_forum_id );
 	}
 
 	if ( ! pmpro_has_membership_access( $forum_id ) ) {

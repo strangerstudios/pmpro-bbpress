@@ -98,7 +98,7 @@ function pmprobb_bp_hide_restricted_activity_content( $activities ) {
 	}
 
 	// Site moderators can see and edit all activity in the admin, so don't hide it from them.
-	if ( current_user_can( 'bp_moderate' ) ) {
+	if ( bp_current_user_can( 'bp_moderate' ) ) {
 		return $activities;
 	}
 

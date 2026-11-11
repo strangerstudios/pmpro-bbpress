@@ -126,6 +126,36 @@ function pmprobbp_check_forum() {
 }
 
 /**
+ * Stop users who can't access a forum from creating topics or replies in it.
+ *
+ * The new topic and reply forms are not shown in restricted forums, but bbPress
+ * processes those form submissions before pmprobbp_check_forum() runs.
+ *
+ * @since TBD
+ *
+ * @param int      $topic_or_forum_id The forum ID for new topics, or the topic ID for new replies.
+ * @param int|null $forum_id          The forum ID for new replies. Not passed for new topics.
+ */
+function pmprobb_check_forum_access_before_new_post( $topic_or_forum_id, $forum_id = null ) {
+	// Make sure PMPro is active.
+	if ( ! function_exists( 'pmpro_has_membership_access' ) ) {
+		return;
+	}
+
+	// New topics only pass the forum ID.
+	if ( null === $forum_id ) {
+		$forum_id = $topic_or_forum_id;
+	}
+
+	if ( ! pmpro_has_membership_access( $forum_id ) ) {
+		$pmpro_bbp_error_msg = apply_filters( 'pmpro_bbp_error_msg', __( 'You do not have the required membership level to access that forum.', 'pmpro-bbpress' ) );
+		bbp_add_error( 'pmprobb_no_forum_access', esc_html( $pmpro_bbp_error_msg ) );
+	}
+}
+add_action( 'bbp_new_topic_pre_extras', 'pmprobb_check_forum_access_before_new_post', 10, 1 );
+add_action( 'bbp_new_reply_pre_extras', 'pmprobb_check_forum_access_before_new_post', 10, 2 );
+
+/**
  * Function to tell if the current forum, topic, or reply is a subpost of the forum_id passed.
  * If no forum_id is passed, it will return true if it is any forum, topic, or reply.
  */
@@ -574,6 +604,31 @@ function pmprobb_auth_reply_view($content, $reply_id)
 add_filter( 'bbp_get_reply_content', 'pmprobb_auth_reply_view', 10, 2 );
 
 /**
+ * Block the topic content if non-members try to access it outside of the topic page,
+ * such as in topic feeds, forum search results and topic excerpts.
+ *
+ * @since TBD
+ *
+ * @param string $content  The topic content.
+ * @param int    $topic_id The topic ID.
+ * @return string
+ */
+function pmprobb_auth_topic_view( $content, $topic_id ) {
+	// Make sure PMPro is active.
+	if ( ! function_exists( 'pmpro_has_membership_access' ) ) {
+		return $content;
+	}
+
+	$has_access = pmpro_has_membership_access( bbp_get_topic_forum_id( $topic_id ), NULL, true );
+	if ( ! $has_access[0] || ( ! empty( $has_access[1] ) && ! is_user_logged_in() ) ) {
+		$content = __( 'Topics viewable by members only', 'pmpro-bbpress' );
+	}
+
+	return $content;
+}
+add_filter( 'bbp_get_topic_content', 'pmprobb_auth_topic_view', 10, 2 );
+
+/**
  * This will check if values are inside the haystack to check. Wrapper function for pre_get_posts sometimes passing array sometimes passes string.
  * @param $needle string/array. Checks whether values are in array via array to array comparison or string to array.
  * @param $haystack array. Array of values to compare $needle to.
@@ -624,6 +679,34 @@ function pmprobb_non_member_reply_notifications( $user_ids, $reply_id, $topic_id
 	return $user_ids;
 }
 add_filter( 'bbp_topic_subscription_user_ids', 'pmprobb_non_member_reply_notifications', 10, 3 );
+
+/**
+ * Stop users who can't access a forum from receiving new topic emails for it,
+ * such as members whose membership ended after they subscribed to the forum.
+ *
+ * @since TBD
+ *
+ * @param array $user_ids The IDs of users subscribed to the forum.
+ * @param int   $topic_id The new topic ID.
+ * @param int   $forum_id The forum ID.
+ * @return array
+ */
+function pmprobb_non_member_topic_notifications( $user_ids, $topic_id, $forum_id ) {
+	// If no user IDs are subscribed to the forum, or PMPro is not active, just bail.
+	if ( empty( $user_ids ) || ! function_exists( 'pmpro_has_membership_access' ) ) {
+		return $user_ids;
+	}
+
+	$allowed_users = array();
+	foreach ( (array) $user_ids as $user_id ) {
+		if ( pmpro_has_membership_access( $forum_id, $user_id, false ) ) {
+			$allowed_users[] = $user_id;
+		}
+	}
+
+	return $allowed_users;
+}
+add_filter( 'bbp_forum_subscription_user_ids', 'pmprobb_non_member_topic_notifications', 10, 3 );
 
 /*
 Function to add links to the plugin row meta

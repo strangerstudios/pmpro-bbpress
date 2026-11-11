@@ -74,3 +74,50 @@ function pmprobb_bp_forum_redirect_url( $redirect_to, $forum_id ) {
 	return $redirect_to;
 }
 add_filter( 'pmprobbp_check_forum_redirect_url', 'pmprobb_bp_forum_redirect_url', 10, 2 );
+
+/**
+ * Hide the content of forum topic and reply activity items from users who
+ * can't access the forum.
+ *
+ * bbPress copies the topic or reply content into the BuddyPress activity item,
+ * where it shows in activity streams, activity RSS feeds and the BuddyPress
+ * REST API without checking the forum's membership restrictions.
+ *
+ * Users who can moderate BuddyPress still see the content, so that editing an
+ * activity item in the admin doesn't erase it.
+ *
+ * @since TBD
+ *
+ * @param array $activities Activity results, with the activity items in the 'activities' key.
+ * @return array
+ */
+function pmprobb_bp_hide_restricted_activity_content( $activities ) {
+	// Make sure PMPro and bbPress are active and there are activity items to check.
+	if ( empty( $activities['activities'] ) || ! function_exists( 'pmpro_has_membership_access' ) || ! function_exists( 'bbp_get_topic_forum_id' ) ) {
+		return $activities;
+	}
+
+	// Site moderators can see and edit all activity in the admin, so don't hide it from them.
+	if ( current_user_can( 'bp_moderate' ) ) {
+		return $activities;
+	}
+
+	foreach ( $activities['activities'] as $activity ) {
+		// Only check bbPress topic and reply activity items that have content.
+		if ( ! is_object( $activity ) || empty( $activity->content ) || ! in_array( $activity->type, array( 'bbp_topic_create', 'bbp_reply_create' ), true ) ) {
+			continue;
+		}
+
+		// Group forum activity stores the topic or reply ID as the secondary item ID.
+		$post_id  = ( 'groups' === $activity->component ) ? $activity->secondary_item_id : $activity->item_id;
+		$forum_id = ( 'bbp_topic_create' === $activity->type ) ? bbp_get_topic_forum_id( $post_id ) : bbp_get_reply_forum_id( $post_id );
+
+		if ( ! pmpro_has_membership_access( $forum_id ) ) {
+			$activity->content = '';
+		}
+	}
+
+	return $activities;
+}
+add_filter( 'bp_activity_get', 'pmprobb_bp_hide_restricted_activity_content' );
+add_filter( 'bp_activity_get_specific', 'pmprobb_bp_hide_restricted_activity_content' );

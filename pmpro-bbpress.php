@@ -129,6 +129,7 @@ function pmprobbp_check_forum() {
  * Without this, the oEmbed endpoint returns the title and author of forums, topics and replies in
  * restricted forums. Returning 0 makes the endpoint respond the same as it does for a URL that isn't a post.
  * The embed itself redirects visitors without access, so restricted forums have no use for embeds.
+ * This checks whether levels are assigned to the forum, not the filtered access result, since that depends on the viewer.
  *
  * @since TBD
  *

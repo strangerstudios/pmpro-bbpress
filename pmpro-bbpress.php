@@ -124,10 +124,11 @@ function pmprobbp_check_forum() {
 }
 
 /**
- * Apply the forum access check to oEmbed requests as well.
+ * Don't allow oEmbed for forums, topics and replies in restricted forums.
  *
  * Without this, the oEmbed endpoint returns the title and author of forums, topics and replies in
  * restricted forums. Returning 0 makes the endpoint respond the same as it does for a URL that isn't a post.
+ * The embed itself redirects visitors without access, so restricted forums have no use for embeds.
  *
  * @since TBD
  *
@@ -152,7 +153,10 @@ function pmprobb_oembed_request_post_id( $post_id, $url ) {
 		return $post_id;
 	}
 
-	if ( ! empty( $forum_id ) && ! pmpro_has_membership_access( $forum_id ) ) {
+	// Refuse embeds of anything in a forum that requires a membership level, even for members.
+	// Embeds of same-site links are cached and shown to every visitor, so the result can't depend on who is viewing.
+	$forum_access = empty( $forum_id ) ? array() : pmpro_has_membership_access( $forum_id, null, true );
+	if ( ! empty( $forum_access[1] ) ) {
 		return 0;
 	}
 

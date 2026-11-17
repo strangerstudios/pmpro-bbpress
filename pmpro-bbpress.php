@@ -124,6 +124,43 @@ function pmprobbp_check_forum() {
 }
 
 /**
+ * Apply the forum access check to oEmbed requests as well.
+ *
+ * Without this, the oEmbed endpoint returns the title and author of forums, topics and replies in
+ * restricted forums. Returning 0 makes the endpoint respond the same as it does for a URL that isn't a post.
+ *
+ * @since TBD
+ *
+ * @param int    $post_id The post ID found for the requested URL.
+ * @param string $url     The requested URL.
+ * @return int
+ */
+function pmprobb_oembed_request_post_id( $post_id, $url ) {
+	// Make sure pmpro and bbpress are active.
+	if ( empty( $post_id ) || ! function_exists( 'pmpro_has_membership_access' ) || ! class_exists( 'bbPress' ) ) {
+		return $post_id;
+	}
+
+	// Find the forum for this forum, topic or reply.
+	if ( bbp_is_forum( $post_id ) ) {
+		$forum_id = $post_id;
+	} elseif ( bbp_is_topic( $post_id ) ) {
+		$forum_id = bbp_get_topic_forum_id( $post_id );
+	} elseif ( bbp_is_reply( $post_id ) ) {
+		$forum_id = bbp_get_reply_forum_id( $post_id );
+	} else {
+		return $post_id;
+	}
+
+	if ( ! empty( $forum_id ) && ! pmpro_has_membership_access( $forum_id ) ) {
+		return 0;
+	}
+
+	return $post_id;
+}
+add_filter( 'oembed_request_post_id', 'pmprobb_oembed_request_post_id', 10, 2 );
+
+/**
  * Stop users who can't access a forum from creating topics or replies in it.
  *
  * The new topic and reply forms are not shown in restricted forums, but bbPress

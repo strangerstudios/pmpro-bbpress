@@ -3,7 +3,7 @@
  * Plugin Name: Paid Memberships Pro - bbPress Add On
  * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-bbpress/
  * Description: Restrict access to bbPress for free or premium members by integrating bbPress with Paid Memberships Pro.
- * Version: 1.9.3
+ * Version: 1.9.4
  * Author: Paid Memberships Pro
  * Author URI: https://www.paidmembershipspro.com
  * Text Domain: pmpro-bbpress
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Constants
 define( 'PMPROBB_DIR', dirname( __FILE__ ) );
-define( 'PMPROBB_VERSION', '1.9.3' );
+define( 'PMPROBB_VERSION', '1.9.4' );
 
 //includes
 require_once(PMPROBB_DIR . '/includes/functions.php');
@@ -131,7 +131,7 @@ function pmprobbp_check_forum() {
  * The embed itself redirects visitors without access, so restricted forums have no use for embeds.
  * This checks whether levels are assigned to the forum, not the filtered access result, since that depends on the viewer.
  *
- * @since TBD
+ * @since 1.9.4
  *
  * @param int    $post_id The post ID found for the requested URL.
  * @param string $url     The requested URL.

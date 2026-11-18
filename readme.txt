@@ -4,7 +4,7 @@ Tags: discussion, forum, bbpress, paid memberships pro, pmpro
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 
 Restrict access to bbPress for free or premium members by integrating bbPress with the top WordPress membership plugin Paid Memberships Pro.
 
@@ -106,6 +106,9 @@ The bbPress Integration for Paid Memberships Pro includes one shortcode to displ
 3. Specifty additional bbPress settings specific to a membership level on the Memberships > Settings > Membership Levels screen in the WordPress admin.
 
 == Changelog ==
+= 1.9.4 - 2026-11-18 =
+* SECURITY: The oEmbed endpoint no longer returns the title and author of forums, topics and replies in restricted forums. Embeds of those added before this update remain until the post containing them is re-saved. #66 (@dparker1005)
+
 = 1.9.3 - 2026-11-11 =
 * SECURITY: Topic content in restricted forums is now hidden from non-members in topic feeds, forum search results and topic excerpts. #65 (@dparker1005)
 * SECURITY: Topic and reply content from restricted forums is now hidden from non-members in BuddyPress activity streams, activity feeds and the BuddyPress REST API. #65 (@dparker1005)

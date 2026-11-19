@@ -294,8 +294,8 @@ function pmprobb_pre_get_posts($query) {
 		return $query;
 	}
 
-	// Don't filter bbPress form handlers or cron, which save forum meta shared by all users.
-	if ( doing_action( 'bbp_post_request' ) || doing_action( 'bbp_get_request' ) || wp_doing_cron() ) {
+	// Don't filter bbPress form handlers, cron, or WP-CLI, which save forum meta shared by all users.
+	if ( doing_action( 'bbp_post_request' ) || doing_action( 'bbp_get_request' ) || wp_doing_cron() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 		return $query;
 	}
 
